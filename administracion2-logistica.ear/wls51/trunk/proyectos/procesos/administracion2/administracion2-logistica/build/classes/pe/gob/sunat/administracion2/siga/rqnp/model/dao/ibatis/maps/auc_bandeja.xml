@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="auc_bandeja">
+	<typeAlias alias="aucBandejaBean"
+		type="pe.gob.sunat.administracion2.siga.rqnp.model.domain.AucBandejaBean" />
+	
+	<typeAlias alias="aucAnexoBean"
+		type="pe.gob.sunat.administracion2.siga.rqnp.model.domain.AucAnexoBean" />
+		
+	<resultMap id="lstbandeja" class="aucBandejaBean">
+		<result property="num_rqnp" 			column="COD_RQTO_NO_PROG" />
+		<result property="fec_rqnp" 			column="FECH_REQU_SRM" />
+		<result property="solicitante" 			column="SOLICITANTE" />
+		<result property="uuoo_solicitante" 	column="UUOO_SOLICITANTE" />
+		<result property="motivo_sol" 			column="MOTI_SOLI_SRM" />
+		<result property="cod_resp" 			column="CODI_RESP_SRM" />
+		<result property="cod_dep" 				column="CODI_DEPE_TDE" />
+		<result property="monto_total" 			column="TOTAL" />
+		<result property="cod_rqnp" 			column="CODI_RQNP_SRM" />
+		<result property="num_auc" 				column="NUM_AUC" />
+		<result property="num_item" 			column="NUM_ITEM" />
+		<result property="anio_atencion" 		column="ANN_ATENCION" />
+		<result property="mes_atencion" 		column="MES_ATENCION" />
+	</resultMap>
+
+	
+	<resultMap id="lstanexo" class="aucAnexoBean">
+		<result property="num_rqnp" 			column="COD_RQTO_NO_PROG" />
+		<result property="cod_rqnp" 			column="CODI_RQNP_SRM" />
+		<result property="fec_rqnp" 			column="FECH_REQU_SRM" />
+		<result property="nom_contacto" 		column="NOMBRE_CONTACTO" />
+		<result property="uuoo_des" 			column="UUOO_DESCRIPCION" />
+		<result property="anexo_contacto" 		column="NUM_ANEXO_CONTACTO" />
+		<result property="des_proceso" 			column="DES_PROCESO" />
+		<result property="des_auc" 				column="DES_AUC" />
+		<result property="fec_auc" 				column="FECHA_AUCT" />
+		<result property="des_ubg" 				column="UBG" />
+		<result property="cod_objeto" 			column="COD_OBJETO" />
+		<result property="des_meta" 			column="DES_META" />
+		<result property="des_finalidad" 		column="DES_FINALIDAD" />
+		<result property="cod_finalidad" 		column="COD_FINALIDAD" />
+		<result property="des_motivo" 			column="MOTI_SOLI_SRM" />
+		<result property="dur_necesidad" 		column="DURACION_NECESIDAD" />
+		<result property="tip_necesidad" 		column="TIPO_NECESIDAD" />
+		<result property="des_tip_necesidad" 	column="DES_TIPO_NECESIDAD" />
+		<result property="cod_bien" 			column="CODI_BSER_CAT" />
+		<result property="des_bien" 			column="DESC_BSER_CAT" />
+		<result property="monto_bien" 			column="IMPORTE" />
+		<result property="des_tecnica" 			column="DES_TECNICA" />
+		<result property="des_c1" 				column="DES_C1" />
+		<result property="des_c2" 				column="DES_C2" />
+		<result property="des_c3" 				column="DES_C3" />
+		<result property="cod_resp" 			column="CODI_RESP_SRM" />
+		<result property="cod_dep" 				column="CODI_DEPE_TDE" />
+		<result property="cod_contacto" 		column="COD_CONTACTO" />
+		<result property="cantidad_bien" 		column="CANTIDAD_DETALLE" />
+		<result property="unidad_bien" 			column="UNIDAD_MEDIDA" />
+		<result property="anio_atencion" 		column="ANN_ATENCION" />
+		<result property="mes_atencion" 		column="MES_ATENCION" />
+		<result property="tipo_vinculo" 		column="TIPO_VINCULO" />
+		<result property="vinculo" 				column="VINCULO_NECESIDAD" />
+		
+		<result property="ind_vinculo" 			column="IND_VINCULO" />
+		<result property="ind_prestamo" 		column="IND_PRESTAMO" />
+		
+		<!-- AGREGADO PARA EL PASE -->
+		<result property="ind_comite" column="IND_COMITE" />
+		<result property="ind_tec_tit" column="IND_TEC_TIT" />
+		<result property="ind_tec_sup" column="IND_TEC_SUP" />
+		<result property="cod_au_tit" column="COD_AU_TIT" />
+		<result property="cod_au_sup" column="COD_AU_SUP" />
+		<result property="cod_tec_tit" column="COD_TEC_TIT" />
+		<result property="cod_tec_sup" column="COD_TEC_SUP" />
+		<result property="nom_tec_tit" column="NOM_TEC_TIT" />
+		<result property="nom_tec_sup" column="NOM_TEC_SUP" />	
+		
+	</resultMap>
+	
+	<resultMap id="lstanexometas" class="aucAnexoBean">
+		<result property="ubg_det" 				column="UBG_DET" />
+		<result property="monto_ubg" 			column="IMP_UBG" />
+		<result property="cantidad_bien" 		column="CANTIDAD_DETALLE" />
+	</resultMap>
+
+	<select id="selectBandejaAUC" parameterClass="java.util.HashMap" resultMap="lstbandeja">
+SELECT DISTINCT REQUERIMIENTO_NO_PROG.COD_RQTO_NO_PROG,
+        REQUERIMIENTO_NO_PROG.FECH_REQU_SRM,
+        MP2.NOMB_CORT_PER AS SOLICITANTE,
+        DEPE2.UNIDAD_ORGANIZACIONAL || ' ' || DEPE2.DESC_DEPE_TDE AS UUOO_SOLICITANTE,
+        REQUERIMIENTO_NO_PROG.MOTI_SOLI_SRM,
+        REQUERIMIENTO_NO_PROG.CODI_RESP_SRM,
+        REQUERIMIENTO_NO_PROG.CODI_DEPE_TDE,
+        NVL((SELECT SUM (CANT_TOTA_DSR * PUNI_NACI_DSR) FROM REQUERIMIENTO_NO_PROG_BIENES    WHERE IND_ESTADO NOT IN ('08', '10')    AND CODI_RQNP_SRM = REQUERIMIENTO_NO_PROG.CODI_RQNP_SRM) ,0) AS TOTAL,
+        REQUERIMIENTO_NO_PROG.CODI_RQNP_SRM,
+        (SELECT COUNT (*) FROM REQUERIMIENTO_NO_PROG_BIENES WHERE CODI_RQNP_SRM = REQUERIMIENTO_NO_PROG.CODI_RQNP_SRM AND IND_ESTADO IN ('02') ) as  NUM_AUC,
+        (SELECT COUNT (*) FROM REQUERIMIENTO_NO_PROG_BIENES WHERE CODI_RQNP_SRM = REQUERIMIENTO_NO_PROG.CODI_RQNP_SRM AND IND_ESTADO NOT IN ('01','02','03','08', '10') ) as NUM_ITEM,
+        NVL(REQUERIMIENTO_NO_PROG.ANN_ATENCION, REQUERIMIENTO_NO_PROG.ANO_PROC_SRM) ANN_ATENCION,
+		DECODE (NVL(REQUERIMIENTO_NO_PROG.MES_ATENCION,REQUERIMIENTO_NO_PROG.MES_PROC_SRM ), '01', 'ENERO','02','FEBEREO','03','MARZO','04','ABRIL','05','MAYO','06','JUNIO','07','JULIO','08','AGOSTO','09','SEPTIEMBRE','10','OCTUBRE','11','NOVIEMBRE','12','DICIEMBRE' ) MES_ATENCION
+FROM REQUERIMIENTO_NO_PROG, TDEPENDENCIAS DEPE2, MAESTRO_PERSONAL MP1 ,MAESTRO_PERSONAL MP2, REQUERIMIENTO_NO_PROG_BIENES
+WHERE 	REQUERIMIENTO_NO_PROG.ANO_PROC_SRM = #anio_act#
+        AND MP1.CODI_EMPL_PER = #cod_per# AND REQUERIMIENTO_NO_PROG_BIENES.CODI_RQNP_SRM = REQUERIMIENTO_NO_PROG.CODI_RQNP_SRM
+    <!-- AND REQUERIMIENTO_NO_PROG_BIENES.COD_AUCT1=MP1.CODI_DEPE_TDE 
+    AND REQUERIMIENTO_NO_PROG_BIENES.COD_AUCT1=SER_RNP.FN_GET_UUOO_NO_SUPERVISION(MP1.CODI_DEPE_TDE,4)
+    -->
+    	<!-- AND REQUERIMIENTO_NO_PROG_BIENES.COD_AUCT1=#cod_dep#  -->
+    	
+    	and #as_cadena# like '%'||REQUERIMIENTO_NO_PROG_BIENES.COD_AUCT1||'%'
+    	
+        and ((SELECT COUNT (*) FROM REQUERIMIENTO_NO_PROG_BIENES WHERE CODI_RQNP_SRM = REQUERIMIENTO_NO_PROG.CODI_RQNP_SRM       AND IND_ESTADO IN ('02') ) >0 )
+        and ((SELECT COUNT (*) FROM REQUERIMIENTO_NO_PROG_BIENES WHERE CODI_RQNP_SRM = REQUERIMIENTO_NO_PROG.CODI_RQNP_SRM       AND IND_ESTADO IN ('02') ) = 
+        (SELECT COUNT (*) FROM REQUERIMIENTO_NO_PROG_BIENES WHERE CODI_RQNP_SRM = REQUERIMIENTO_NO_PROG.CODI_RQNP_SRM       AND IND_ESTADO NOT IN ('08', '10') ) )
+        AND REQUERIMIENTO_NO_PROG.CODI_DEPE_TDE = DEPE2.CODI_DEPE_TDE
+        AND REQUERIMIENTO_NO_PROG.CODI_RESP_SRM = MP2.CODI_EMPL_PER
+        order by REQUERIMIENTO_NO_PROG.COD_RQTO_NO_PROG
+  </select>
+  
+  <select id="selectBandejaAUCAll" parameterClass="java.util.HashMap" resultMap="lstbandeja">
+	SELECT DISTINCT REQUERIMIENTO_NO_PROG.COD_RQTO_NO_PROG,
+		REQUERIMIENTO_NO_PROG.FECH_REQU_SRM,
+		MP2.NOMB_CORT_PER AS SOLICITANTE,
+		DEPE2.UNIDAD_ORGANIZACIONAL || ' ' || DEPE2.DESC_DEPE_TDE AS UUOO_SOLICITANTE,
+		REQUERIMIENTO_NO_PROG.MOTI_SOLI_SRM,
+		REQUERIMIENTO_NO_PROG.CODI_RESP_SRM,
+		REQUERIMIENTO_NO_PROG.CODI_DEPE_TDE,
+		NVL((SELECT SUM (CANT_TOTA_DSR * PUNI_NACI_DSR) FROM REQUERIMIENTO_NO_PROG_BIENES    WHERE IND_ESTADO NOT IN ('08', '10')    AND CODI_RQNP_SRM = REQUERIMIENTO_NO_PROG.CODI_RQNP_SRM) ,0 )AS TOTAL,
+		REQUERIMIENTO_NO_PROG.CODI_RQNP_SRM,
+		(SELECT COUNT (*)     FROM REQUERIMIENTO_NO_PROG_BIENES   WHERE CODI_RQNP_SRM = REQUERIMIENTO_NO_PROG.CODI_RQNP_SRM       AND IND_ESTADO IN ('02') ) as  NUM_AUC,
+		(SELECT COUNT (*)     FROM REQUERIMIENTO_NO_PROG_BIENES   WHERE CODI_RQNP_SRM = REQUERIMIENTO_NO_PROG.CODI_RQNP_SRM       AND IND_ESTADO NOT IN ('01','02','03','08', '10') ) as NUM_ITEM,
+		NVL(REQUERIMIENTO_NO_PROG.ANN_ATENCION, REQUERIMIENTO_NO_PROG.ANO_PROC_SRM) ANN_ATENCION,
+		DECODE (NVL(REQUERIMIENTO_NO_PROG.MES_ATENCION,REQUERIMIENTO_NO_PROG.MES_PROC_SRM ), '01', 'ENERO','02','FEBEREO','03','MARZO','04','ABRIL','05','MAYO','06','JUNIO','07','JULIO','08','AGOSTO','09','SEPTIEMBRE','10','OCTUBRE','11','NOVIEMBRE','12','DICIEMBRE' ) MES_ATENCION 
+	FROM REQUERIMIENTO_NO_PROG, TDEPENDENCIAS DEPE2, MAESTRO_PERSONAL MP1 ,MAESTRO_PERSONAL MP2, REQUERIMIENTO_NO_PROG_BIENES
+	WHERE	REQUERIMIENTO_NO_PROG.ANO_PROC_SRM = #anio_act#
+		AND REQUERIMIENTO_NO_PROG_BIENES.IND_ESTADO LIKE #cod_estado#
+		AND MP1.CODI_EMPL_PER = #cod_per# AND REQUERIMIENTO_NO_PROG_BIENES.CODI_RQNP_SRM = REQUERIMIENTO_NO_PROG.CODI_RQNP_SRM
+		<!-- AND REQUERIMIENTO_NO_PROG_BIENES.COD_AUCT1=MP1.CODI_DEPE_TDE 
+		AND REQUERIMIENTO_NO_PROG_BIENES.COD_AUCT1=SER_RNP.FN_GET_UUOO_NO_SUPERVISION(MP1.CODI_DEPE_TDE,4) 
+		-->
+		<!-- AND REQUERIMIENTO_NO_PROG_BIENES.COD_AUCT1=#cod_dep# -->
+		
+		 and #as_cadena# like '%'||REQUERIMIENTO_NO_PROG_BIENES.COD_AUCT1||'%'
+		
+		AND REQUERIMIENTO_NO_PROG.CODI_DEPE_TDE = DEPE2.CODI_DEPE_TDE
+		AND REQUERIMIENTO_NO_PROG.CODI_RESP_SRM = MP2.CODI_EMPL_PER
+		AND (SELECT COUNT (*) FROM requerimiento_no_prog_bienes
+						 WHERE	codi_rqnp_srm = requerimiento_no_prog.codi_rqnp_srm
+								AND ind_estado NOT IN ('01', '03', '10')
+								AND requerimiento_no_prog_bienes.cod_usuarioauct1 IS NOT NULL) > 0
+	order by REQUERIMIENTO_NO_PROG.COD_RQTO_NO_PROG
+  </select>
+
+
+ <select id="selectAUCAnexo" parameterClass="java.util.HashMap" resultMap="lstanexo">
+
+SELECT requerimiento_no_prog.COD_RQTO_NO_PROG,
+       requerimiento_no_prog.CODI_RQNP_SRM,
+       TO_CHAR (requerimiento_no_prog.FECH_REQU_SRM, 'DD/MM/YYYY') AS FECH_REQU_SRM,
+       mp2.numero_registro_alterno || ' ' || mp2.nomb_cort_per  AS NOMBRE_CONTACTO,
+<!-- uuoo_contacto.unidad_organizacional || ' ' || uuoo_contacto.desc_depe_tde AS UUOO_DESCRIPCION, -->
+<!--         substr(trim(UUOO_Bene.cadena),1,length(trim(UUOO_Bene.cadena))-1) as UUOO_DESCRIPCION, -->
+        UUOO_Bene.BENEFICIARIA as UUOO_DESCRIPCION,
+       requerimiento_no_prog.NUM_ANEXO_CONTACTO,
+       requerimiento_no_prog.DES_PROCESO,
+       (SELECT unidad_organizacional || ' ' || desc_depe_tde
+          FROM TDEPENDENCIAS WHERE codi_depe_tde =  (SELECT DISTINCT NVL (cod_auct1,
+                                                                        requerimiento_no_prog.codi_depe_tde)
+                                                                        FROM requerimiento_no_prog_bienes
+                                                                        WHERE codi_rqnp_srm = requerimiento_no_prog.codi_rqnp_srm)) AS DES_AUC,
+       NVL ((SELECT DISTINCT TO_CHAR (fec_autorizaauct1, 'DD/MM/YYYY')
+             FROM requerimiento_no_prog_bienes
+            WHERE codi_rqnp_srm = #cod_req# AND fec_autorizaauct1 IS NOT NULL),
+          TO_CHAR (requerimiento_no_prog.fech_requ_srm, 'DD/MM/YYYY')) AS FECHA_AUCT,
+       (SELECT proyectos.codi_proy_pry || ' ' || proyectos.desc_proy_pry
+          FROM (  SELECT anno_ejec_eje, secu_func_sfu, SUM (mont_naci_dsr) AS total
+                    FROM requerimiento_no_prog_metas
+                   WHERE codi_rqnp_srm = #cod_req#
+                GROUP BY anno_ejec_eje, secu_func_sfu
+                ORDER BY 3 DESC) DATOS,
+               METAS,
+               PROYECTOS
+         WHERE     ROWNUM = 1
+               AND metas.anno_ejec_eje = datos.anno_ejec_eje
+               AND metas.secu_func_sfu = datos.secu_func_sfu
+               AND proyectos.codi_proy_pry = metas.codi_proy_pry)
+          AS UBG,
+       requerimiento_no_prog.COD_OBJETO,
+       NVL (requerimiento_no_prog.DES_META, '') DES_META,
+       requerimiento_no_prog.DES_FINALIDAD,
+       TOBJ.DESC_CORT_OBJE COD_FINALIDAD,
+       requerimiento_no_prog.MOTI_SOLI_SRM,
+       DECODE (requerimiento_no_prog.cod_necesidad,
+               '01', 'Permanente',
+               '02', 'Reiterada o estacional',
+               '03', 'Agotamiento inmediato')
+          AS DURACION_NECESIDAD,
+       DECODE (requerimiento_no_prog.cod_tipo_necesidad,
+               '01', 'Recurrente',
+               '02', 'Nueva',
+               '03', 'Incremental')
+          AS TIPO_NECESIDAD,
+       requerimiento_no_prog.DES_TIPO_NECESIDAD,
+       requerimiento_no_prog_bienes.CODI_BSER_CAT,
+       catalogo_bien_servicio.DESC_BSER_CAT,
+       (requerimiento_no_prog_bienes.cant_tota_dsr
+        * requerimiento_no_prog_bienes.puni_naci_dsr)
+          AS IMPORTE,
+       requerimiento_no_prog_bienes.DES_TECNICA,
+       '' AS MIEMBROS_COMITE,
+       t1.unidad_organizacional || ' ' || t1.desc_depe_tde AS DES_C1,
+       t2.unidad_organizacional || ' ' || t2.desc_depe_tde AS DES_C2,
+       t3.unidad_organizacional || ' ' || t3.desc_depe_tde AS DES_C3,
+       REQUERIMIENTO_NO_PROG.CODI_RESP_SRM,
+       requerimiento_no_prog.CODI_DEPE_TDE,
+       requerimiento_no_prog.COD_CONTACTO,
+       requerimiento_no_prog_bienes.cant_tota_dsr AS CANTIDAD_DETALLE,
+       TRIM (unidades_de_medidas.unid_medi_und) AS UNIDAD_MEDIDA,
+       NVL (REQUERIMIENTO_NO_PROG.ANN_ATENCION,
+            REQUERIMIENTO_NO_PROG.ANO_PROC_SRM)
+          ANN_ATENCION,
+       DECODE (
+          NVL (REQUERIMIENTO_NO_PROG.MES_ATENCION,
+               REQUERIMIENTO_NO_PROG.MES_PROC_SRM),
+          '01', 'ENERO',
+          '02', 'FEBEREO',
+          '03', 'MARZO',
+          '04', 'ABRIL',
+          '05', 'MAYO',
+          '06', 'JUNIO',
+          '07', 'JULIO',
+          '08', 'AGOSTO',
+          '09', 'SEPTIEMBRE',
+          '10', 'OCTUBRE',
+          '11', 'NOVIEMBRE',
+          '12', 'DICIEMBRE')
+          MES_ATENCION,
+       REQUERIMIENTO_NO_PROG.TIPO_VINCULO,
+       REQUERIMIENTO_NO_PROG.VINCULO_NECESIDAD,
+       REQUERIMIENTO_NO_PROG.IND_VINCULO,
+       REQUERIMIENTO_NO_PROG.IND_PRESTAMO,
+       REQUERIMIENTO_NO_PROG.IND_COMITE,
+       REQUERIMIENTO_NO_PROG.IND_TEC_TIT,
+       REQUERIMIENTO_NO_PROG.IND_TEC_SUP,
+       REQUERIMIENTO_NO_PROG.COD_AU_TIT,
+       REQUERIMIENTO_NO_PROG.COD_AU_SUP,
+       REQUERIMIENTO_NO_PROG.COD_TEC_TIT,
+       REQUERIMIENTO_NO_PROG.COD_TEC_SUP,
+       REQUERIMIENTO_NO_PROG.NOM_TEC_TIT,
+       REQUERIMIENTO_NO_PROG.NOM_TEC_SUP
+  FROM requerimiento_no_prog,
+       requerimiento_no_prog_bienes,
+       maestro_personal mp2,
+       TDEPENDENCIAS t1,
+       TDEPENDENCIAS t2,
+       TDEPENDENCIAS t3,
+       catalogo_bien_servicio,
+       unidades_de_medidas,
+       TDEPENDENCIAS uuoo_contacto,
+       (  SELECT DESC_CORT_OBJE, TIPO_OBJE_OBJ, CODI_OBJE_OBJ
+            FROM OBJETIVOS
+           WHERE TIPO_OBJE_OBJ = 'Institucional'
+        ORDER BY DESC_CORT_OBJE) TOBJ,
+        
+       (	SELECT UUOO_BEN.codi_rqnp_srm, (CASE TOTAL_BEN.TOTAL WHEN 1 THEN  UUOO_BEN.CADENA ELSE UUOO_BEN.CADENA ||', entre otras.' END) as BENEFICIARIA
+			FROM 
+			(
+			select count(*) total, codi_rqnp_srm
+			    from (
+			       select distinct requerimiento_no_prog_metas.codi_rqnp_srm, tdependencias.unidad_organizacional, tdependencias.desc_depe_tde 
+			       from requerimiento_no_prog_metas, 
+			       requerimiento_no_prog_bienes,
+			       metas,
+			       tdependencias 
+			       where requerimiento_no_prog_metas.codi_rqnp_srm = #cod_req#
+			       and requerimiento_no_prog_bienes.codi_rqnp_srm = requerimiento_no_prog_metas.codi_rqnp_srm
+			       AND requerimiento_no_prog_bienes.ind_estado NOT IN  ('01', '03', '08', '10')
+			       AND NVL (requerimiento_no_prog_bienes.ind_autorizaauct1, 'A') = 'A'
+			       and requerimiento_no_prog_metas.anno_ejec_eje = metas.anno_ejec_eje
+			       and requerimiento_no_prog_metas.secu_func_sfu = metas.secu_func_sfu
+			       and tdependencias.codi_depe_tde = metas.codi_depe_tde
+			       )
+			       group by codi_rqnp_srm
+			       ) TOTAL_BEN,
+			       (
+			        select distinct requerimiento_no_prog_metas.codi_rqnp_srm, tdependencias.unidad_organizacional||' '|| tdependencias.desc_depe_tde AS CADENA
+			       from requerimiento_no_prog_metas, 
+			       requerimiento_no_prog_bienes,
+			       metas,
+			       tdependencias 
+			       where requerimiento_no_prog_metas.codi_rqnp_srm = #cod_req#
+			       and requerimiento_no_prog_bienes.codi_rqnp_srm = requerimiento_no_prog_metas.codi_rqnp_srm
+			       AND requerimiento_no_prog_bienes.ind_estado NOT IN  ('01', '03', '08', '10')
+			       AND NVL (requerimiento_no_prog_bienes.ind_autorizaauct1, 'A') = 'A'
+			       and requerimiento_no_prog_metas.anno_ejec_eje = metas.anno_ejec_eje
+			       and requerimiento_no_prog_metas.secu_func_sfu = metas.secu_func_sfu
+			       and tdependencias.codi_depe_tde = metas.codi_depe_tde
+			       AND ROWNUM=1
+			       ) UUOO_BEN
+			   WHERE TOTAL_BEN.codi_rqnp_srm=UUOO_BEN.codi_rqnp_srm
+       ) UUOO_Bene
+WHERE     requerimiento_no_prog.codi_rqnp_srm = #cod_req#
+       AND requerimiento_no_prog.COD_FINALIDAD = TOBJ.CODI_OBJE_OBJ
+       AND requerimiento_no_prog.cod_contacto = mp2.codi_empl_per(+)
+       AND mp2.codi_depe_tde = uuoo_contacto.codi_depe_tde(+)
+       AND requerimiento_no_prog.cod_conform1 = t1.codi_depe_tde(+)
+       AND requerimiento_no_prog.cod_conform2 = t2.codi_depe_tde(+)
+       AND requerimiento_no_prog.cod_conform3 = t3.codi_depe_tde(+)
+       AND requerimiento_no_prog_bienes.codi_rqnp_srm =
+              requerimiento_no_prog.codi_rqnp_srm
+       AND requerimiento_no_prog_bienes.ind_estado NOT IN
+              ('01', '03', '08', '10')
+       AND NVL (requerimiento_no_prog_bienes.ind_autorizaauct1, 'A') = 'A'
+       AND requerimiento_no_prog_bienes.codi_bser_cat =
+              catalogo_bien_servicio.codi_bser_cat
+       AND unidades_de_medidas.codi_medi_und =
+              requerimiento_no_prog_bienes.unid_medi_dsr
+      and UUOO_Bene.codi_rqnp_srm = requerimiento_no_prog.codi_rqnp_srm
+
+  </select>
+
+
+<select id="selectAUCAnexoMetas" parameterClass="java.util.HashMap" resultMap="lstanexometas">
+SELECT        
+             metas.codi_proy_pry
+         || '.'
+         || metas.codi_prod_prd
+         || '.'
+         || metas.codi_meta_met
+         || ' '
+         || TRIM (proyectos.desc_proy_pry)
+         || '/'
+         || TRIM (productos.desc_prod_prd)
+         || '/'
+         || TRIM (metas_productos.desc_larg_met)
+             AS UBG_DET,
+        SUM( requerimiento_no_prog_metas.mont_naci_dsr) AS IMP_UBG,
+       SUM(  requerimiento_no_prog_metas.cant_tota_dsr )AS CANTIDAD_DETALLE
+  FROM requerimiento_no_prog,
+         requerimiento_no_prog_bienes,
+         requerimiento_no_prog_metas,
+         catalogo_bien_servicio,
+         METAS,
+         PROYECTOS,
+         PRODUCTOS,
+         metas_productos      
+ WHERE      requerimiento_no_prog.codi_rqnp_srm =  #cod_req#
+           AND requerimiento_no_prog_bienes.codi_rqnp_srm = requerimiento_no_prog.codi_rqnp_srm
+         AND requerimiento_no_prog_metas.codi_rqnp_srm = requerimiento_no_prog_bienes.codi_rqnp_srm
+         AND requerimiento_no_prog_metas.codi_bser_cat = requerimiento_no_prog_bienes.codi_bser_cat
+         AND metas.anno_ejec_eje = requerimiento_no_prog_metas.anno_ejec_eje
+         AND metas.secu_func_sfu = requerimiento_no_prog_metas.secu_func_sfu
+         AND requerimiento_no_prog_bienes.ind_estado NOT IN ('01', '03', '08', '10')
+         AND NVL (requerimiento_no_prog_bienes.ind_autorizaauct1, 'A') = 'A'
+         AND requerimiento_no_prog_bienes.codi_bser_cat = catalogo_bien_servicio.codi_bser_cat
+         AND proyectos.codi_proy_pry = metas.codi_proy_pry
+         AND productos.codi_proy_pry = metas.codi_proy_pry
+         AND productos.codi_prod_prd = metas.codi_prod_prd
+         AND metas_productos.codi_proy_pry = metas.codi_proy_pry
+         AND metas_productos.codi_prod_prd = metas.codi_prod_prd
+         AND metas_productos.codi_meta_met = metas.codi_meta_met
+         group by  metas.codi_proy_pry
+         || '.'
+         || metas.codi_prod_prd
+         || '.'
+         || metas.codi_meta_met
+         || ' '
+         || TRIM (proyectos.desc_proy_pry)
+         || '/'
+         || TRIM (productos.desc_prod_prd)
+         || '/'
+         || TRIM (metas_productos.desc_larg_met)
+      
+  </select>
+
+
+<select id="rqnp_obtener_cadena_encargos_auc" parameterClass="java.util.HashMap"
+		resultClass="java.lang.String">
+	SELECT LISTAGG (AUC.AUC || '') WITHIN GROUP (ORDER BY AUC.AUC) AS CADENA
+	FROM (
+		SELECT CODI_DEPE_TDE FROM MAESTRO_PERSONAL WHERE CODI_EMPL_PER = #cod_empl#
+		UNION 
+		SELECT UBIC_FISI_TDE FROM MAESTRO_PERSONAL WHERE CODI_EMPL_PER = #cod_empl#
+		UNION 
+		SELECT DISTINCT ENCARGOS_PERSONA.COD_DEPENDENCIA FROM ENCARGOS_PERSONA, MAESTRO_PERSONAL
+		WHERE ENCARGOS_PERSONA.CODI_ENCA_ENC = #cod_empl#
+			AND ENCARGOS_PERSONA.FLAG_ENCA_ENC = 'S'
+			AND (TO_CHAR (SYSDATE, 'YYYYMMDD') BETWEEN TO_CHAR (ENCARGOS_PERSONA.FECH_INIC_ENC,'YYYYMMDD') AND TO_CHAR (ENCARGOS_PERSONA.FECH_FINA_ENC,'YYYYMMDD'))
+			AND ENCARGOS_PERSONA.CODI_EMPL_PER = MAESTRO_PERSONAL.CODI_EMPL_PER) TABLA,
+		(SELECT DISTINCT AUC FROM (SELECT DISTINCT COD_AUC_TECNICA AS AUC FROM CATALOGO_BIEN_SERVICIO
+		WHERE SITU_BSER_CAT = 'A' AND COD_AUC_TECNICA IS NOT NULL
+		UNION
+		SELECT DISTINCT COD_OEC_DEFECTO AS AUC FROM TDEPENDENCIAS
+		WHERE ESTADO_ID = '1' AND COD_OEC_DEFECTO IS NOT NULL)
+		 UNION
+         (SELECT DISTINCT RNPB.COD_AUCT1 FROM REQUERIMIENTO_NO_PROG_BIENES RNPB, TDEPENDENCIAS TD
+        WHERE RNPB.COD_AUCT1 IS NOT NULL AND RNPB.COD_AUCT1=TD.CODI_DEPE_TDE AND TD.ESTADO_ID='1')
+        ) AUC
+		WHERE TABLA.CODI_DEPE_TDE = AUC.AUC
+	
+	</select>
+	
+	
+	<!-- DPORRASC 
+	<resultMap id="BaseResultMapJoinMpTipDoc" class="pe.gob.sunat.administracion2.siga.registro.model.domain.DependenciaBean" >
+	-->
+	
+	<resultMap id="BaseResultMapJoinMpTipDoc" class="pe.gob.sunat.recurso2.administracion.siga.registro.model.bean.DependenciaBean" >
+
+    <result column="UNIDAD_ORGANIZACIONAL" property="uuoo" jdbcType="CHAR" />
+    <result column="DESC_DEPE_TDE" property="nom_largo" jdbcType="CHAR" />
+    
+  </resultMap>
+
+		<select id="obtenerBeneficiariasForExcel" resultMap="BaseResultMapJoinMpTipDoc" parameterClass="java.util.HashMap" >
+ 			select 
+				tdependencias.unidad_organizacional,
+				tdependencias.desc_depe_tde,
+				dep_meta.secu_func_sfu 
+				<!-- 0 as cantidad -->
+				from 
+				    tdependencias,
+				    (select distinct codi_depe_tde, secu_func_sfu
+				    from metas
+				    where anno_ejec_eje = to_char(sysdate,'yyyy')
+				    and IND_META_UUOO='1'
+				    and NVL(METAS.CODI_INST_INS,'1') = '1') dep_meta
+				where
+				tdependencias.estado_id = '1'
+				and ((tdependencias.cod_plaza = #cod_plaza# and #cod_ambito# not in ('01')) or (#cod_ambito# = '01'))
+				and tdependencias.codi_depe_tde =  dep_meta.codi_depe_tde
+				order by 1  
+	  </select>
+	  
+</sqlMap>

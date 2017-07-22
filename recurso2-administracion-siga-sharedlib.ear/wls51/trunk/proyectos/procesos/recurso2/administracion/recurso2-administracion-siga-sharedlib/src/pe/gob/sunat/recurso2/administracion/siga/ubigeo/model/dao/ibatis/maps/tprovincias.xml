@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="tprovincias">
+
+	<typeAlias alias="tProvinciasBean"
+		type="pe.gob.sunat.recurso2.administracion.siga.ubigeo.model.bean.TProvinciasBean" />
+
+	<resultMap id="provinciaList" class="tProvinciasBean">
+		<result property="codiProvTpr" column="CODI_PROV_TPR" />
+		<result property="nombProvTpr" column="NOMB_PROV_TPR" />
+		<result property="codiDepaDpt" column="CODI_DEPA_DPT" />
+	</resultMap>
+
+	<select id="obtenerProvinciasByCodigoDepartamento" parameterClass="java.util.HashMap"
+		resultMap="provinciaList">
+		SELECT
+		PROVINCIA.CODI_PROV_TPR,
+		PROVINCIA.NOMB_PROV_TPR,
+		PROVINCIA.CODI_DEPA_DPT
+		FROM TPROVINCIAS PROVINCIA
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="codiDepaDpt"> CODI_DEPA_DPT = #codiDepaDpt# </isNotNull>
+		</dynamic>
+		ORDER BY PROVINCIA.NOMB_PROV_TPR
+	</select>
+
+</sqlMap>

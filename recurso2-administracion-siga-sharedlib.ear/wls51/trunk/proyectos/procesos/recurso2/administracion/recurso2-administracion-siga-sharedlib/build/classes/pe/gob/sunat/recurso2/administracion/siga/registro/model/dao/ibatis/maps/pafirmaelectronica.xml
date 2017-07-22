@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="pafirmaelectronica">
+
+	<parameterMap id="spFirmaParm"		class="map">
+		<parameter property="codDepeSoli" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+		<parameter property="codEmplSoli" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+		
+		<parameter property="codProceso" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+		
+		<parameter property="codResultado" jdbcType="CHAR" javaType="java.lang.String"
+			mode="OUT" />
+		
+		<parameter property="codUUOO" jdbcType="CHAR" javaType="java.lang.String"
+			mode="OUT" />
+
+	</parameterMap>
+
+	<parameterMap id="spFirmaRevaluaParm"		class="map">
+	
+		<parameter property="codEmplSoli" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+			
+		<parameter property="codResultado" jdbcType="CHAR" javaType="java.lang.String"
+			mode="OUT" />
+		
+		<parameter property="codMensaje" jdbcType="CHAR" javaType="java.lang.String"
+			mode="OUT" />
+
+	</parameterMap>
+	
+	 <procedure id="spUUOOAprueba" parameterMap="spFirmaParm" >
+		{call SIGA01.PAFIRMAELECTRONICA.SP_UUOOAPRUEBA(?,?,?,?,?)}
+	</procedure>
+
+
+	 <procedure id="spUUOOAutoriza" parameterMap="spFirmaParm" >
+		{call SIGA01.PAFIRMAELECTRONICA.SP_UUOOAUTORIZA(?,?,?,?,?)}
+	</procedure>
+	
+	
+	<procedure id="spRevaluaAprueba" parameterMap="spFirmaRevaluaParm" >
+		{call SIGA01.PAFIRMAELECTRONICA.SP_REVALUADJAPRO(?,?,?)}
+	</procedure>
+	
+	<procedure id="spRevaluaAutoriza" parameterMap="spFirmaRevaluaParm" >
+		{call SIGA01.PAFIRMAELECTRONICA.SP_REVALUADJAUTO(?,?,?)}
+	</procedure>
+	
+	
+	
+</sqlMap>

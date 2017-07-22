@@ -1,0 +1,40 @@
+@CHARSET "ISO-8859-1";
+
+.panel-body{margin-bottom: 1px;padding-bottom: 0px;	padding-top: 6px;}
+.alineartext{line-height: 2;}
+.btn-exp-consul{margin: 4px 0 4px 0;}
+.form-horizontal{font-size: 11px;}
+.btn-impar-margin{margin-left: 1.6%; margin-right: 1.6%; margin-bottom: 0.2%;}
+.btn-par-margin{margin-left: 4%;  margin-right: 4%; margin-bottom: 0.2%;}
+.btn-impar-three-margin{margin-left: 8%;  margin-right: 8%; margin-bottom: 0.2%;}
+.ui-state-default .ui-icon {
+	/*background-image: url("../../image/common/ui-icons_4197c0_256x240.png") ;*/
+	background-image: url("../../../a/js/libs/jquery-ui/1.11.2/css/images/ui-icons_228ef1_256x240.png") ;
+}
+
+select.ui-pg-selbox, input.ui-pg-input{outline:0px;}
+.margen-input{ margin-bottom:2px;}
+.divMargin-panel{margin-bottom:4px;}
+
+/* INICIO: CSS - Tables */
+.ui-jqgrid .ui-pg-input {height: 15px;font-size:.8em;margin: 0;}
+.ui-jqgrid .ui-jqgrid-htable th {height: 33px;}
+.ui-jqgrid .ui-jqgrid-pager {height: 50px;font-size: 12px;}
+.ui-pg-table {height: 100%;}
+.ui-pager-control, .ui-pager-control tr {height: 100%;}
+.ui-jqgrid-sortable {color: #777;font-size: 12px;font-weight: bold;}
+.ui-widget-content .ui-state-default {background: #f6f6f6;}
+.ui-widget-content .ui-state-hover {background: #bce8f1;}
+.ui-state-default.ui-th-column.ui-th-ltr.ui-state-hover {border-right-color: #ccc;}
+.ui-widget-content.jqgrow.ui-row-ltr.ui-state-hover {border-top-color: #ccc;border-right-color: #ccc;border-bottom-color: #ccc;border-left-color: #ccc;}
+.ui-widget-content.jqgrow.ui-row-ltr.ui-state-highlight {background-color: #ffe45c;}
+.ui-widget-content.jqgrow.ui-row-ltr.ui-state-highlight td {background-color: #ffe45c;border-color: #ccc;}
+.ui-jqgrid-title {font-size: 12px;color: #fff;}
+.ui-widget-header {height: 33px;background-color: #337ab7;background-image: none;border-bottom-color: #ccc;}
+.ui-jqgrid .ui-jqgrid-titlebar {padding-top: 7px;}
+.jqGridGeneral th.ui-th-column div{	white-space: normal !important;	height: auto !important;padding: 2px;}
+.jqGridGeneralPagerClass table tr td:first-child {color: #990000;font-weight: bold;}
+a.jqGridGeneralLinkClass, a.jqGridGeneralLinkClass:hover {text-decoration: underline;cursor: pointer;color:#A2122F;}
+a.jqGridGeneralTooltipClass {color: inherit;}
+
+/* FIN: CSS - Tables */

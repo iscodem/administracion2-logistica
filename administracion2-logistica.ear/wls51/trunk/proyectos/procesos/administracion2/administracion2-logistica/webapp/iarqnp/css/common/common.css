@@ -1,0 +1,249 @@
+/*
+* CSS comunes para la APP.
+*/
+
+body {font-family: 'Trebuchet MS', Tahoma, Verdana, Arial, sans-serif;font-size: 12px;}
+.border-none {border: none;}
+.border {border: 1px solid #ccc !important;}
+.sinBorderMargenPadding {border:0; margin:0;padding:0;}
+.sinMargenPadding {margin:0;padding:0;}
+
+/* CLASES DE CONTENEDOR*/
+.container {margin-top: 17px;}
+.sigaContainer {width: 100%;}
+.sigaAnulacionContainer {width: 52%;}
+.sigaCrearNuevaRutaContainer {width: 700px;}
+.sigaModalContainer, .sigaModalContainerAuxiliar {width: 80%;}
+.sigaModalContainerMedium {width: 70%;}
+.sigaModalContainerSmall {width: 60%;}
+.sigaModalContainerSmaller {width: 50%;}
+.sigaModalContainerSmallest {width: 40%;}
+.sigaModalContainerMoreSmallest {width: 35%;}
+.sigaModalConsultarDetalleContainer, .sigaModalConsultarDetalleContainerAuxiliar {width: 90%;}
+
+/* CLASES DE PANEL DE MENSAJERIA*/
+.sigaMensajeConfirmacionContainerBigger {width: 35%; word-break: keep-all;}
+.sigaMensajeConfirmacionContainerBiggest {width: 40%;}
+.sigaMensajeConfirmacionContainer {width: 30%;}
+.sigaMensajeConfirmacionContainer .panel-heading, .divErrorSigaMensajeConfirmacionContainer {font-weight: bold;text-align: justify;}
+.divIeComponentSigaClass, .divHiddenClase {display: none;}
+.divError {color: #990000;display: none;text-align: justify;}
+.errorContainerClass {background: transparent;bottom: 0;width: 100%;height: 50px;left: 0;margin: auto;position: absolute;top: 0;right: 0;}
+.errorContainerClass .container.sigaErrorContainer {margin-top: 0px;}
+
+/* ALINEACIONES DE TEXTO*/
+.verticalAlignmentHelper {display: table;height: 100%;}
+.verticalAlignCenter {display: table-cell;vertical-align: middle;}
+.txtTextJustifyClase {text-align: justify;}
+.txtTextLeftClase {text-align: left;}
+.txtTextCenterClase {text-align: center;}
+.txtTextRightClase {text-align: right;}
+
+/* CSS - Loading */
+.divLoadingClase {display: none;}
+.divLoadingCompleteRowClase {display: none;	margin-top: -18px;}
+.divLoadingClase img, .divLoadingCompleteRowClase img {vertical-align: middle;}
+
+/* CSS - Panel */
+/*.panel-heading {height: 33px;}*/
+.panel.panel-info.panelPagerButtonClass {border-color: #fff;margin-bottom: 0px;}
+.panel.panel-info.panelPagerButtonClass .panel-body {padding-top: 0px;padding-bottom: 0px;}
+
+/* CSS - Panel Collapse*/
+.panelCollapseClass .panel-heading .imagePanelCollapseClass {float: left;}
+.panelCollapseClass .panel-heading .tituloPanelCollapseClass {float: left;padding-left: 2px;padding-top: 2px;}
+.panelCollapseClass .panel-heading .imagePanelCollapseClass img {width: 15px;height: 15px;}
+.panelCollapseClass .collapseComponentClass {display: block;}
+
+/* CSS - Fieldset */
+.container > fieldset {
+	border: 1px solid #bce8f1 !important;
+	border-radius: 4px;
+	padding: 0 5px 5px 5px !important;
+	margin: 4px 0 8px 0 !important;
+	-webkit-box-shadow:  0px 0px 0px 0px #bce8f1;
+	box-shadow:  0px 0px 0px 0px #bce8f1;
+}
+
+.container > legend {
+	font-size: 12px !important;
+	font-weight: bold !important;
+	text-align: left !important;
+	color: #31708f;
+	width: inherit; /* Or auto */
+	padding: 0 10px; /* To give a bit of padding on the left and right */
+	border-bottom: none;
+	margin-bottom: 5px;
+}
+
+
+/* DATATABLES*/
+.tableSiga{ min-height: 200px;}
+.tableSiga thead { color: #fff; font-size: 12px;font-weight: bold; text-align:center; background-color: #337ab7}
+
+/*.tableColaborador th , .tableColaborador td {height: 33px;}
+.tableColaborador thead tr th {height: 33px;}
+.tableColaborador tr th {height: 33px;}
+*/
+/*.tableColaborador tr:first-child { color: #fff; background-color: #f00;}*/
+
+
+/* CSS - Tables */
+.ui-jqgrid .ui-pg-input {height: 18px;font-size:.8em;margin: 0;}
+.ui-jqgrid .ui-jqgrid-htable th {height: 33px;}
+.ui-jqgrid .ui-jqgrid-pager {height: 28px;font-size: 12px;}
+.ui-pg-table {height: 100%;}
+.ui-pager-control, .ui-pager-control tr {height: 100%;}
+.ui-jqgrid-sortable {color: #777;font-size: 12px;font-weight: bold;}
+.ui-widget-content .ui-state-default {background: #f6f6f6;}
+.ui-widget-content .ui-state-hover {background: #bce8f1;}
+.ui-state-default.ui-th-column.ui-th-ltr.ui-state-hover {border-right-color: #ccc;}
+.ui-widget-content.jqgrow.ui-row-ltr.ui-state-hover {border-top-color: #ccc;border-right-color: #ccc;border-bottom-color: #ccc;border-left-color: #ccc;}
+.ui-widget-content.jqgrow.ui-row-ltr.ui-state-highlight {background-color: #ffe45c;}
+.ui-widget-content.jqgrow.ui-row-ltr.ui-state-highlight td {background-color: #ffe45c;border-color: #ccc;}
+.ui-jqgrid-title {font-size: 12px;color: #fff;}
+.ui-widget-header {
+	height: 33px;
+	background-color: #337ab7;
+	background-image: none;
+	border-bottom-color: #ccc;
+}
+
+.ui-jqgrid .ui-jqgrid-titlebar {padding-top: 7px;}
+.jqGridSiga th.ui-th-column div{white-space: normal !important;height: auto !important;padding: 2px;}
+.jqGridSigaPagerClass table tr td:first-child {font-weight: bold;padding-left: 4px;color: #990000;}
+.jqGridSigaWithVerticalScroll .ui-jqgrid-bdiv {overflow-y: scroll !important;width: 99.78% !important;}
+
+/*CSS - Button - Hiperlink*/
+
+.buttonHiperlinkClass {
+	background: none!important;
+	border: none; 
+	padding: 0!important;
+	text-decoration: underline;
+	cursor: pointer;
+	color: #069;
+}
+
+/*CSS - Color Font*/
+.colorFontRedTableClass {color: #990000;}
+.colorFontOrangeTableClass {color: #ff8121;}
+.colorFontPinkTableClass {color: #e8207a;}
+.colorFontDarkGreenTableClass {color: #117811;}
+.colorFontDarkGreen2TableClass {color: #008045;}
+.colorFontGreenTableClass {color: #61c419;}
+.colorFontGreen2TableClass {color: #00AA00;}
+.colorFontTurquesaTableClass {color: #4096ee;}
+.colorFontAzulMarinoTableClass {color: #1C4B7A;}
+.colorFontCelesteTableClass {color: #1C94C4;}
+.sigaContainer tr.jqgrow.boldFontTableClass td {font-weight: bold;}
+.sigaContainer tr.jqgrow.bolderFontTableClass td {font-weight: bolder;}
+a.jqGridSigaLinkClass {text-decoration: underline;cursor: pointer;color: inherit;}
+a.jqGridSigaLinkClass:hover  {text-decoration: underline;cursor: pointer;color: #337ab7;}
+a.jqGridSigaTooltipClass {color: inherit;white-space: pre-wrap;display: inline-block;width: 100%;}
+.jqGridSigaPagerClass.jqGridSigaWithoutPagerClass .ui-pg-table {display: none;}
+.jqGridSiga span.jqGridSigaSemaphoreRedCell {
+	display: block;
+	background-image: none;
+	margin-right: -2px;
+	margin-left: -2px;
+	height: 20px;
+	padding: 4px;
+	text-align: center;
+	background-color: #990000;
+	color: white;
+}
+
+.jqGridSiga span.jqGridSigaSemaphoreGreenCell {
+	display: block;
+	background-image: none;
+	margin-right: -2px;
+	margin-left: -2px;
+	height: 20px;
+	padding: 4px;
+	text-align: center;
+	background-color: #008045;
+	color: white;
+}
+
+/* CSS - Tables - Boton de despliegue*/
+.ui-jqgrid-titlebar-close.ui-corner-all.HeaderButton {display: none;}
+
+/* CSS - Date Time Picker */
+.datepicker {font-size: 12px;}
+.timepicker-picker .timepicker-hour, .timepicker-picker .separator, .timepicker-picker .timepicker-minute, .timepicker-picker .btn {font-size: 12px;}
+.dateTimeHourSigaClass .bootstrap-datetimepicker-widget table td, .dateTimeHourSigaClass .bootstrap-datetimepicker-widget table td span {
+    height: 30px;
+    line-height: 30px;
+}
+
+.dateTimeHourSigaClass .bootstrap-datetimepicker-widget table td {padding: 0px;}
+
+/* CSS - Boton */
+.btn-impar-three-margin {margin-left: 8%;margin-right: 8%;margin-bottom: 0.2%;}
+.btn-impar-one-margin {margin-left: 40%;margin-right: 40%;margin-bottom: 0.2%;}
+.panel-body-anulacion {margin-bottom: 1px;padding-bottom: 0px;padding-top: 6px;}
+	
+/**Inicio pagina de alerta**/
+.sigaContainerError {margin: 0 auto;margin-top: 14%;color: #a94442;text-align: center;}
+.sigaContainerError img {float: left;}
+.spaMensajeError {line-height: 3;}
+
+/**Fin pagina de alerta**/
+.posicionRight {float: right;}
+
+/*Label*/
+.colorFontRedClass {color: #990000;}
+.colorFontOrangeClass {color: #ff8121;}
+.pAdvertencia {	color: #990000; font-size: 11px;display: inline-block;padding-left: 5px;}
+.msgError {	color: #990000; font-size: 11px;display: inline-block;padding-left: 5px;}
+
+/*DatePicker - Modal*/
+.datepicker.dropdown-menu.centerRight {z-index: 80000;}
+
+/* CSS - Tooltip */
+.tooltip {font-family:'Trebuchet MS',Tahoma, Verdana,Arial, sans-serif;font-size: 10px !important;padding:4px 6px !important;text-transform:uppercase;max-width:800px !important;}
+.tooltip-inner {max-width: 150px;white-space: pre-wrap;}
+
+/* Botones */
+.boton100 {width:100px;}
+.boton200 {width:200px;}
+/*CSS - General*/
+.paddingTop10 {padding-top: 10px;}
+.paddingTop14 {padding-top: 14px;}
+.paddingTop15 {padding-top: 15px;}
+.paddingTop20 {padding-top: 20px;}
+.paddingTop25 {padding-top: 25px;}
+.marginTop5 {margin-top: 5px;}
+.marginBottom5 {margin-bottom: 5px;}
+.marginBottom10 {margin-bottom: 10px;}
+.paddingBottomTop10 {padding-top: 10px;padding-bottom: 10px;}
+.paddingBottomTop5 {padding-top: 5px;padding-bottom: 5px;}
+.upperCaseTextClase {text-transform: uppercase;}
+.lineaSigaClase {border: none;border-top: 1px solid #bce8f1;color: #fff;background-color: #fff;height: 1px;width: 100%;}
+
+/*Media Queries*/
+@media (min-width: 768px) {
+	.noLeftPadding { padding-left: 0px; }
+	.noRightPadding { padding-right: 0px; }
+}
+
+@media (max-width: 991px) {
+	.paddingTop10XSmallTablet {padding-top: 10px;}
+	.radio-inline.radioButtonSigaClass {margin-left: 10px;}
+}
+
+@media (min-width: 992px) {
+	.paddingLeftRightZeroClase {padding-left: 0px;padding-right: 0px;}
+	.paddingLeftRightZeroWithSpaceClase {padding-left: 0px;padding-right: 1px;}
+	.paddingLeftZeroClase {padding-left: 0px;}
+	.paddingRightZeroClase {padding-right: 0px;}
+}
+
+.no-gutter > [class*='col-'] {
+	padding-right:0;
+	padding-left:0;
+}
+
+.form-group label {float: left;text-align: left;}
+.form-group select {display: inline-block;width: auto;vertical-align: middle;}

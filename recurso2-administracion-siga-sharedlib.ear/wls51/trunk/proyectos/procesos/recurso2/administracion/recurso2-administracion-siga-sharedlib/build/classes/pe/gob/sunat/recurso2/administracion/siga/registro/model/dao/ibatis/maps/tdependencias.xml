@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="tdependencias">
+
+	<typeAlias alias="dependencias"
+		type="pe.gob.sunat.recurso2.administracion.siga.registro.model.bean.DependenciaBean" />
+	
+	<resultMap id="resultado" class="dependencias">
+		<result property="cod_dep" 			column="CODI_DEPE_TDE" />
+		<result property="cod_sede" 		column="CODI_SEDE_SED" />
+		<result property="nom_largo" 		column="DESC_DEPE_TDE" />
+		<result property="nom_corto" 		column="ABREVIATURA" />
+		<result property="uuoo" 			column="UNIDAD_ORGANIZACIONAL" />
+		<result property="cod_plaza" 		column="COD_PLAZA" />
+		<result property="codOecDefecto" 	column="COD_OEC_DEFECTO" />
+		<result property="codUuooAprueba" 	column="COD_UUOO_APRUEBA" />
+		<result property="codEmpleado" 		column="CODI_EMPL_PER" />
+		<result property="flagInfoInf" 		column="FLAG_INFO_INF" />
+	</resultMap>
+	
+	<resultMap id="resultadoViatico" class="dependencias">
+		<result property="cod_dep" 			column="CODI_DEPE_TDE" />
+		<result property="cod_sede" 		column="CODI_SEDE_SED" />
+		<result property="nom_largo" 		column="DESC_DEPE_TDE" />
+		<result property="nom_corto" 		column="ABREVIATURA" />
+		<result property="uuoo" 			column="UNIDAD_ORGANIZACIONAL" />
+		<result property="intendencia"		column="INTENDENCIA"/>
+		<!-- AGREGADO -->
+		<result property="cod_plaza" 			column="COD_PLAZA" />
+
+	</resultMap>
+	
+	<!-- PAS201780000300007 -->
+	<select id="selectAll" parameterClass="map" resultMap="resultado">
+		SELECT CODI_DEPE_TDE, 
+		CODI_SEDE_SED,
+		DESC_DEPE_TDE,
+		ABREVIATURA,
+		UNIDAD_ORGANIZACIONAL,
+		COD_PLAZA,
+		COD_OEC_DEFECTO,
+		COD_UUOO_APRUEBA,
+		CODI_EMPL_PER,
+		FLAG_INFO_INF
+		FROM TDEPENDENCIAS 
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="cod_dep"> CODI_DEPE_TDE = #cod_dep#</isNotNull>
+			<isNotNull prepend="AND" property="num_uuoo"> UNIDAD_ORGANIZACIONAL like #num_uuoo#</isNotNull>
+			<isNotNull prepend="AND" property="cod_per"> CODI_EMPL_PER = #cod_per#</isNotNull>
+			<isNotNull prepend="AND" property="des_dep"> DESC_DEPE_TDE like #des_dep#</isNotNull>
+			<isNotNull prepend="AND" property="estado_id"> ESTADO_ID = #estado_id# </isNotNull>
+		</dynamic>  
+  </select>
+  
+  
+  <select id="selectAllMovilidad" parameterClass="map" resultMap="resultado">
+		SELECT T.CODI_DEPE_TDE, 
+		T.CODI_SEDE_SED,
+		T.DESC_DEPE_TDE,
+		T.ABREVIATURA,
+		T.UNIDAD_ORGANIZACIONAL,
+		T.COD_PLAZA, <!-- AGREGADO -->
+		T.CODI_EMPL_PER, <!-- AGREGADO -->
+		T.COD_OEC_DEFECTO,
+		T.COD_UUOO_APRUEBA,
+		T.FLAG_INFO_INF
+		FROM registrador_movilidad R ,TDEPENDENCIAS T
+		WHERE R.codi_depe_tde=T.codi_depe_tde(+) 
+		AND R.codi_empl_per =#codRegistrador# 
+		
+			<isNotNull prepend="AND" property="cod_dep"> CODI_DEPE_TDE = #cod_dep#</isNotNull>
+			<isNotNull prepend="AND" property="num_uuoo"> UNIDAD_ORGANIZACIONAL like #num_uuoo#</isNotNull>
+			<isNotNull prepend="AND" property="cod_per"> CODI_EMPL_PER = #cod_per#</isNotNull>
+			<isNotNull prepend="AND" property="des_dep"> DESC_DEPE_TDE like #des_dep#</isNotNull>
+			<isNotNull prepend="AND" property="estado_id"> ESTADO_ID = #estado_id# </isNotNull>
+		  
+  </select>
+ 
+ <!-- INICIO:DPORRASC CREADO PARA DEVOLVER EL TIPO DE AUC (TECNICA O DESCONCENTRADA) -->
+	<select id="tipoAuc" parameterClass="java.util.HashMap"	resultClass="java.lang.String">
+		SELECT TIPO_AUC
+		FROM
+		        ( 
+		           (
+		           SELECT CODI_DEPE_TDE,'T' AS TIPO_AUC
+		            FROM
+		             (
+		              (SELECT codi_depe_tde FROM TDEPENDENCIAS 
+		               WHERE CODI_DEPE_TDE  in (SELECT DISTINCT COD_AUC_TECNICA 
+		                                        FROM CATALOGO_BIEN_SERVICIO 
+		                                        WHERE SITU_BSER_CAT = 'A'
+		                                        AND COD_AUC_TECNICA IS NOT NULL
+		                                        AND COD_AUC_TECNICA NOT IN ('0000'))
+		                AND  estado_id = '1')))
+		UNION
+		            (
+		            SELECT CODI_DEPE_TDE, 'D' AS TIPO_AUC
+		            FROM
+		            (SELECT codi_depe_tde FROM TDEPENDENCIAS 
+		            WHERE CODI_DEPE_TDE in (SELECT COD_OEC_DEFECTO 
+		                                     FROM TDEPENDENCIAS
+		                                     WHERE estado_id = '1')
+		            AND estado_id = '1'
+			            AND CODI_DEPE_TDE NOT IN( (SELECT TRIM(VALOR_CHAR_PAR) FROM SYS_PARAMETROS WHERE NOM_VAR_PAR = 'ind_oec_ina'))
+		          ))
+		          )
+		WHERE CODI_DEPE_TDE=#cod_dep#
+		AND ROWNUM = 1
+	</select>
+
+
+	<select id="rqnp_uuoo_no_supervision" parameterClass="map" resultClass="java.lang.String">
+		SELECT SIGA01.SER_RNP.FN_GET_UUOO_NO_SUPERVISION(#cod_dep#,#long_uuoo#) AS RESULTADO FROM DUAL
+	</select>
+	<!-- FIN: DPORRASC -->
+	
+	<!-- Viaticos -->
+	<select id="selectAllViatico" parameterClass="map" resultMap="resultadoViatico">
+		
+			 SELECT 
+	      		T.CODI_DEPE_TDE,
+	      		T.CODI_SEDE_SED,
+				T.DESC_DEPE_TDE,
+				T.ABREVIATURA,
+				T.UNIDAD_ORGANIZACIONAL,
+				T.COD_PLAZA,
+	      			(SELECT G.DESC_DEPE_TDE FROM TDEPENDENCIAS G WHERE G.unidad_organizacional like (CONCAT(SUBSTR(T.UNIDAD_ORGANIZACIONAL, 1, 2),'0000'))) AS INTENDENCIA
+			FROM 
+			REGISTRADOR_MOVILIDAD R, TDEPENDENCIAS T
+			WHERE 
+			R.CODI_DEPE_TDE = T.CODI_DEPE_TDE(+) AND (R.IND_PROC IN('X','V')) 
+		      AND R.CODI_EMPL_PER = #codRegistrador#  
+			
+			<isNotNull prepend="AND" property="cod_dep"> CODI_DEPE_TDE = #cod_dep#</isNotNull>
+			<isNotNull prepend="AND" property="num_uuoo"> UNIDAD_ORGANIZACIONAL like #num_uuoo#</isNotNull>
+			<isNotNull prepend="AND" property="cod_per"> CODI_EMPL_PER = #cod_per#</isNotNull>
+			<isNotNull prepend="AND" property="des_dep"> DESC_DEPE_TDE like #des_dep#</isNotNull>
+			<isNotNull prepend="AND" property="estado_id"> ESTADO_ID = #estado_id# </isNotNull>
+			<isNotNull prepend="AND" property="uuoo_autoriza_viaticos"> substr(nvl(cod_nag,'00'),2,1)='1' </isNotNull>
+	</select>
+	
+	
+	<!-- Viaticos -->
+	<select id="selectAllViaticoIndividual" parameterClass="map" resultMap="resultadoViatico">			
+		SELECT T.CODI_DEPE_TDE, 
+		T.CODI_SEDE_SED,
+		T.DESC_DEPE_TDE,
+		T.ABREVIATURA,
+		T.UNIDAD_ORGANIZACIONAL,
+		T.COD_PLAZA, 
+		(SELECT G.DESC_DEPE_TDE FROM TDEPENDENCIAS G WHERE G.unidad_organizacional like (CONCAT(SUBSTR(T.UNIDAD_ORGANIZACIONAL, 1, 2),'0000'))) AS INTENDENCIA
+		FROM TDEPENDENCIAS T
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="cod_dep"> T.CODI_DEPE_TDE = #cod_dep#</isNotNull>
+			<isNotNull prepend="AND" property="num_uuoo"> T.UNIDAD_ORGANIZACIONAL like #num_uuoo#</isNotNull>
+			<isNotNull prepend="AND" property="cod_per"> T.CODI_EMPL_PER = #cod_per#</isNotNull>
+			<isNotNull prepend="AND" property="des_dep"> T.DESC_DEPE_TDE like #des_dep#</isNotNull>
+			<isNotNull prepend="AND" property="estado_id"> T.ESTADO_ID = #estado_id# </isNotNull>
+			<isNotNull prepend="AND" property="uuoo_autoriza_viaticos"> substr(nvl(cod_nag,'00'),2,1)='1' </isNotNull>
+		</dynamic>  			
+			
+	</select>
+	
+	
+	<select id="buscarIntendenciaByUnidadOrganizacional" parameterClass="map" resultMap="resultadoViatico">
+		SELECT 
+			G.CODI_DEPE_TDE, 
+			G.CODI_SEDE_SED, 
+			G.DESC_DEPE_TDE,
+     		G.ABREVIATURA, 
+     		G.UNIDAD_ORGANIZACIONAL,
+     		G.DESC_DEPE_TDE AS INTENDENCIA,
+     		G.COD_PLAZA 
+     	FROM 
+     	TDEPENDENCIAS G 
+     	WHERE 
+     	G.UNIDAD_ORGANIZACIONAL = (CONCAT(SUBSTR(#num_uuoo#, 1, 2), '0000'))
+	</select>
+	
+	
+	<!-- PAS201780000300007: OBTENER JEFE Y ENCARGADO -->
+	<resultMap id="resultadoPerfilDependencia" class="dependencias">
+		<result property="cod_dep" 			column="CODI_DEPE_TDE" />
+		<result property="nom_largo" 		column="DESC_DEPE_TDE" />
+		<result property="nom_corto" 		column="ABREVIATURA" />
+		<result property="uuoo" 			column="UNIDAD_ORGANIZACIONAL" />
+		<result property="cod_plaza" 		column="COD_PLAZA" />
+		<result property="codOecDefecto" 	column="COD_OEC_DEFECTO" />
+		<result property="codUuooAprueba" 	column="COD_UUOO_APRUEBA" />
+		<result property="codEmpleado" 		column="CODI_EMPL_PER" />
+		<result property="flagInfoInf" 		column="FLAG_INFO_INF" />
+	</resultMap>
+	
+	<select id="esPerfilDependenciaAprobador" parameterClass="java.util.HashMap"	resultMap="resultadoPerfilDependencia">
+		SELECT DISTINCT
+		TD.CODI_DEPE_TDE, 
+		TD.CODI_SEDE_SED,
+		TD.DESC_DEPE_TDE , 
+		TD.ABREVIATURA, 
+		TD.UNIDAD_ORGANIZACIONAL, 
+		TD.COD_PLAZA,
+		TD.COD_OEC_DEFECTO,
+		TD.COD_UUOO_APRUEBA,
+		TD.CODI_EMPL_PER,
+		TD.FLAG_INFO_INF
+		FROM TDEPENDENCIAS TD, TDEPENDENCIAS TDX
+		WHERE 
+		TDX.ESTADO_ID='1' 
+		AND TD.ESTADO_ID='1'
+		AND TDX.COD_UUOO_APRUEBA = TD.CODI_DEPE_TDE
+		AND ROWNUM =1
+		<isNotNull prepend="AND" property="codDependencia"> TD.CODI_DEPE_TDE like #codDependencia#</isNotNull>
+		<isNotNull prepend="AND" property="codEmpleado"> MP.CODI_EMPL_PER like #codEmpleado#</isNotNull>
+	</select>
+	
+	<select id="esPerfilDependenciaAUC" parameterClass="java.util.HashMap"	resultMap="resultadoPerfilDependencia">
+		SELECT 
+		TD.CODI_DEPE_TDE, 
+		TD.CODI_SEDE_SED,
+		TD.DESC_DEPE_TDE , 
+		TD.ABREVIATURA, 
+		TD.UNIDAD_ORGANIZACIONAL, 
+		TD.COD_PLAZA,
+		TD.COD_OEC_DEFECTO,
+		TD.COD_UUOO_APRUEBA,
+		TD.CODI_EMPL_PER,
+		TD.FLAG_INFO_INF
+		FROM TDEPENDENCIAS TD
+		WHERE 
+		TD.CODI_DEPE_TDE IN (
+				SELECT DISTINCT COD_AUC_TECNICA
+				FROM CATALOGO_BIEN_SERVICIO
+				WHERE SITU_BSER_CAT = 'A'
+				AND COD_AUC_TECNICA IS NOT NULL
+				AND COD_AUC_TECNICA NOT IN ('0000')
+				)
+		AND ROWNUM =1
+		<isNotNull prepend="AND" property="codDependencia"> TD.CODI_DEPE_TDE like #codDependencia#</isNotNull>
+		<isNotNull prepend="AND" property="codEmpleado"> MP.CODI_EMPL_PER like #codEmpleado#</isNotNull>
+	</select>
+	
+	<select id="obtenerUuoo" parameterClass="map" resultMap="resultado">
+		SELECT CODI_DEPE_TDE, 
+		CODI_SEDE_SED,
+		DESC_DEPE_TDE,
+		ABREVIATURA,
+		UNIDAD_ORGANIZACIONAL,
+		COD_PLAZA,
+		COD_OEC_DEFECTO,
+		COD_UUOO_APRUEBA,
+		CODI_EMPL_PER,
+		FLAG_INFO_INF
+		FROM TDEPENDENCIAS 
+		WHERE ESTADO_ID='1'
+		<isNotNull prepend="AND" property="cod_dep"> CODI_DEPE_TDE = #cod_dep#</isNotNull>
+		<isNotNull prepend="AND" property="num_uuoo"> UNIDAD_ORGANIZACIONAL = UPPER(#num_uuoo#)</isNotNull>
+		<isNotNull prepend="AND" property="codEmpleado"> CODI_EMPL_PER = #codEmpleado#</isNotNull>
+		<!-- <isNotNull prepend="AND" property="flagInfoInf"> FLAG_INFO_INF NOT IN (#flagInfoInf#)</isNotNull> -->
+	</select>
+  
+  
+	<select id="obtenerDependenciaRqnp" parameterClass="map" resultMap="resultado">
+		SELECT CODI_DEPE_TDE, 
+		CODI_SEDE_SED,
+		DESC_DEPE_TDE,
+		ABREVIATURA,
+		UNIDAD_ORGANIZACIONAL,
+		COD_PLAZA,
+		COD_OEC_DEFECTO,
+		COD_UUOO_APRUEBA,
+		CODI_EMPL_PER,
+		FLAG_INFO_INF
+		FROM TDEPENDENCIAS 
+		WHERE CODI_DEPE_TDE IN (
+								SELECT CODI_DEPE_TDE 
+								FROM REQUERIMIENTO_NO_PROG
+								WHERE CODI_RQNP_SRM  =#codRqnp#
+								)
+		AND ESTADO_ID='1'
+	</select>
+	
+	<select id="obtenerDependenciaAUCdeRqnp" parameterClass="map" resultMap="resultado">
+		SELECT CODI_DEPE_TDE, 
+		CODI_SEDE_SED,
+		DESC_DEPE_TDE,
+		ABREVIATURA,
+		UNIDAD_ORGANIZACIONAL,
+		COD_PLAZA,
+		COD_OEC_DEFECTO,
+		COD_UUOO_APRUEBA,
+		CODI_EMPL_PER,
+		FLAG_INFO_INF
+		FROM TDEPENDENCIAS 
+		WHERE CODI_DEPE_TDE IN (
+								SELECT DISTINCT COD_AUCT1 
+								FROM REQUERIMIENTO_NO_PROG_BIENES 
+								WHERE CODI_RQNP_SRM  =#codRqnp#
+								)
+		AND ESTADO_ID='1'
+	</select>
+	
+	
+	<select id="obtenerDependenciaOECdeRqnp" parameterClass="map" resultMap="resultado">
+		SELECT CODI_DEPE_TDE,    
+		CODI_SEDE_SED,   
+		DESC_DEPE_TDE,   
+		ABREVIATURA,   
+		UNIDAD_ORGANIZACIONAL,   
+		COD_PLAZA,   
+		COD_OEC_DEFECTO,   
+		COD_UUOO_APRUEBA,   
+		CODI_EMPL_PER,
+		FLAG_INFO_INF   
+		FROM TDEPENDENCIAS
+		WHERE CODI_DEPE_TDE IN (
+								SELECT COD_OEC_DEFECTO
+								FROM TDEPENDENCIAS    
+								WHERE CODI_DEPE_TDE IN (  
+														SELECT CODI_DEPE_TDE          
+														FROM REQUERIMIENTO_NO_PROG          
+														WHERE CODI_RQNP_SRM  =#codRqnp# )   
+														)
+		 AND ESTADO_ID='1'
+	</select>
+	<select id="obtenerJefaturasAucJson" parameterClass="java.util.HashMap"	resultMap="resultadoPerfilDependencia">
+		SELECT 
+		TABLA.CODI_DEPE_TDE, 
+		TABLA.CODI_SEDE_SED,
+		TABLA.DESC_DEPE_TDE , 
+		TABLA.ABREVIATURA, 
+		TABLA.UNIDAD_ORGANIZACIONAL, 
+		TABLA.COD_PLAZA,
+		TABLA.COD_OEC_DEFECTO,
+		TABLA.COD_UUOO_APRUEBA,
+		TABLA.CODI_EMPL_PER
+		FROM 
+		(
+		SELECT 
+		        TD.CODI_DEPE_TDE, 
+		        TD.CODI_SEDE_SED,
+		        TD.DESC_DEPE_TDE , 
+		        TD.ABREVIATURA, 
+		        TD.UNIDAD_ORGANIZACIONAL, 
+		        TD.COD_PLAZA,
+		        TD.COD_OEC_DEFECTO,
+		        TD.COD_UUOO_APRUEBA,
+		        TD.CODI_EMPL_PER
+		        FROM TDEPENDENCIAS TD
+		        WHERE 
+		        TD.ESTADO_ID='1'
+		       AND TD.CODI_EMPL_PER=#codEmpleado#
+		 UNION ALL
+		       SELECT 
+		        TD.CODI_DEPE_TDE, 
+		        TD.CODI_SEDE_SED,
+		        TD.DESC_DEPE_TDE , 
+		        TD.ABREVIATURA, 
+		        TD.UNIDAD_ORGANIZACIONAL, 
+		        TD.COD_PLAZA,
+		        TD.COD_OEC_DEFECTO,
+		        TD.COD_UUOO_APRUEBA,
+		        TD.CODI_EMPL_PER
+		        FROM
+		        ENCARGOS_PERSONA EP,
+		        TDEPENDENCIAS TD
+		        WHERE
+		        EP.CODI_ENCA_ENC = #codEmpleado#
+		        AND EP.FLAG_ENCA_ENC = 'S'
+		        AND TO_CHAR(SYSDATE,'YYYYMMDD')  BETWEEN TO_CHAR(EP.FECH_INIC_ENC,'YYYYMMDD') AND TO_CHAR(EP.FECH_FINA_ENC,'YYYYMMDD')
+		        AND EP.CODI_EMPL_PER = TD.CODI_EMPL_PER
+		        AND NVL(TD.FLAG_INFO_INF,'0') NOT IN ('6')
+		        AND TD.ESTADO_ID = '1'
+		        ) TABLA
+		WHERE 
+		       TABLA.CODI_DEPE_TDE IN (
+                                            SELECT DISTINCT COD_AUC_TECNICA
+                                               FROM CATALOGO_BIEN_SERVICIO
+                                               WHERE SITU_BSER_CAT = 'A'
+                                               AND COD_AUC_TECNICA IS NOT NULL
+                                               AND COD_AUC_TECNICA NOT IN ('0000')
+                                               UNION ALL
+                                             SELECT DISTINCT codi_depe_tde FROM TDEPENDENCIAS 
+                                               WHERE CODI_DEPE_TDE in (SELECT COD_OEC_DEFECTO 
+                                               FROM TDEPENDENCIAS
+                                               WHERE estado_id = '1')
+                                               AND estado_id = '1'
+                                               AND CODI_DEPE_TDE NOT IN( (SELECT TRIM(VALOR_CHAR_PAR) FROM SYS_PARAMETROS WHERE NOM_VAR_PAR = 'ind_oec_ina'))
+                                               )
+	</select>
+	
+	<select id="obtenerNumJefaturasEmpleado" parameterClass="map" resultClass="java.lang.String">
+		SELECT COUNT(*) 
+	       FROM
+	       (
+		       SELECT DISTINCT TD.CODI_DEPE_TDE
+		        FROM TDEPENDENCIAS TD, MAESTRO_PERSONAL MP
+		        WHERE 
+		        MP.CODI_EMPL_PER=TD.CODI_EMPL_PER
+		        AND TD.ESTADO_ID='1'
+		        AND MP.ESTA_TRAB_PER='1'
+		       AND TD.CODI_EMPL_PER=#codEmpleado#
+		     UNION ALL
+		        SELECT DISTINCT TRIM(ENCARGOS_PERSONA.COD_DEPENDENCIA)
+		        FROM
+		        ENCARGOS_PERSONA,
+		        TDEPENDENCIAS
+		        WHERE
+		        CODI_ENCA_ENC = #codEmpleado#
+		        AND FLAG_ENCA_ENC = 'S'
+		        AND TO_CHAR(SYSDATE,'YYYYMMDD')  BETWEEN TO_CHAR(FECH_INIC_ENC,'YYYYMMDD') AND TO_CHAR(FECH_FINA_ENC,'YYYYMMDD')
+		        AND ENCARGOS_PERSONA.CODI_EMPL_PER = TDEPENDENCIAS.CODI_EMPL_PER
+		        AND NVL(TDEPENDENCIAS.FLAG_INFO_INF,'0') NOT IN ('6')
+		        AND TDEPENDENCIAS.ESTADO_ID = '1'
+	        )
+	</select>
+</sqlMap>

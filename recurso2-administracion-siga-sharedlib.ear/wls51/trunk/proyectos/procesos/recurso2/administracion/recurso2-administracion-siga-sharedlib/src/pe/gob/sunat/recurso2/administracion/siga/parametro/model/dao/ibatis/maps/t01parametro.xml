@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="t01parameto">
+
+	<typeAlias alias="t01ParametroBean"
+		type="pe.gob.sunat.recurso2.administracion.siga.parametro.model.bean.T01ParametroBean" />
+	
+	<resultMap id="lstparametros" class="t01ParametroBean">
+		<result property="cod_parametro" 		column="COD_PARAMETRO" />
+		<result property="cod_modulo" 		column="COD_MODULO" />
+		<result property="cod_tipo" 		column="COD_TIPO" />
+		<result property="cod_argumento" 		column="COD_ARGUMENTO" />
+		<result property="nom_largo" 		column="DESC_LARGA" />
+		<result property="nom_corto" 		column="DESC_CORTA" />
+		<result property="desc_abrv" 		column="DESC_ABREVIATURA" />
+	</resultMap>
+	
+	<resultMap id="lstparametrosComisionado" class="t01ParametroBean">
+		<result property="cod_parametro" 	column="COD_PARAMETRO" />
+		<result property="cod_modulo" 		column="COD_MODULO" />
+		<result property="cod_tipo" 		column="COD_TIPO" />
+		<result property="cod_argumento" 	column="COD_ARGUMENTO" />
+		<result property="nom_largo" 		column="DESC_LARGA" />
+		<result property="nom_corto" 		column="DESC_CORTA" />
+		<result property="desc_abrv" 		column="DESC_ABREVIATURA" />
+		<result property="cod_estado" 		column="COD_ESTADO" />
+	</resultMap>	
+
+	<select id="select_arg" parameterClass="java.util.HashMap" resultMap="lstparametros">
+		SELECT COD_PARAMETRO,
+		 COD_MODULO, 
+		 COD_TIPO, 
+		 COD_ARGUMENTO,
+		  DESC_LARGA,
+ 		DESC_CORTA,
+ 		DESC_ABREVIATURA 
+ 		FROM T01PARAMETRO 
+ 		WHERE 
+		COD_ESTADO='1'
+		<isNotNull prepend="AND" property="cod_par"> trim(COD_PARAMETRO)  = #cod_par#</isNotNull>
+		<isNotNull prepend="AND" property="cod_arg"> trim(COD_ARGUMENTO)  = #cod_arg#</isNotNull>
+		<isNotNull prepend="AND" property="cod_tipo"> trim(COD_TIPO)  = #cod_tipo#</isNotNull>
+		<isNotNull prepend="AND" property="cod_arg2"> trim(COD_ARGUMENTO)  LIKE #cod_arg2#</isNotNull>
+		<isNotNull prepend="AND" property="cod_mod"> trim(COD_MODULO)  = #cod_mod#</isNotNull>
+		<isNotNull prepend="AND" property="des_lar"> trim(DESC_LARGA)  = #des_lar#</isNotNull>
+		<isNotNull prepend="AND" property="des_cor"> trim(DESC_CORTA)  = #des_cor#</isNotNull>
+		
+		ORDER BY COD_ARGUMENTO ASC
+  </select>
+	
+	<select id="select_tipo_archivo" parameterClass="java.util.HashMap" resultMap="lstparametros">
+	SELECT COD_PARAMETRO,
+	 COD_MODULO, 
+	 COD_TIPO, 
+	 COD_ARGUMENTO,
+	  DESC_LARGA,
+		DESC_CORTA,
+		DESC_ABREVIATURA
+	 FROM t01parametro
+       WHERE TRIM(COD_PARAMETRO)='6000'
+              AND TRIM(COD_MODULO)='SIGA'
+              AND TRIM(COD_TIPO)='D'                                                        
+              AND TRIM(DESC_LARGA) = #cod_app#
+              AND TRIM(DESC_CORTA)= #cod_mod#
+	  </select>
+
+<select id="select_auditor" parameterClass="java.util.HashMap" resultClass="java.lang.Long" >
+		SELECT COUNT(MP.CODI_EMPL_PER) 
+		 FROM T01PARAMETRO T01 , 
+     MAESTRO_PERSONAL MP 
+     WHERE  
+		COD_ESTADO='1' 
+		<isNotNull prepend="AND" property="cod_par"> trim(T01.COD_PARAMETRO)  LIKE #cod_par#</isNotNull>
+		<isNotNull prepend="AND" property="cod_mod"> trim(T01.COD_MODULO)  = #cod_mod#</isNotNull>
+		<isNotNull prepend="AND" property="cod_tipo"> trim(T01.COD_TIPO)  = #cod_tipo#</isNotNull>
+		<isNotNull prepend="AND" property="cod_arg"> trim(T01.COD_ARGUMENTO)  = #cod_arg#</isNotNull>
+		<isNotNull prepend="AND" property="cod_emp"> MP.CODI_EMPL_PER = #cod_emp#</isNotNull> 
+  </select>
+  
+	<select id="buscarComisionado" parameterClass="java.util.HashMap" resultMap="lstparametrosComisionado">
+		SELECT 
+			trim(COD_PARAMETRO) AS COD_PARAMETRO,
+		 	trim(COD_MODULO) AS COD_MODULO, 
+		 	trim(COD_TIPO) AS COD_TIPO, 
+		 	trim(COD_ARGUMENTO) AS COD_ARGUMENTO,
+		  	trim(DESC_LARGA) AS DESC_LARGA,
+ 			trim(DESC_CORTA) AS DESC_CORTA,
+ 			trim(DESC_ABREVIATURA) AS DESC_ABREVIATURA,
+ 			trim(COD_ESTADO) AS COD_ESTADO
+		FROM 
+			T01PARAMETRO 
+ 		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="cod_parametro"> trim(COD_PARAMETRO) = #cod_parametro# </isNotNull>			
+			<isNotNull prepend="AND" property="cod_tipo"> trim(COD_TIPO) = #cod_tipo# </isNotNull>
+			<isNotNull prepend="AND" property="cod_modulo"> trim(COD_MODULO) = #cod_modulo# </isNotNull>
+			<isNotNull prepend="AND" property="cod_estado"> trim(COD_ESTADO) = #cod_estado# </isNotNull>
+			<isNotNull prepend="AND" property="uuooColaborador"> TRIM(SUBSTR(COD_ARGUMENTO,1,6)) = #uuooColaborador# </isNotNull>
+			<isNotNull prepend="AND" property="nroRegistroColaborador"> TRIM(SUBSTR(COD_ARGUMENTO,7,4)) = #nroRegistroColaborador# </isNotNull>
+			<isNotNull prepend="AND" property="nroRegistroRegistrador"> TRIM(SUBSTR(COD_ARGUMENTO,11,4)) = #nroRegistroRegistrador# </isNotNull>
+		</dynamic>
+		ORDER BY COD_ARGUMENTO ASC
+  	</select>
+  	
+	<insert id="registrarComisionado" parameterClass="t01ParametroBean">
+		INSERT INTO T01PARAMETRO(
+			COD_PARAMETRO, 
+			COD_MODULO, 
+			COD_TIPO, 
+			COD_ARGUMENTO, 
+			DESC_LARGA, 
+			DESC_CORTA, 
+			DESC_ABREVIATURA, 
+			COD_ESTADO)
+		VALUES(
+			#cod_parametro#, 
+			#cod_modulo#, 
+			#cod_tipo#, 
+			#cod_argumento#, 
+			#nom_largo#, 
+			#nom_corto#, 
+			#desc_abrv#, 
+			#cod_estado#)
+	</insert>
+	
+	<update id="actualizarComisionado" parameterClass="java.util.HashMap">
+		UPDATE 
+			T01PARAMETRO
+		SET
+			DESC_LARGA = #nom_largo#, 
+			DESC_CORTA = #nom_corto#,
+			COD_ESTADO = #cod_estado#, 
+			DESC_ABREVIATURA = #desc_abrv#,
+			COD_ARGUMENTO = #cod_argumento_set#
+		WHERE 
+			trim(COD_PARAMETRO)  = #cod_parametro# 
+			AND trim(COD_MODULO) = #cod_modulo# 
+			AND trim(COD_TIPO) = #cod_tipo# 
+			AND trim(COD_ARGUMENTO) = #cod_argumento#
+	</update>  	
+
+</sqlMap>

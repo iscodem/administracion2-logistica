@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="registro_archivos">
+
+	<typeAlias alias="registroArchivosBean"
+		type="pe.gob.sunat.recurso2.administracion.siga.archivo.model.bean.RegistroArchivosBean" />
+	
+		
+	<select id="selectCount"   resultClass="java.lang.String">
+		SELECT SUBSTR('00000000'||TO_CHAR(SE_REG_ARCHIVOS.NEXTVAL),-8,8)
+		FROM DUAL		
+	</select>
+	
+	<select id="selectCountCorreoMovilidad" parameterClass="java.util.HashMap" resultClass="java.lang.Long">
+		SELECT COUNT(*) NUMERO
+		FROM
+		SYS_REGISTRO_ARCHIVOS RA,
+		SYS_REGISTRO_ARCHIVOS_FISICO AF
+		WHERE
+		RA.APLICACION = 'SERVICIOS' AND
+		RA.MODULO = 'MOVILIDAD' AND
+		RA.NUME_REGI_ARC = AF.NUME_REGI_ARC
+		<isNotNull prepend="AND" property="fuenteMovilidad"> AF.FUENTE = #fuenteMovilidad# </isNotNull>
+		<isNotNull prepend="AND" property="numeroRegistro"> RA.NUME_REGI_ARC = #numeroRegistro# </isNotNull>
+	</select>
+	
+	<select id="obtenerNumeroArchivosRegistrados" parameterClass="java.util.HashMap" resultClass="java.lang.Long">
+		SELECT
+		COUNT(*) NUMERO
+		FROM
+		SYS_REGISTRO_ARCHIVOS RA,
+		SYS_REGISTRO_ARCHIVOS_FISICO AF
+		WHERE
+		RA.NUME_REGI_ARC = AF.NUME_REGI_ARC AND
+		AF.COD_ESTADO = '1'
+		<isNotNull prepend="AND" property="aplicacion"> RA.APLICACION = #aplicacion# </isNotNull>
+		<isNotNull prepend="AND" property="modulo"> RA.MODULO = #modulo# </isNotNull>
+		<isNotNull prepend="AND" property="fuente"> AF.FUENTE = #fuente# </isNotNull>
+		<isNotNull prepend="AND" property="numeroRegistroArchivo"> RA.NUME_REGI_ARC = #numeroRegistroArchivo# </isNotNull>
+	</select>
+	
+	<insert id="insert" parameterClass="registroArchivosBean">
+	  INSERT INTO SYS_REGISTRO_ARCHIVOS (
+							NUME_REGI_ARC,
+							FECH_REGI_ARC,
+							APLICACION,
+							MODULO,
+							REGISTRO,
+							DESCRIPCION_REGISTRO)
+			values(#num_reg#,
+					 sysdate,
+					 #aplicacion#,
+					 #modulo#,
+					 #registro#,
+					 #descripcion#) 
+   </insert>
+	
+	
+	
+		
+</sqlMap>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="consultaCatalogo">
+	<typeAlias alias="consultaCatalogoBean"
+		type="pe.gob.sunat.administracion2.siga.rqnp.model.domain.ConsultaCatalogoBean" />
+
+	<resultMap id="lstConsultaCatalogo" 	class="consultaCatalogoBean">
+		<result property="tipo" 						column="TIPO" />
+		<result property="codigo_item" 					column="CODIGO_ITEM" />
+		<result property="descripcion_item" 			column="DESCRIPCION_ITEM" />
+		<result property="unidad_medida" 				column="UNIDAD_MEDIDA" />
+		<result property="precio_unitario" 				column="PRECIO_UNITARIO" />
+		<result property="clasificador_gasto" 			column="CLASIFICADOR_GASTO" />
+		<result property="descripcion_clasificador" 	column="DESCRIPCION_CLASIFICADOR" />
+		<result property="auc" 							column="AUC" />
+		<result property="ambito" 						column="AMBITO" />
+		<result property="ruta_programado" 				column="RUTA_PROGRAMADO" />
+		<result property="ruta_no_programado" 			column="RUTA_NO_PROGRAMADO" />
+		<result property="rubro_general" 				column="RUBRO_GENERAL" />
+		<result property="rubro_especifico" 			column="RUBRO_ESPECIFICO" />
+		<result property="estado" 						column="ESTADO" />
+		<result property="alerta" 						column="ALERTA" />
+		<result property="grupo_catalogo" 				column="GRUPO_CATALOGO" />
+		<result property="grupo_descripcion" 			column="GRUPO_DESCRIPCION" />
+		<result property="clase_catalogo" 				column="CLASE_CATALOGO" />
+		<result property="clase_descripcion" 			column="CLASE_DESCRIPCION" />
+		<result property="familia_catalogo" 			column="FAMILIA_CATALOGO" />
+		<result property="familia_descripcion" 			column="FAMILIA_DESCRIPCION" />
+	</resultMap>
+	
+	<select id="selectConsultaCatalogo" parameterClass="java.util.HashMap" resultMap="lstConsultaCatalogo">
+	SELECT 
+		DECODE(CATALOGO_BIEN_SERVICIO.TIPO_BSER_CAT,'B','BIEN','S','SERVICIO','O','OBRAS','') AS TIPO,  
+		CATALOGO_BIEN_SERVICIO.CODI_BSER_CAT AS CODIGO_ITEM,   
+		CATALOGO_BIEN_SERVICIO.DESC_BSER_CAT AS DESCRIPCION_ITEM,   
+		UNIDADES_DE_MEDIDAS.DESC_MEDI_UND AS UNIDAD_MEDIDA,   
+		CATALOGO_BIEN_SERVICIO.PREC_SPROM_CAT AS PRECIO_UNITARIO,   
+		FILTROA.PART_GAST_CAT  AS CLASIFICADOR_GASTO,
+		CLASIFICADOR_GASTO.DESC_GAST_GAS AS DESCRIPCION_CLASIFICADOR,
+		nvl((select unidad_organizacional||' - '||desc_depe_tde from TDEPENDENCIAS where estado_id='1' and codi_depe_tde = CATALOGO_BIEN_SERVICIO.COD_AUC_TECNICA),'- NINGUNA') AS AUC,
+		(SELECT TRIM(COD_ARGUMENTO) ||' - '||TRIM(DESC_LARGA) FROM T01PARAMETRO WHERE COD_PARAMETRO = '5017' AND COD_MODULO='PLAN' AND COD_ESTADO='1' AND COD_TIPO='D' and TRIM(COD_ARGUMENTO) = CATALOGO_BIEN_SERVICIO.COD_AMBITO) AS AMBITO,
+		(SELECT TRIM(COD_ARGUMENTO) ||' - '||TRIM(DESC_LARGA) FROM T01PARAMETRO WHERE COD_PARAMETRO = '5015' AND COD_MODULO='PLAN' AND COD_ESTADO='1' AND COD_TIPO='D' and TRIM(COD_ARGUMENTO) = CATALOGO_BIEN_SERVICIO.COD_TIPO_PROG) AS RUTA_PROGRAMADO,
+		(SELECT TRIM(COD_ARGUMENTO) ||' - '||TRIM(DESC_LARGA) FROM T01PARAMETRO WHERE COD_PARAMETRO = '5015' AND COD_MODULO='PLAN' AND COD_ESTADO='1' AND COD_TIPO='D' and TRIM(COD_ARGUMENTO) = CATALOGO_BIEN_SERVICIO.plan_cta_tran) AS RUTA_NO_PROGRAMADO,
+		(SELECT TRIM(COD_ARGUMENTO) ||' - '||TRIM(DESC_LARGA) FROM T01PARAMETRO WHERE COD_PARAMETRO = '4015' AND COD_MODULO='SIGA' AND COD_ESTADO='1' AND COD_TIPO='D' and TRIM(COD_ARGUMENTO) = TRIM(CATALOGO_BIEN_SERVICIO.medi_pres_cat)) AS RUBRO_GENERAL,
+		(SELECT TRIM(COD_ARGUMENTO) ||' - '||TRIM(DESC_LARGA) FROM T01PARAMETRO WHERE COD_PARAMETRO = '4016' AND COD_MODULO='SIGA' AND COD_ESTADO='1' AND COD_TIPO='D' and TRIM(COD_ARGUMENTO) = TRIM(CATALOGO_BIEN_SERVICIO.codi_fabr_cat)) AS RUBRO_ESPECIFICO,
+		DECODE(CATALOGO_BIEN_SERVICIO.SITU_BSER_CAT,'A','ACTIVO','I','INACTIVO','N','PENDIENTE','') AS ESTADO,
+		DECODE(CATALOGO_BIEN_SERVICIO.SITU_BSER_CAT,'I','1','0') AS ALERTA,
+		CATALOGO_BIEN_SERVICIO.CODI_GRUP_GBS AS GRUPO_CATALOGO,   
+		GRUPO_BIENES_SERVICIO.DESC_GRUP_GBS AS GRUPO_DESCRIPCION,
+		CATALOGO_BIEN_SERVICIO.CODI_CLAS_CFA AS CLASE_CATALOGO,   
+		CLASE_FAMILIA_BSERV.DESC_CLAS_CFA AS CLASE_DESCRIPCION,
+		CATALOGO_BIEN_SERVICIO.CODI_FAMI_FAM AS FAMILIA_CATALOGO,   
+		FAMI_BIEN_ABA.DESC_FAMI_FAM AS FAMILIA_DESCRIPCION
+	FROM 
+		SIGA.CATALOGO_BIEN_SERVICIO, SIGA.UNIDADES_DE_MEDIDAS, SIGA01.CATALOGO_FILTRO FILTROA,
+		SIGA01.CLASIFICADOR_GASTO, SIGA.GRUPO_BIENES_SERVICIO, SIGA.CLASE_FAMILIA_BSERV, SIGA.FAMI_BIEN_ABA
+	WHERE 
+		CATALOGO_BIEN_SERVICIO.UNID_MUSO_CAT = UNIDADES_DE_MEDIDAS.CODI_MEDI_UND (+)    
+		AND catalogo_bien_servicio.codi_bser_cat  = FILTROA.codi_bser_cat (+)
+		AND FILTROA.ann_clasificador (+)= to_char(sysdate,'yyyy')
+		AND CLASIFICADOR_GASTO.ANN_CLASIFICADOR (+)= to_char(sysdate,'yyyy')
+		AND CLASIFICADOR_GASTO.CLAS_GAST_GAS (+)= FILTROA.PART_GAST_CAT
+		<!-- AND CATALOGO_BIEN_SERVICIO.SITU_BSER_CAT IN ('A','I','N') -->
+		AND CATALOGO_BIEN_SERVICIO.SITU_BSER_CAT IN ('A','N')
+		AND SUBSTR(CATALOGO_BIEN_SERVICIO.CODI_BSER_CAT,1,1) IN ('B','S','O')
+		AND FAMI_BIEN_ABA.CODI_GRUP_GBS = CLASE_FAMILIA_BSERV.CODI_GRUP_GBS
+		AND FAMI_BIEN_ABA.CODI_CLAS_CFA = CLASE_FAMILIA_BSERV.CODI_CLAS_CFA
+		AND CLASE_FAMILIA_BSERV.CODI_GRUP_GBS = GRUPO_BIENES_SERVICIO.CODI_GRUP_GBS
+		AND CATALOGO_BIEN_SERVICIO.CODI_GRUP_GBS = GRUPO_BIENES_SERVICIO.CODI_GRUP_GBS
+		AND CATALOGO_BIEN_SERVICIO.CODI_GRUP_GBS = CLASE_FAMILIA_BSERV.CODI_GRUP_GBS
+		AND CATALOGO_BIEN_SERVICIO.CODI_CLAS_CFA = CLASE_FAMILIA_BSERV.CODI_CLAS_CFA
+		AND CATALOGO_BIEN_SERVICIO.CODI_FAMI_FAM = FAMI_BIEN_ABA.CODI_FAMI_FAM
+		AND CATALOGO_BIEN_SERVICIO.TIPO_BSER_CAT LIKE #tipo_bien#
+		<isNotNull prepend="AND" property="desc_bien"> CATALOGO_BIEN_SERVICIO.DESC_BSER_CAT like #desc_bien#</isNotNull>
+		<isNotNull prepend="AND" property="cod_bien"> CATALOGO_BIEN_SERVICIO.CODI_BSER_CAT like #cod_bien#</isNotNull>
+		<isNotNull prepend="AND" property="cod_auc"> CATALOGO_BIEN_SERVICIO.COD_AUC_TECNICA like #cod_auc#</isNotNull>
+		AND ROWNUM &lt;=500
+		<!-- AND catalogo_bien_servicio.codi_bser_cat IN ('B475100059051','B952246270001') -->
+		<!--AND CATALOGO_BIEN_SERVICIO.CODI_BSER_CAT || CATALOGO_BIEN_SERVICIO.DESC_BSER_CAT LIKE #desc_bien# -->
+	ORDER BY
+		<!-- CATALOGO_BIEN_SERVICIO.TIPO_BSER_CAT, -->
+		CATALOGO_BIEN_SERVICIO.DESC_BSER_CAT 
+		
+</select>
+</sqlMap>
+

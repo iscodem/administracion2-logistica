@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="tdependenciasfirma">
+	
+	<typeAlias alias="dependencia"
+		type="pe.gob.sunat.recurso2.administracion.siga.firma.model.bean.Dependencia" />
+	
+	<resultMap id="resultado" class="dependencia">
+		<result property="cod_dep" 			column="CODI_DEPE_TDE" />
+		<result property="cod_per" 			column="CODI_EMPL_PER" />
+		<result property="cod_sede" 		column="CODI_SEDE_SED" />
+		<result property="nom_largo" 		column="DESC_DEPE_TDE" />
+		<result property="nom_corto" 		column="ABREVIATURA" />
+		<result property="uuoo" 			column="UNIDAD_ORGANIZACIONAL" />
+	</resultMap>
+	
+	
+	<resultMap id="resultadoJefe" class="dependencia">
+		<result property="cod_dep" 			column="CODI_DEPE_TDE" />
+		<result property="cod_per" 			column="CODI_EMPL_PER" />
+		<result property="cod_sede" 		column="CODI_SEDE_SED" />
+		<result property="nom_largo" 		column="DESC_DEPE_TDE" />
+		<result property="nom_corto" 		column="ABREVIATURA" /> 
+		<result property="uuoo" 			column="UNIDAD_ORGANIZACIONAL" />
+		<result property="flagInfoInf" 		column="FLAG_INFO_INF" />
+	</resultMap>
+	
+   	<select id="obtenerDatosDependencia"  parameterClass="pe.gob.sunat.recurso2.administracion.siga.firma.model.bean.Dependencia"
+  		   resultMap="resultado">
+		SELECT CODI_DEPE_TDE, 
+		CODI_EMPL_PER, 
+		CODI_SEDE_SED, 
+		DESC_DEPE_TDE, 
+		ABREVIATURA, 
+		UNIDAD_ORGANIZACIONAL 
+		FROM TDEPENDENCIAS 
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="cod_dep"> CODI_DEPE_TDE = #cod_dep#</isNotNull>
+			<isNotNull prepend="AND" property="cod_per"> CODI_EMPL_PER = #cod_per#</isNotNull>
+		</dynamic>
+  	</select>
+  	
+  	
+	<select id="selectDependencias"  parameterClass="map" resultMap="resultadoJefe">
+		SELECT CODI_DEPE_TDE, 
+		CODI_EMPL_PER, 
+		CODI_SEDE_SED, 
+		DESC_DEPE_TDE, 
+		ABREVIATURA, 
+		NVL(FLAG_INFO_INF, 6) as FLAG_INFO_INF,
+		UNIDAD_ORGANIZACIONAL 
+		FROM TDEPENDENCIAS 
+		WHERE ESTADO_ID='1'
+		AND CODI_EMPL_PER IS NOT NULL
+			<isNotNull prepend="AND" property="cod_dep"> CODI_DEPE_TDE = #cod_dep#</isNotNull>
+			<isNotNull prepend="AND" property="cod_per"> CODI_EMPL_PER = #cod_per#</isNotNull>
+			<isNotNull prepend="AND" property="nom_largo"> DESC_DEPE_TDE like #nom_largo#</isNotNull>
+			<isNotNull prepend="AND" property="uuoo"> UNIDAD_ORGANIZACIONAL like #uuoo#</isNotNull>
+  	</select>
+</sqlMap>

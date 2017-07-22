@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="requerimientonoprogbienes">
+	<typeAlias alias="requerimientoNoProgBienesBean"
+		type="pe.gob.sunat.administracion2.siga.rqnp.model.domain.RequerimientoNoProgBienesBean" />
+	
+	<resultMap id="lstRqnpBienes" class="requerimientoNoProgBienesBean">
+		<result property="codigoRqnp" column="CODI_RQNP_SRM" />
+		<result property="codigoBien" column="CODI_BSER_CAT" />
+		<result property="codigoUnidad" column="UNID_MEDI_DSR" />
+		<result property="cantBien" column="CANT_TOTA_DSR" />
+		<result property="precioUnid" column="PUNI_NACI_DSR" />
+		<result property="flagServ" column="FLAG_PASE_SRM" />
+		<result property="desBien" column="DESC_BSER_CAT" />
+		<result property="tipo_bien" column="TIPO_BSER_CAT" />
+		<result property="desUnid" column="DESC_MEDI_UND" />
+		<result property="codClasificador" column="PART_GAST_CAT" />
+		<result property="desClasificador" column="DESC_GAST_GAS" />
+		<result property="asignacion_especi" column="PLAN_CNTA_GAS" />
+		<result property="tipo_ruta" column="PLAN_CTA_TRAN" />
+		<result property="ind_especializado" column="IND_ESPECIALIZADO" />
+		<result property="auct1" column="COD_AUCT1" />
+		<result property="auct2" column="COD_AUCT2" />
+		<result property="auct3" column="COD_AUCT3" />
+		<result property="ind_auct1" column="IND_AUTORIZAAUCT1" />
+		<result property="ind_auct2" column="IND_AUTORIZAAUCT2" />
+		<result property="ind_auct3" column="IND_AUTORIZAAUCT3" />
+		<result property="cod_jefe" column="COD_JEFE" />
+		<result property="saldo" column="SALDO" />
+		<result property="numeroArchivo" column="NUM_ARCHIVO" />
+		<result property="ind_estado" column="IND_ESTADO" />
+		<result property="num_exp" column="NUME_EXPE_EXP" />
+		<result property="cod_plaza" column="COD_PLAZA" />
+		<result property="ind_estado_alterno" column="IND_ESTADO_ALTERNO" />
+		<result property="ind_aprueba_exceso" column="IND_APRUEBA_EXCESO" />
+		<result property="uuoo_exceso" column="COD_UUOO_EXCESO" />
+		<result property="oec_compra" column="COD_UORESPONSABLE" />
+		<result property="cod_proveedor" column="COD_PROVEEDOR" />
+		<result property="obs_justificacion" column="OBS_JUSTIFICACION" />
+		<result property="obs_plazo_entrega" column="OBS_PLAZOENTREGA" />
+		<result property="obs_lugar_entrega" column="OBS_LUGARENTREGA" />
+		<result property="obs_dir_entrega" column="OBS_DIRECCENTREGA" />
+		<result property="nom_estado" column="DESC_ESTADO" />
+		<result property="des_tecnica" column="DES_TECNICA" />
+		<result property="item_origen" column="COD_ITEMORIGEN" />
+		<result property="nro_adjuntos" column="NRO_ADJUNTOS" />
+		<result property="ind_recurrente" column="IND_RECURRENTE" />
+		<!-- INICIO:DPORRASC -->
+		<result property="cod_ambito" column="COD_AMBITO" />
+		<result property="cod_tipo_prog" column="PLAN_CTA_TRAN" />
+		<result property="fechEnviOec" column="FECH_ENVI_OEC" />
+		<!-- FIN:DPORRASC -->	
+	</resultMap>
+	
+	
+	<select id="selectRqnpBienes" parameterClass="java.util.HashMap" resultMap="lstRqnpBienes">
+	SELECT
+ 		REQUERIMIENTO_NO_PROG_BIENES.FECH_ENVI_OEC,
+ 		REQUERIMIENTO_NO_PROG_BIENES.CODI_RQNP_SRM,   		
+		REQUERIMIENTO_NO_PROG_BIENES.CODI_BSER_CAT,   
+		REQUERIMIENTO_NO_PROG_BIENES.UNID_MEDI_DSR,   
+		REQUERIMIENTO_NO_PROG_BIENES.CANT_TOTA_DSR,   
+		REQUERIMIENTO_NO_PROG_BIENES.PUNI_NACI_DSR, 
+		REQUERIMIENTO_NO_PROG.FLAG_PASE_SRM,  
+		CATALOGO_BIEN_SERVICIO.TIPO_BSER_CAT,  
+		CATALOGO_BIEN_SERVICIO.DESC_BSER_CAT,   
+		UNIDADES_DE_MEDIDAS.DESC_MEDI_UND  ,
+	  	CATALOGO_FILTRO.PART_GAST_CAT,
+		CLASIFICADOR_GASTO.DESC_GAST_GAS,
+		CATALOGO_BIEN_SERVICIO.PLAN_CNTA_GAS,
+    	CATALOGO_BIEN_SERVICIO.PLAN_CTA_TRAN,
+    	REQUERIMIENTO_NO_PROG_BIENES.IND_ESPECIALIZADO,
+    	REQUERIMIENTO_NO_PROG_BIENES.COD_AUCT1,
+    	REQUERIMIENTO_NO_PROG_BIENES.COD_AUCT2,
+    	REQUERIMIENTO_NO_PROG_BIENES.COD_AUCT3,
+    	REQUERIMIENTO_NO_PROG_BIENES.IND_AUTORIZAAUCT1,
+    	REQUERIMIENTO_NO_PROG_BIENES.IND_AUTORIZAAUCT2,
+    	REQUERIMIENTO_NO_PROG_BIENES.IND_AUTORIZAAUCT3,
+    	REQUERIMIENTO_NO_PROG_BIENES.COD_JEFE,
+    	(SELECT SER_RNP.FN_SALDO_CD (REQUERIMIENTO_NO_PROG.ANO_PROC_SRM,REQUERIMIENTO_NO_PROG_BIENES.COD_PLAZA ,REQUERIMIENTO_NO_PROG_BIENES.CODI_BSER_CAT) AS RESULTADO FROM DUAL)  SALDO,
+    	REQUERIMIENTO_NO_PROG_BIENES.NUM_ARCHIVO,
+    	REQUERIMIENTO_NO_PROG_BIENES.IND_ESTADO,
+    	REQUERIMIENTO_NO_PROG_BIENES.NUME_EXPE_EXP,
+    	REQUERIMIENTO_NO_PROG_BIENES.COD_PLAZA,
+    	IND_ESTADO_ALTERNO,
+    	IND_APRUEBA_EXCESO,
+    	COD_UUOO_EXCESO,
+    	COD_UORESPONSABLE,
+    	REQUERIMIENTO_NO_PROG_BIENES.COD_PROVEEDOR,
+		REQUERIMIENTO_NO_PROG_BIENES.OBS_JUSTIFICACION,
+		REQUERIMIENTO_NO_PROG_BIENES.OBS_PLAZOENTREGA,
+		REQUERIMIENTO_NO_PROG_BIENES.OBS_LUGARENTREGA,
+		REQUERIMIENTO_NO_PROG_BIENES.OBS_DIRECCENTREGA,
+		ESTADOS.DESC_ESTADO,
+		REQUERIMIENTO_NO_PROG_BIENES.DES_TECNICA,
+		REQUERIMIENTO_NO_PROG_BIENES.COD_ITEMORIGEN,
+		(select count(*) 
+		from sys_registro_archivos_fisico
+		where NUME_REGI_ARC = requerimiento_no_prog_bienes.num_archivo
+		and trim(FUENTE) = 'TDR/EETT/Exp.Técnico'  
+		and cod_estado='1') NRO_ADJUNTOS,
+		CATALOGO_BIEN_SERVICIO.IND_RECURRENTE,
+		CATALOGO_BIEN_SERVICIO.COD_AMBITO<!-- , AGREGADO -->
+		<!-- CATALOGO_BIEN_SERVICIO.COD_TIPO_PROG  AGREGADO -->
+	FROM REQUERIMIENTO_NO_PROG_BIENES,   
+		CATALOGO_BIEN_SERVICIO,   
+ 		UNIDADES_DE_MEDIDAS  ,
+		REQUERIMIENTO_NO_PROG,
+		CATALOGO_FILTRO,
+		CLASIFICADOR_GASTO,
+		(SELECT DESC_REGI_EST Desc_estado, VALO_ESTA_EST Valor FROM  SYS_ESTADOS
+		WHERE NOMB_TABL_EST='REQUERIMIENTO_NO_PROG_BIENES') ESTADOS
+	WHERE 
+		( REQUERIMIENTO_NO_PROG_BIENES.CODI_RQNP_SRM = REQUERIMIENTO_NO_PROG.CODI_RQNP_SRM ) AND
+		( REQUERIMIENTO_NO_PROG_BIENES.IND_ESTADO= ESTADOS.Valor (+) ) and 
+		( requerimiento_no_prog_bienes.codi_bser_cat = catalogo_bien_servicio.codi_bser_cat (+)) AND  
+		( requerimiento_no_prog_bienes.unid_medi_dsr = unidades_de_medidas.codi_medi_und (+)) AND
+		(requerimiento_no_prog_bienes.codi_bser_cat = CATALOGO_FILTRO.codi_bser_cat (+)) AND
+		(CATALOGO_FILTRO.PART_GAST_CAT = CLASIFICADOR_GASTO.CLAS_GAST_GAS (+)) AND
+		CLASIFICADOR_GASTO.ann_clasificador =  REQUERIMIENTO_NO_PROG.ANO_PROC_SRM AND 
+		  CLASIFICADOR_GASTO.Ann_Clasificador=CATALOGO_FILTRO.Ann_Clasificador  
+		<isNotNull prepend="AND" property="cod_req"> REQUERIMIENTO_NO_PROG_BIENES.CODI_RQNP_SRM = #cod_req#</isNotNull>
+		<isNotNull prepend="AND" property="cod_bien"> REQUERIMIENTO_NO_PROG_BIENES.CODI_BSER_CAT = #cod_bien#</isNotNull>
+		<isNotNull prepend="AND" property="ind_estado"> REQUERIMIENTO_NO_PROG_BIENES.IND_ESTADO = #ind_estado#</isNotNull>
+  </select>
+  
+	
+	<resultMap id="lstRqnpBienesModifica" class="requerimientoNoProgBienesBean">
+		<result property="codigoRqnp" column="CODI_RQNP_SRM" />
+		<result property="codigoBien" column="CODI_BSER_CAT" />
+		<result property="item_origen" column="COD_ITEMORIGEN" />
+		<result property="codigoUnidad" column="UNID_MEDI_DSR" />
+		<result property="cantBien" column="CANT_TOTA_DSR" />
+		<result property="precioUnid" column="PUNI_NACI_DSR" />
+		<result property="precio_origen" column="MTO_PRECIOORIGEN" />
+		<result property="tipo_bien" column="TIPO_BSER_CAT" />
+		<result property="desBien" column="DESC_BSER_CAT" />
+		<result property="desBien_origen" column="DESC_BSER_CAT_ORIGEN" />
+		<result property="desUnid" column="DESC_MEDI_UND" />
+		<result property="desUnid_origen" column="UNID_MEDI_UND_ORIGEN" />
+		<result property="numeroArchivo" column="NUM_ARCHIVO" />
+		<result property="ind_estado" column="IND_ESTADO" />
+		<result property="num_exp" column="NUME_EXPE_EXP" />
+		<result property="cod_plaza" column="COD_PLAZA" />
+		<result property="ind_estado_alterno" column="IND_ESTADO_ALTERNO" />
+		<result property="ind_aprueba_exceso" column="IND_APRUEBA_EXCESO" />
+		<result property="uuoo_exceso" column="COD_UUOO_EXCESO" />
+		<result property="oec_compra" column="COD_UORESPONSABLE" />
+		<result property="cod_proveedor" column="COD_PROVEEDOR" />
+		<result property="obs_justificacion" column="OBS_JUSTIFICACION" />
+		<result property="obs_plazo_entrega" column="OBS_PLAZOENTREGA" />
+		<result property="obs_lugar_entrega" column="OBS_LUGARENTREGA" />
+		<result property="obs_dir_entrega" column="OBS_DIRECCENTREGA" />
+		<result property="des_tecnica" column="DES_TECNICA" />
+	</resultMap>
+	
+
+<select id="selectRqnpBienesModifica" parameterClass="java.util.HashMap" resultMap="lstRqnpBienesModifica">
+	SELECT
+        REQUERIMIENTO_NO_PROG_BIENES.CODI_RQNP_SRM,           
+        REQUERIMIENTO_NO_PROG_BIENES.CODI_BSER_CAT,
+        REQUERIMIENTO_NO_PROG_BIENES.COD_ITEMORIGEN,      
+        REQUERIMIENTO_NO_PROG_BIENES.UNID_MEDI_DSR,  
+        REQUERIMIENTO_NO_PROG_BIENES.CANT_TOTA_DSR,   
+        REQUERIMIENTO_NO_PROG_BIENES.PUNI_NACI_DSR, 
+        REQUERIMIENTO_NO_PROG_BIENES.MTO_PRECIOORIGEN,
+        C1.TIPO_BSER_CAT,  
+        C1.DESC_BSER_CAT,   
+        C2.DESC_BSER_CAT  DESC_BSER_CAT_ORIGEN,   
+        U1.DESC_MEDI_UND  ,
+        U2.UNID_MEDI_UND UNID_MEDI_UND_ORIGEN  ,
+        REQUERIMIENTO_NO_PROG_BIENES.NUM_ARCHIVO,
+        REQUERIMIENTO_NO_PROG_BIENES.IND_ESTADO,
+        REQUERIMIENTO_NO_PROG_BIENES.NUME_EXPE_EXP,
+        REQUERIMIENTO_NO_PROG_BIENES.COD_PLAZA,
+        IND_ESTADO_ALTERNO,
+        IND_APRUEBA_EXCESO,
+        COD_UUOO_EXCESO,
+        COD_UORESPONSABLE,
+        REQUERIMIENTO_NO_PROG_BIENES.COD_PROVEEDOR,
+    	REQUERIMIENTO_NO_PROG_BIENES.OBS_JUSTIFICACION,
+    	REQUERIMIENTO_NO_PROG_BIENES.OBS_PLAZOENTREGA,
+    	REQUERIMIENTO_NO_PROG_BIENES.OBS_LUGARENTREGA,
+    	REQUERIMIENTO_NO_PROG_BIENES.OBS_DIRECCENTREGA,
+    	REQUERIMIENTO_NO_PROG_BIENES.DES_TECNICA
+	FROM REQUERIMIENTO_NO_PROG_BIENES,   
+        CATALOGO_BIEN_SERVICIO C1,   
+        CATALOGO_BIEN_SERVICIO C2,
+         UNIDADES_DE_MEDIDAS  U1 ,
+          UNIDADES_DE_MEDIDAS  U2 ,
+        REQUERIMIENTO_NO_PROG,
+        CATALOGO_FILTRO,
+        CLASIFICADOR_GASTO
+	WHERE 
+        ( REQUERIMIENTO_NO_PROG_BIENES.CODI_RQNP_SRM = REQUERIMIENTO_NO_PROG.CODI_RQNP_SRM ) AND
+        ( requerimiento_no_prog_bienes.codi_bser_cat = C1.codi_bser_cat (+)) AND  
+        ( requerimiento_no_prog_bienes.COD_ITEMORIGEN = C2.codi_bser_cat (+)) AND
+        ( requerimiento_no_prog_bienes.unid_medi_dsr = U1.codi_medi_und (+)) AND
+        ( C2.UNID_MUSO_CAT = U2.CODI_MEDI_UND ) AND
+        (requerimiento_no_prog_bienes.codi_bser_cat = CATALOGO_FILTRO.codi_bser_cat (+)) AND
+        (CATALOGO_FILTRO.PART_GAST_CAT = CLASIFICADOR_GASTO.CLAS_GAST_GAS (+)) AND
+        CLASIFICADOR_GASTO.ann_clasificador =  REQUERIMIENTO_NO_PROG.ANO_PROC_SRM AND 
+          CLASIFICADOR_GASTO.Ann_Clasificador=CATALOGO_FILTRO.Ann_Clasificador 
+		<isNotNull prepend="AND" property="cod_req"> REQUERIMIENTO_NO_PROG_BIENES.CODI_RQNP_SRM = #cod_req#</isNotNull>
+		<isNotNull prepend="AND" property="cod_bien"> REQUERIMIENTO_NO_PROG_BIENES.CODI_BSER_CAT = #cod_bien#</isNotNull>
+		<isNotNull prepend="AND" property="ind_estado"> REQUERIMIENTO_NO_PROG_BIENES.IND_ESTADO = #ind_estado#</isNotNull>
+	
+  </select>
+	
+<insert id="insertar" parameterClass="requerimientoNoProgBienesBean">
+INSERT INTO REQUERIMIENTO_NO_PROG_BIENES(
+		CODI_RQNP_SRM, 
+		CODI_BSER_CAT,
+		UNID_MEDI_DSR,
+		CANT_TOTA_DSR,
+		PUNI_NACI_DSR,
+		PUNI_DOLA_DSR,
+		PRES_BIEN_SRM,
+		CODI_PROC_PAA,
+		CODI_REGI_ADQ,
+		CLASIFICADOR,
+		IND_ATENCION,
+		IND_ESPECIALIZADO,
+		COD_AUCT1,
+		COD_AUCT2,
+		COD_AUCT3,
+		IND_ESTADO,
+		MTO_PRECIOORIGEN,
+		MTO_PRECIOITEM,
+		COD_ITEMORIGEN,
+		NUME_EXPE_EXP,
+		COD_PLAZA	
+		)VALUES(
+		#codigoRqnp#,
+		#codigoBien#,
+		#codigoUnidad#,
+		#cantBien#,
+		#precioUnid#,
+		#precioUnidDol#,
+		#presBien#,
+		#codPaa#,
+		#codRegAdq#,
+		#codClasifGasto#,
+		#indAtentencion#,
+		#ind_especializado#,
+		#auct1#,
+		#auct2#,
+		#auct3#,
+		#ind_estado#,
+		#precio_origen#,
+		#precio_item#,
+		#item_origen#,
+		#num_exp#,
+		#cod_plaza#
+		)
+	</insert>	
+	
+	<update id="updateBienesEntrega"  parameterClass="requerimientoNoProgBienesBean">
+		UPDATE  REQUERIMIENTO_NO_PROG_BIENES  
+		SET COD_PROVEEDOR 	= #cod_proveedor#,
+		OBS_JUSTIFICACION 		= #obs_justificacion#,
+		OBS_PLAZOENTREGA 	= #obs_plazo_entrega#,
+		OBS_LUGARENTREGA 		= #obs_lugar_entrega#,
+		OBS_DIRECCENTREGA 		= #obs_dir_entrega#,
+		DES_TECNICA 		= #des_tecnica#
+		WHERE CODI_RQNP_SRM = 	#codigoRqnp# AND
+		CODI_BSER_CAT = #codigoBien#
+	</update>
+		
+
+	<update id="updateBienes"  parameterClass="requerimientoNoProgBienesBean">
+		UPDATE  REQUERIMIENTO_NO_PROG_BIENES  
+		SET CANT_TOTA_DSR 	= #cantBien#,
+		PUNI_NACI_DSR 		= #precioUnid#,
+		MTO_PRECIOORIGEN 	= #precio_origen#,
+		MTO_PRECIOITEM 		= #precio_item#
+		WHERE CODI_RQNP_SRM = 	#codigoRqnp# AND
+		CODI_BSER_CAT = #codigoBien#
+	</update>
+	
+	
+	<update id="updateModificaBienes"  parameterClass="requerimientoNoProgBienesBean">
+		UPDATE  REQUERIMIENTO_NO_PROG_BIENES  
+		SET PUNI_NACI_DSR 		= #precioUnid# ,
+		UNID_MEDI_DSR			=#codigoUnidad# ,
+		MTO_PRECIOITEM 			= #precio_item# ,
+		COD_AUCTMODIFICO 		=#auc_modi# ,
+		COD_USERMODIFICO 		=#user_modi# ,
+		FEC_ITEMMODIFICADO 		= #fec_item_modi#,
+		CODI_BSER_CAT			=#codigoBien#
+		WHERE CODI_RQNP_SRM = 	#codigoRqnp# AND
+		CODI_BSER_CAT = #item_origen#
+	</update>
+			
+	<delete id="deleteBien"  parameterClass="requerimientoNoProgBienesBean">
+		DELETE  REQUERIMIENTO_NO_PROG_BIENES  
+		WHERE CODI_RQNP_SRM = 	#codigoRqnp# AND
+		CODI_BSER_CAT = #codigoBien#
+	</delete>
+	
+	
+	<update id="updateCantidades"  parameterClass="requerimientoNoProgBienesBean">
+		UPDATE  REQUERIMIENTO_NO_PROG_BIENES  
+		SET CANT_TOTA_DSR = #cantBien#
+		WHERE CODI_RQNP_SRM = 	#codigoRqnp# AND
+		CODI_BSER_CAT = #codigoBien#
+	</update>
+	
+	<update id="updateEstado"  parameterClass="requerimientoNoProgBienesBean">
+		UPDATE  REQUERIMIENTO_NO_PROG_BIENES  
+		<dynamic prepend="set" >
+		<isNotNull prepend="," property="ind_estado" > IND_ESTADO = #ind_estado# </isNotNull>
+		<isNotNull prepend="," property="ind_estado_alterno" > IND_ESTADO_ALTERNO = #ind_estado_alterno# </isNotNull>
+		<isNotNull prepend="," property="oec_compra" > COD_UORESPONSABLE = #oec_compra# </isNotNull>
+		<isNotNull prepend="," property="cod_plaza" > COD_PLAZA = #cod_plaza# </isNotNull>
+		<isNotNull prepend="," property="cod_jefe" > COD_JEFE = #cod_jefe# </isNotNull>
+		<isNotNull prepend="," property="fechEnviOec" > FECH_ENVI_OEC = SYSDATE </isNotNull>
+		</dynamic>
+		WHERE CODI_RQNP_SRM = 	#codigoRqnp# AND
+		CODI_BSER_CAT = #codigoBien#
+	</update>
+	
+	<update id="updateEstadoAUC"  parameterClass="requerimientoNoProgBienesBean">
+		UPDATE  REQUERIMIENTO_NO_PROG_BIENES  
+		<dynamic prepend="set" >
+		<isNotNull prepend="," property="ind_estado" > IND_ESTADO = #ind_estado# </isNotNull>
+		<isNotNull prepend="," property="ind_estado_alterno" > IND_ESTADO_ALTERNO = #ind_estado_alterno# </isNotNull>
+		<isNotNull prepend="," property="oec_compra" > COD_UORESPONSABLE = #oec_compra# </isNotNull>
+		<isNotNull prepend="," property="cod_plaza" > COD_PLAZA = #cod_plaza# </isNotNull>
+		<isNotNull prepend="," property="cod_jefe" > COD_JEFE = #cod_jefe# </isNotNull>
+		<isNotNull prepend="," property="ind_autorizaauct1" > IND_AUTORIZAAUCT1 = #ind_autorizaauct1# </isNotNull>
+		<isNotNull prepend="," property="fec_autorizaauct1" > FEC_AUTORIZAAUCT1 = #fec_autorizaauct1# </isNotNull>
+		<isNotNull prepend="," property="cod_usuarioauct1" > COD_USUARIOAUCT1 = #cod_usuarioauct1# </isNotNull>
+		<isNotNull prepend="," property="fechEnviOec" > FECH_ENVI_OEC = SYSDATE </isNotNull>
+		</dynamic>
+		WHERE CODI_RQNP_SRM = 	#codigoRqnp# AND
+		CODI_BSER_CAT = #codigoBien#
+	</update>
+	<update id="updateEstadoOnly"  parameterClass="requerimientoNoProgBienesBean">
+		UPDATE  REQUERIMIENTO_NO_PROG_BIENES  
+		SET IND_ESTADO = #ind_estado#
+		WHERE CODI_RQNP_SRM = 	#codigoRqnp# AND
+		CODI_BSER_CAT = #codigoBien#
+	</update>
+	
+	<update id="updateRechazo"  parameterClass="requerimientoNoProgBienesBean">
+		UPDATE  REQUERIMIENTO_NO_PROG_BIENES  
+		SET IND_ESTADO = #ind_estado#,
+		OBS_RECHAZO=#obs_rechazo#,
+		COD_JEFE=#cod_jefe#,
+		FEC_RECHAZO =#fec_rechazo#
+		WHERE CODI_RQNP_SRM = 	#codigoRqnp# AND
+		CODI_BSER_CAT = #codigoBien#
+	</update>
+	
+	<update id="updateRechazoAuc"  parameterClass="requerimientoNoProgBienesBean">
+		UPDATE  REQUERIMIENTO_NO_PROG_BIENES  
+		SET IND_AUTORIZAAUCT1 ='R', 
+		IND_ESTADO = #ind_estado#,
+		OBS_RECHAZO =#obs_rechazo#,
+		COD_JEFE =#cod_jefe#,
+		FEC_RECHAZO =#fec_rechazo#,
+		FEC_AUTORIZAAUCT1 = #fec_rechazo#,
+		COD_USUARIOAUCT1 = #cod_jefe#,
+		OBS_RECHAZO1 = #obs_rechazo#
+		WHERE CODI_RQNP_SRM = 	#codigoRqnp# AND
+		CODI_BSER_CAT = #codigoBien#
+	</update>
+	
+	<update id="updateFile"  parameterClass="requerimientoNoProgBienesBean">
+		UPDATE  REQUERIMIENTO_NO_PROG_BIENES  
+		SET NUM_ARCHIVO = #numeroArchivo#
+		WHERE CODI_RQNP_SRM = 	#codigoRqnp# AND
+		CODI_BSER_CAT = #codigoBien#
+	</update>
+	
+	
+	<select id="rqnp_saldo_cd" parameterClass="map" resultClass="java.math.BigDecimal">
+		SELECT SIGA01.SER_RNP.FN_SALDO_CD (#anio_pro#,#cod_sede#,#cod_bien#) AS RESULTADO FROM DUAL <!-- SE UTILIZA PLAZA -->
+	</select>
+	
+	
+	<parameterMap id="crear_exp_parm"
+		class="map">
+		<parameter property="anio_pro" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+		<parameter property="cod_sede" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+		
+		<parameter property="cod_proceso" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+		
+		<parameter property="cod_responsable" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+		
+		<parameter property="cod_doc" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+		
+		<parameter property="cod_exp" jdbcType="CHAR" javaType="java.lang.String"
+			mode="OUT" />
+			
+	</parameterMap>
+	
+	
+	 <procedure id="sp_crear_exp" parameterMap="crear_exp_parm" >
+		{call SIGA.PA_EXPEDIENTES.sp_crear_exp(?,?,?,?,?,?)}
+	</procedure>
+	
+	
+ 	<parameterMap id="crear_acc_parm"
+		class="map">
+		<parameter property="cod_exp" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+		<parameter property="cod_proceso" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+		<parameter property="cod_accion" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+		<parameter property="cod_sede" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+		<parameter property="cod_responsable" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+		<parameter property="exp_estado" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+		<parameter property="exp_obs" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+	</parameterMap>
+	
+	<procedure id="sp_crear_acc" parameterMap="crear_acc_parm" >
+		{call SIGA.PA_EXPEDIENTES.sp_crear_acc(?,?,?,?,?,?,?)}
+	</procedure>
+
+	
+	<select id="rqnp_uuoo_no_supervision" parameterClass="map" resultClass="java.lang.String">
+		SELECT SIGA01.SER_RNP.FN_GET_UUOO_NO_SUPERVISION(#cod_dep#,#long_uuoo#) AS RESULTADO FROM DUAL
+	</select>
+	
+</sqlMap>

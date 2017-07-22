@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd ">
+
+	<jee:jndi-lookup id="dcsig" jndi-name="jdbc/dcsig" resource-ref="true" cache="true">
+	</jee:jndi-lookup>
+	
+	<jee:jndi-lookup id="dgsig" jndi-name="jdbc/dgsig" resource-ref="true" cache="true">
+	</jee:jndi-lookup>
+
+	<jee:jndi-lookup id="dxrfisca" jndi-name="jdbc/dxrfisca" resource-ref="true" cache="true">	
+	</jee:jndi-lookup>
+
+	<bean id="lobHandler"  class="org.springframework.jdbc.support.lob.DefaultLobHandler" />
+	
+	<bean id="sqlMapClientDcsig" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sql-map-config-firma.xml" />
+		<property name="dataSource" ref="dcsig" />
+		<property name="lobHandler" ref="lobHandler"/>
+	</bean>
+
+	<bean id="sqlMapClientDgsig" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sql-map-config-firma.xml" />
+		<property name="dataSource" ref="dgsig" />
+		<property name="lobHandler" ref="lobHandler"/>
+	</bean>
+
+	<bean id="sqlMapClientDxrfisca" 
+		class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sql-map-config-firma.xml" />
+		<property name="dataSource" ref="dxrfisca" />		
+		<property name="lobHandler" ref="lobHandler"/>
+	</bean>
+
+	<bean id="firma.archbinDao" 
+		class="pe.gob.sunat.recurso2.administracion.siga.firma.model.dao.ibatis.SqlMapT5282DAOImpl">
+		<property name="sqlMapClient" ref="sqlMapClientDxrfisca"></property>
+	</bean>	
+	
+	<bean id="firma.firmaelectronDao" 
+		class="pe.gob.sunat.recurso2.administracion.siga.firma.model.dao.ibatis.SqlMapT7073FirmaElectronDAOImpl">
+		<property name="sqlMapClient" ref="sqlMapClientDgsig"></property>
+	</bean>	
+	
+	<bean id="firma.documentofirmDao" 
+		class="pe.gob.sunat.recurso2.administracion.siga.firma.model.dao.ibatis.SqlMapT7074DocumentoFirmDAOImpl">
+		<property name="sqlMapClient" ref="sqlMapClientDgsig"></property>
+	</bean>	
+	
+	<bean id="firma.terminocondDao" 
+		class="pe.gob.sunat.recurso2.administracion.siga.firma.model.dao.ibatis.SqlMapT7075TerminoCondDAOImpl">
+		<property name="sqlMapClient" ref="sqlMapClientDgsig"></property>
+	</bean>	
+	
+	<bean id="firma.delegacfirmaDao" 
+		class="pe.gob.sunat.recurso2.administracion.siga.firma.model.dao.ibatis.SqlMapT7076DelegacFirmaDAOImpl">
+		<property name="sqlMapClient" ref="sqlMapClientDgsig"></property>
+	</bean>	
+	
+	<bean id="firma.maestroPersonalDao"
+		class="pe.gob.sunat.recurso2.administracion.siga.firma.model.dao.ibatis.SqlMapMaestroPersonalDaoImpl">
+		<property name="sqlMapClient" ref="sqlMapClientDgsig"></property>
+	</bean>
+
+	<bean id="firma.dependenciaDao"
+		class="pe.gob.sunat.recurso2.administracion.siga.firma.model.dao.ibatis.SqlMapDependenciaDaoImpl">
+		<property name="sqlMapClient" ref="sqlMapClientDgsig"></property>
+	</bean>
+
+	<bean id="firma.t01parametroDao"
+		class="pe.gob.sunat.recurso2.administracion.siga.firma.model.dao.ibatis.SqlMapT01ParametroDaoImpl">
+		<property name="sqlMapClient" ref="sqlMapClientDgsig"></property>
+	</bean>
+</beans>

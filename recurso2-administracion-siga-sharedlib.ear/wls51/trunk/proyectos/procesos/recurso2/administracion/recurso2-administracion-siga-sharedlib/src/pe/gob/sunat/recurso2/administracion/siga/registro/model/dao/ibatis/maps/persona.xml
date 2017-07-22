@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="persona_map">
+
+<typeAlias alias="personaBean"
+		type="pe.gob.sunat.recurso2.administracion.siga.registro.model.bean.PersonaBean" />
+
+	<resultMap id="resultado" class="personaBean">
+		<result property="codigo_persona" 	column="PERSONA_ID" />
+		<result property="ruc_persona" 		column="RUC" />
+		<result property="tipo_documento" 	column="DOCUMENTO_TIPO" />
+		<result property="numero_documento" column="DOCUMENTO_NUMERO" />
+		<result property="nombre_razon" 	column="NOMBRE_RAZON_SOCIAL" />
+		<result property="apellido_pat" 	column="APELLIDO_PATERNO" />
+		<result property="apellido_mat" 	column="APELLIDO_MATERNO" />
+		<result property="nombres" 			column="NOMBRES" />
+		<result property="tipo_persona" 	column="PERSONA_TIPO" />
+		<result property="direccion_per" 		column="DIRECCION" />
+	</resultMap>
+
+
+	<select id="selectPersona" parameterClass="map" resultMap="resultado">
+		SELECT PERSONA_ID,
+			RUC,
+			DOCUMENTO_TIPO,
+			DOCUMENTO_NUMERO,
+			NOMBRE_RAZON_SOCIAL,
+			APELLIDO_PATERNO,
+			APELLIDO_MATERNO,
+			NOMBRES,
+			PERSONA_TIPO,
+			DIRECCION
+		FROM PERSONA
+		<dynamic prepend="WHERE">
+				<isNotNull prepend="AND" property="num_ruc"> RUC = #num_ruc#</isNotNull>
+				<isNotNull prepend="AND" property="tipod_doc"> DOCUMENTO_TIPO = #tipod_doc#</isNotNull>
+				<isNotNull prepend="AND" property="num_doc"> DOCUMENTO_NUMERO = #num_doc#</isNotNull>
+				<isNotNull prepend="AND" property="id_persona"> PERSONA_ID = #id_persona#</isNotNull>
+		</dynamic>
+	</select>
+	
+	
+   <select id="selectPersonaID"  resultClass="java.lang.String">
+		SELECT LPAD(TO_NUMBER(NVL(MAX(PERSONA_ID),'0'))+1,8,'0')
+		FROM PERSONA
+  </select>
+	
+	
+	<insert id="insert" parameterClass="personaBean">	
+	INSERT INTO PERSONA(
+	PERSONA_ID,
+	NOMBRE_RAZON_SOCIAL,
+	PERSONA_TIPO,
+	DOCUMENTO_TIPO,
+	DOCUMENTO_NUMERO,
+	RUC,
+	DIRECCION,
+	ESTADO,
+	DEPARTAMENTO_ID,
+	PROVINCIA_ID,
+	DISTRITO_ID,
+	PAIS_ID)
+	VALUES(
+	#codigo_persona#,
+	substr(#nombre_razon#,1,200),
+	decode(substr(#ruc_persona#,1,2),'10','JURIDICA','JURIDICA'),
+	'04',
+	#ruc_persona#,
+	#ruc_persona#,
+	substr(#direccion_per#,1,200),
+	'ACTIVO',
+	#cod_depa#,
+	#cod_prov#,
+	#cod_dis#,
+	#cod_pais#
+	) 
+	</insert>
+
+
+	<resultMap id="resultado2" class="personaBean">
+		<result property="codigo_persona" 	column="PERSONA_ID" />
+		<result property="ruc_persona" 		column="RUC" />
+		<result property="tipo_documento" 	column="DOCUMENTO_TIPO" />
+		<result property="numero_documento" column="DOCUMENTO_NUMERO" />
+		<result property="nombre_razon" 	column="NOMBRE_RAZON_SOCIAL" />
+		<result property="apellido_pat" 	column="APELLIDO_PATERNO" />
+		<result property="apellido_mat" 	column="APELLIDO_MATERNO" />
+		<result property="nombres" 			column="NOMBRES" />
+		<result property="tipo_persona" 	column="PERSONA_TIPO" />
+		<result property="direccion_per" 		column="DIRECCION" />
+
+		<result property="referencia" 	column="REFERENCIA" />
+		<result property="fecha_nacimiento" 		column="FECHA_NACIMIENTO" />
+		<result property="user_crea" 	column="USER_CREA" />
+		<result property="fech_crea" 		column="FECH_CREA" />
+		<result property="user_modi" 	column="USER_MODI" />
+		<result property="fech_modi" 		column="FECH_MODI" />
+
+	</resultMap>
+
+	<insert id="insert2" parameterClass="personaBean">	
+	INSERT INTO PERSONA(
+	PERSONA_ID,
+	NOMBRE_RAZON_SOCIAL,
+	PERSONA_TIPO,
+	DOCUMENTO_TIPO,
+	DOCUMENTO_NUMERO,
+	RUC,
+	DIRECCION,
+	ESTADO,
+	DEPARTAMENTO_ID,
+	PROVINCIA_ID,
+	DISTRITO_ID,
+	PAIS_ID,
+	
+	NOMBRES,
+	APELLIDO_PATERNO,
+	APELLIDO_MATERNO,
+	REFERENCIA,
+	FECHA_NACIMIENTO,
+	USER_CREA,
+	FECH_CREA,
+	USER_MODI,
+	FECH_MODI	
+	)
+	VALUES(
+	#codigo_persona#,
+	substr(#nombre_razon#,1,200),
+	#tipo_persona#,
+	#tipo_documento#,
+	#numero_documento#,
+	#ruc_persona#,
+	substr(#direccion_per#,1,200),
+	'ACTIVO',
+	#cod_depa#,
+	#cod_prov#,
+	#cod_dis#,
+	#cod_pais#,
+	
+	substr(#nombres#,1,50),
+	substr(#apellido_pat#,1,50),
+	substr(#apellido_mat#,1,50),
+	substr(#referencia#,1,200),
+	#fecha_nacimiento#,
+	#user_crea#,
+	#fech_crea#,
+	#user_modi#,
+	#fech_modi#
+	) 
+	</insert>
+	
+	<update id="update_ruc"  parameterClass="personaBean">
+		UPDATE PERSONA
+		SET RUC =#ruc_persona#
+		WHERE PERSONA_ID =	#codigo_persona# 
+	</update>
+	
+	
+	<parameterMap id="sp_ruc_datos_parm"		class="map">
+		<parameter property="num_ruc" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+		<parameter property="razon_social" jdbcType="CHAR" javaType="java.lang.String"
+			mode="OUT" />
+		
+		<parameter property="cod_ubigeo" jdbcType="CHAR" javaType="java.lang.String"
+			mode="OUT" />
+		
+		<parameter property="tipo_via" jdbcType="CHAR" javaType="java.lang.String"
+			mode="OUT" />
+		
+		<parameter property="nom_via" jdbcType="CHAR" javaType="java.lang.String"
+			mode="OUT" />
+		
+		<parameter property="num_via" jdbcType="CHAR" javaType="java.lang.String"
+			mode="OUT" />
+			
+		<parameter property="num_interior" jdbcType="CHAR" javaType="java.lang.String"
+			mode="OUT" />
+		
+		<parameter property="tipo_zona" jdbcType="CHAR" javaType="java.lang.String"
+			mode="OUT" />
+			
+		<parameter property="nom_zona" jdbcType="CHAR" javaType="java.lang.String"
+			mode="OUT" />
+			
+		<parameter property="referencia" jdbcType="CHAR" javaType="java.lang.String"
+			mode="OUT" />
+		<parameter property="ruc_estado" jdbcType="CHAR" javaType="java.lang.String"
+			mode="OUT" />	
+	</parameterMap>
+
+	
+	 <procedure id="sp_ruc_datos" parameterMap="sp_ruc_datos_parm" >
+		{call SIGA.PKG_SERVICIOS_PERSONA.GET_RUC_DATOS_ESTADO(?,?,?,?,?,?,?,?,?,?,?)}
+	</procedure>
+	
+	
+  <select id="valida_ruc" parameterClass="map" resultClass="java.lang.String">
+		SELECT SIGA.PKG_SERVICIOS_PERSONA.VALIDA_RUC(#num_ruc#)  AS RESULTADO FROM DUAL
+  </select>
+
+<select id="get_ruc_estado" parameterClass="map" resultClass="java.lang.String">
+		SELECT SIGA.PKG_SERVICIOS_PERSONA.GET_RUC_ESTADO(#num_ruc#)  AS RESULTADO FROM DUAL
+  </select>
+	
+	
+	
+</sqlMap>

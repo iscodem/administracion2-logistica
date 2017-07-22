@@ -1,0 +1,417 @@
+<project name="recurso2-administracion-siga-sharedlib" default="ear-gen" basedir=".">
+  <tstamp>
+    <format property="TODAY" pattern="dd-MM-yyyy"/>
+    <format property="touch.time" pattern="yyyyMMddhhmm"/>
+  </tstamp>
+	
+	<!-- agregar menuldap y frameworkcore, al ear, luego generar y deployar -->
+	<property name="model"   value="recurso2-administracion-siga-model"/>
+	<property name="dao-ifz"   value="recurso2-administracion-siga-dao-ifz"/>
+	<property name="dao-imp"   value="recurso2-administracion-siga-dao-imp"/>
+	<property name="service-ifz" value="recurso2-administracion-siga-service-ifz"/>
+	<property name="service-imp" value="recurso2-administracion-siga-service-imp"/>
+	<!--<property name="controller" value="recurso2-administracion-siga-constroller"/>-->
+	<property name="util" 		value="recurso2-administracion-siga-util"/>
+	<property name="slbear" value="recurso2-administracion-siga-sharedlib"/>
+	<property name="impl.version" value="1.6.0"/>
+	<property name="user.name" value="emarchena"/>
+	<property name="java.version" value="1.6"/>
+	<property name="spec.version" value="1.2"/>
+	<property name="java.lib.dir" value="d:/dev/libs"/>
+	
+	
+	<property name="build.dir" value="build"/>
+	<property name="classes.dir" value="build/classes"/>
+	<property name="project.lib" value="build/classes/lib"/>
+	<property name="dominio.dir" value="camelopardus"/>
+
+	
+	<target name="model-gen">
+			<jar jarfile="${classes.dir}/lib/${model}-${impl.version}.jar">
+				<fileset dir="${classes.dir}">
+					<include name="pe/gob/sunat/recurso2/administracion/siga/archivo/model/bean/*.class"/>
+					<include name="pe/gob/sunat/recurso2/administracion/siga/expediente/model/bean/*.class"/>
+					<include name="pe/gob/sunat/recurso2/administracion/siga/firma/model/bean/*.class"/>
+					<include name="pe/gob/sunat/recurso2/administracion/siga/mensajeria/model/bean/*.class"/>
+					<include name="pe/gob/sunat/recurso2/administracion/siga/parametro/model/bean/*.class"/>
+					<include name="pe/gob/sunat/recurso2/administracion/siga/registro/model/bean/*.class"/>
+					<include name="pe/gob/sunat/recurso2/administracion/siga/ubigeo/model/bean/*.class"/>
+					
+				</fileset>
+
+				<manifest>
+					<attribute name="Built-By" value="${user.name}"/>
+					<attribute name="Build-Jdk" value="${java.version}"/>
+					<attribute name="Implementation-Version" value="${impl.version}"/>
+					<attribute name="Specification-Title" value="${model}"/>
+					<attribute name="Specification-Vendor" value="SUNAT-INSI DAIA"/>
+					<attribute name="Specification-Version" value="${spec.version}"/>
+				</manifest>
+			</jar>
+	</target>
+	
+	<target name="dao-ifz-gen">
+			<jar jarfile="${classes.dir}/lib/${dao-ifz}-${impl.version}.jar">
+				<fileset dir="${classes.dir}">
+					<include name="pe/gob/sunat/recurso2/administracion/siga/archivo/model/dao/*DAO.class"/>
+					<include name="pe/gob/sunat/recurso2/administracion/siga/expediente/model/dao/*DAO.class"/>
+					<include name="pe/gob/sunat/recurso2/administracion/siga/firma/model/dao/*.class"/>
+					<include name="pe/gob/sunat/recurso2/administracion/siga/mensajeria/model/dao/*DAO.class"/>
+					<include name="pe/gob/sunat/recurso2/administracion/siga/parametro/model/dao/*DAO.class"/>
+					<include name="pe/gob/sunat/recurso2/administracion/siga/registro/model/dao/*DAO.class"/>
+					<include name="pe/gob/sunat/recurso2/administracion/siga/ubigeo/model/dao/*DAO.class"/>
+					
+				</fileset>
+
+				<manifest>
+					<attribute name="Built-By" value="${user.name}"/>
+					<attribute name="Build-Jdk" value="${java.version}"/>
+					<attribute name="Implementation-Version" value="${impl.version}"/>
+					<attribute name="Specification-Title" value="${dao-ifz}"/>
+					<attribute name="Specification-Vendor" value="SUNAT-INSI DAIA"/>
+					<attribute name="Specification-Version" value="${spec.version}"/>
+				</manifest>
+			</jar>
+		</target>
+
+		<target name="dao-imp-gen">
+			<jar jarfile="${classes.dir}/lib/${dao-imp}-${impl.version}.jar">
+				<fileset dir="${classes.dir}">
+					
+					<include name="pe/gob/sunat/recurso2/administracion/siga/archivo/model/dao/ibatis/SqlMap*.class"/>
+					<include name="pe/gob/sunat/recurso2/administracion/siga/expediente/model/dao/ibatis/SqlMap*.class"/>
+					<include name="pe/gob/sunat/recurso2/administracion/siga/firma/model/dao/ibatis/*.class"/>
+					<include name="pe/gob/sunat/recurso2/administracion/siga/ldap/dao/*.class"/>
+					<include name="pe/gob/sunat/recurso2/administracion/siga/ldap/dao/*.properties"/>
+					<include name="pe/gob/sunat/recurso2/administracion/siga/mensajeria/model/dao/ibatis/SqlMap*.class"/>
+					<include name="pe/gob/sunat/recurso2/administracion/siga/parametro/model/dao/ibatis/SqlMap*.class"/>
+					<include name="pe/gob/sunat/recurso2/administracion/siga/registro/model/dao/ibatis/SqlMap*.class"/>
+					<include name="pe/gob/sunat/recurso2/administracion/siga/ubigeo/model/dao/ibatis/SqlMap*.class"/>
+					
+						
+					<include name="pe/gob/sunat/gestionriesgo2/riesgo/perfilriesgo/model/dao/ibatis/maps/*.xml"/>
+					
+					<include name="pe/gob/sunat/recurso2/administracion/siga/archivo/model/dao/ibatis/maps/*.xml"/>
+					<include name="pe/gob/sunat/recurso2/administracion/siga/expediente/model/dao/ibatis/maps/*.xml"/>
+					<include name="pe/gob/sunat/recurso2/administracion/siga/firma/model/dao/ibatis/maps/*.xml"/>
+					<include name="pe/gob/sunat/recurso2/administracion/siga/mensajeria/model/dao/ibatis/maps/*.xml"/>
+					<include name="pe/gob/sunat/recurso2/administracion/siga/parametro/model/dao/ibatis/maps/*.xml"/>
+					<include name="pe/gob/sunat/recurso2/administracion/siga/registro/model/dao/ibatis/maps/*.xml"/>
+					<include name="pe/gob/sunat/recurso2/administracion/siga/ubigeo/model/dao/ibatis/maps/*.xml"/>
+					<!-- Archivos de configuración de Spring -->
+					<!--include name="contribuyente2-registro-beanRefContext.xml" /-->
+				</fileset>
+				
+				<manifest>
+					<attribute name="Built-By" value="${user.name}"/>
+					<attribute name="Build-Jdk" value="${java.version}"/>
+					<attribute name="Implementation-Version" value="${impl.version}"/>
+					<attribute name="Specification-Title" value="${dao-imp}"/>
+					<attribute name="Specification-Vendor" value="SUNAT-INSI DAIA"/>
+					<attribute name="Specification-Version" value="${spec.version}"/>
+				</manifest>
+			</jar>
+		</target>
+
+		<target name="service-ifz-gen">
+			<jar jarfile="${classes.dir}/lib/${service-ifz}-${impl.version}.jar">
+				<fileset dir="${classes.dir}">
+					<!-- indique las clases que necesita para generar el jar -->
+					
+					<include name="pe/gob/sunat/recurso2/administracion/siga/archivo/service/*Service.class"/>
+					<include name="pe/gob/sunat/recurso2/administracion/siga/expediente/service/*Service.class"/>
+					<include name="pe/gob/sunat/recurso2/administracion/siga/firma/service/*Service.class"/>
+					<include name="pe/gob/sunat/recurso2/administracion/siga/ldap/service/*Service.class"/>
+					<include name="pe/gob/sunat/recurso2/administracion/siga/mensajeria/service/*Service.class"/>
+					<include name="pe/gob/sunat/recurso2/administracion/siga/registro/service/*Service.class"/>
+					
+				</fileset>
+				<manifest>
+					<attribute name="Built-By" value="${user.name}"/>
+					<attribute name="Build-Jdk" value="${java.version}"/>
+					<attribute name="Implementation-Version" value="${impl.version}"/>
+					<attribute name="Specification-Title" value="${service-ifz}"/>
+					<attribute name="Specification-Vendor" value="SUNAT-INSI DAIA"/>
+					<attribute name="Specification-Version" value="${spec.version}"/>
+				</manifest>
+			</jar>
+		</target>
+
+		<target name="service-imp-gen">
+			<jar jarfile="${classes.dir}/lib/${service-imp}-${impl.version}.jar">
+				<fileset dir="${classes.dir}">
+					
+					
+					<include name="pe/gob/sunat/recurso2/administracion/siga/archivo/service/*ServiceImpl.class"/>
+					<include name="pe/gob/sunat/recurso2/administracion/siga/expediente/service/*ServiceImpl.class"/>
+					<include name="pe/gob/sunat/recurso2/administracion/siga/firma/service/*ServiceImpl.class"/>
+					<include name="pe/gob/sunat/recurso2/administracion/siga/ldap/service/*ServiceImpl.class"/>
+					<include name="pe/gob/sunat/recurso2/administracion/siga/mensajeria/service/*ServiceImpl.class"/>
+					<include name="pe/gob/sunat/recurso2/administracion/siga/registro/service/*ServiceImpl.class"/>
+					
+					
+					
+					<!-- Archivos de configruación de Spring -->
+				
+				</fileset>
+				<fileset dir="${classes.dir}/main/resources">
+						<include name="administracion-siga-model-data.xml" />
+						<include name="administracion-siga-model-sql-map-config.xml" />
+						<include name="administracion-siga-service.xml" />
+						<include name="administracion-siga.xml" />
+						<include name="firmadigital-siga.xml" />
+						<include name="firmadigital-siga-data.xml" />
+						<include name="firmadigital-siga-service.xml" />
+						<include name="firmadigital-siga-tx.xml" />
+						<include name="sql-map-config-firma.xml" />
+						<include name="beanRefAdminitracionContext.xml" />
+				</fileset>
+				<manifest>
+					<attribute name="Built-By" value="${user.name}"/>
+					<attribute name="Build-Jdk" value="${java.version}"/>
+					<attribute name="Implementation-Version" value="${impl.version}"/>
+					<attribute name="Specification-Title" value="${service-imp}"/>
+					<attribute name="Specification-Vendor" value="SUNAT-INSI DAIA"/>
+					<attribute name="Specification-Version" value="${spec.version}"/>
+				</manifest>
+			</jar>
+		</target>
+	<!--
+	<target name="controller-gen">
+				<jar jarfile="${classes.dir}/lib/${controller}-${impl.version}.jar">
+					<fileset dir="${classes.dir}">
+						-->
+						
+						<!--<include name="pe/gob/sunat/recurso2/administracion/siga/archivo/web/controller/*.class"/>-->
+						<!--<include name="pe/gob/sunat/recurso2/administracion/siga/expediente/web/controller/*.class"/>-->
+						<!--<include name="pe/gob/sunat/recurso2/administracion/siga/mensajeria/web/controller/*.class"/>-->
+						<!--<include name="pe/gob/sunat/recurso2/administracion/siga/registro/web/controller/*.class"/>-->
+						
+						
+						
+						<!-- Archivos de configruación de Spring -->
+					<!--
+					</fileset>
+					
+					<manifest>
+						<attribute name="Built-By" value="${user.name}"/>
+						<attribute name="Build-Jdk" value="${java.version}"/>
+						<attribute name="Implementation-Version" value="${impl.version}"/>
+						<attribute name="Specification-Title" value="${service-imp}"/>
+						<attribute name="Specification-Vendor" value="SUNAT-INSI DAIA"/>
+						<attribute name="Specification-Version" value="${spec.version}"/>
+					</manifest>
+				</jar>
+			</target>
+-->
+	
+		<target name="util-gen">
+				<jar jarfile="${classes.dir}/lib/${util}-${impl.version}.jar">
+					<fileset dir="${classes.dir}">
+						<!-- indique las clases que necesita para generar el jar -->
+						
+						<include name="pe/gob/sunat/recurso2/administracion/siga/archivo/util/*.class"/>
+						<include name="pe/gob/sunat/recurso2/administracion/siga/expediente/util/*.class"/>
+						<include name="pe/gob/sunat/recurso2/administracion/siga/firma/util/*.class"/>
+						<include name="pe/gob/sunat/recurso2/administracion/siga/registro/util/*.class"/>
+						<include name="pe/gob/sunat/recurso2/administracion/siga/util/*.class"/>
+						<include name="pe/gob/sunat/recurso2/administracion/siga/web/util/*.class"/>
+						
+					</fileset>
+					<manifest>
+						<attribute name="Built-By" value="${user.name}"/>
+						<attribute name="Build-Jdk" value="${java.version}"/>
+						<attribute name="Implementation-Version" value="${impl.version}"/>
+						<attribute name="Specification-Title" value="${service-ifz}"/>
+						<attribute name="Specification-Vendor" value="SUNAT-INSI DAIA"/>
+						<attribute name="Specification-Version" value="${spec.version}"/>
+					</manifest>
+				</jar>
+			</target>
+	
+	<target name="jar-gen" >
+
+						<!-- reemplazamos la version de los componentes en el application.xml -->
+						<replace file="${build.dir}/META-INF/application.xml" value="${impl.version}">
+							<replacetoken>${impl.version}</replacetoken>
+						</replace>
+
+						<!-- indique las librerias que utiliza la aplicacion -->
+						<jar jarfile="${build.dir}/${slbear}-${impl.version}.jar" basedir="${classes.dir}">
+							<fileset dir="${build.dir}">
+								<include name="META-INF/*.xml" />
+							</fileset>
+							<!-- BEAN////////////////////////////////////////////////////////////-->
+							<include name="pe/gob/sunat/recurso2/administracion/siga/archivo/model/bean/*.class"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/expediente/model/bean/*.class"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/mensajeria/model/bean/*.class"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/parametro/model/bean/*.class"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/registro/model/bean/*.class"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/ubigeo/model/bean/*.class"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/firma/model/bean/*.class"/>
+							<!-- DAO///MAPS/////////////////////////////////////////////////////////-->
+							<include name="pe/gob/sunat/recurso2/administracion/siga/archivo/model/dao/*DAO.class"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/expediente/model/dao/*DAO.class"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/mensajeria/model/dao/*DAO.class"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/parametro/model/dao/*DAO.class"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/registro/model/dao/*DAO.class"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/ubigeo/model/dao/*DAO.class"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/firma/model/dao/*.class"/>
+							
+							<include name="pe/gob/sunat/recurso2/administracion/siga/ldap/dao/*.class"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/ldap/dao/*.properties"/>
+							
+							<include name="pe/gob/sunat/recurso2/administracion/siga/archivo/model/dao/ibatis/SqlMap*DAO.class"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/expediente/model/dao/ibatis/SqlMap*DAO.class"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/mensajeria/model/dao/ibatis/SqlMap*DAO.class"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/parametro/model/dao/ibatis/SqlMap*DAO.class"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/registro/model/dao/ibatis/SqlMap*DAO.class"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/ubigeo/model/dao/ibatis/SqlMap*DAO.class"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/firma/model/dao/ibatis/*.class"/>
+								
+							<include name="pe/gob/sunat/gestionriesgo2/riesgo/perfilriesgo/model/dao/ibatis/maps/*.xml"/>
+							
+							<include name="pe/gob/sunat/recurso2/administracion/siga/archivo/model/dao/ibatis/maps/*.xml"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/expediente/model/dao/ibatis/maps/*.xml"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/mensajeria/model/dao/ibatis/maps/*.xml"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/parametro/model/dao/ibatis/maps/*.xml"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/registro/model/dao/ibatis/maps/*.xml"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/ubigeo/model/dao/ibatis/maps/*.xml"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/firma/model/dao/ibatis/maps/*.xml"/>
+							<!-- SERVICE////////////////////////////////////////////////////////////-->
+							<include name="pe/gob/sunat/recurso2/administracion/siga/archivo/service/*Service.class"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/expediente/service/*Service.class"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/mensajeria/service/*Service.class"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/registro/service/*Service.class"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/firma/service/*Service.class"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/ldap/service/*.class"/>
+	
+					
+							<include name="pe/gob/sunat/recurso2/administracion/siga/archivo/service/*ServiceImpl.class"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/expediente/service/*ServiceImpl.class"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/mensajeria/service/*ServiceImpl.class"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/registro/service/*ServiceImpl.class"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/firma/service/*ServiceImpl.class"/>
+							
+							<!-- CONTROLLER////////////////////////////////////////////////////////////-->
+							<!--<include name="pe/gob/sunat/recurso2/administracion/siga/archivo/web/controller/*.class"/>-->
+							<!--<include name="pe/gob/sunat/recurso2/administracion/siga/expediente/web/controller/*.class"/>-->
+							<!--<include name="pe/gob/sunat/recurso2/administracion/siga/mensajeria/web/controller/*.class"/>-->
+							<!--<include name="pe/gob/sunat/recurso2/administracion/siga/registro/web/controller/*.class"/>-->
+							
+							<!-- UTIL////////////////////////////////////////////////////////////-->
+							<include name="pe/gob/sunat/recurso2/administracion/siga/archivo/util/*.class"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/expediente/util/*.class"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/registro/util/*.class"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/util/*.class"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/web/util/*.class"/>
+							<include name="pe/gob/sunat/recurso2/administracion/siga/firma/util/*.class"/>
+							<manifest>
+								<attribute name="Built-By" value="${user.name}"/>
+								<attribute name="Build-Jdk" value="${java.version}"/>
+								<attribute name="Specification-Title" value="${slbear}"/>
+								<attribute name="Specification-Version" value="${spec.version}"/>
+								<attribute name="Implementation-Version" value="${impl.version}"/>
+								<attribute name="Extension-Name" value="${slbear}"/>
+							</manifest>
+						</jar>
+						
+		</target>
+
+		<target name="ear-gen" depends="model-gen, dao-ifz-gen, dao-imp-gen, service-ifz-gen, service-imp-gen, util-gen">
+			<!-- reemplazamos la version de los componentes en el application.xml -->
+
+			<delete>
+			    <fileset dir="${build.dir}/META-INF" includes="weblogic-application.xml"/>
+			</delete>
+
+			<copy todir="${build.dir}/META-INF">
+				<fileset dir="${dominio.dir}">
+					<!-- librerias obligatorias -->
+					<include name="weblogic-application.xml" />
+				</fileset>				
+			</copy>
+			
+			<copy todir="${classes.dir}/lib">
+				<fileset dir="${java.lib.dir}">
+					<!-- librerias obligatorias -->
+					<include name="menu-ldap.jar" />
+				</fileset>
+				
+				<fileset dir="${java.lib.dir}/framework">
+					<!-- librerias obligatorias -->
+					<include name="framework-core-1.6.jar" />
+				</fileset>
+			</copy>
+			
+			<replace file="${build.dir}/META-INF/application.xml" value="${impl.version}">
+				<replacetoken>${impl.version}</replacetoken>
+			</replace>
+
+			<!-- indique las librerias que utiliza la aplicacion -->
+			<jar jarfile="${build.dir}/${slbear}-${impl.version}.ear" basedir="${classes.dir}">
+				<fileset dir="${build.dir}">
+					<include name="META-INF/*.xml" />
+				</fileset>
+				<include name="lib/menu-ldap.jar" />
+				<include name="lib/framework-core-1.6.jar" />
+				
+				<include name="lib/${model}-${impl.version}.jar" />
+				<include name="lib/${dao-ifz}-${impl.version}.jar" />
+				<include name="lib/${dao-imp}-${impl.version}.jar" />
+				<include name="lib/${service-ifz}-${impl.version}.jar" />
+				<include name="lib/${service-imp}-${impl.version}.jar" />
+				<!--<include name="lib/${controller}-${impl.version}.jar" />-->
+				<include name="lib/${util}-${impl.version}.jar" />
+				<manifest>
+					<attribute name="Built-By" value="${user.name}"/>
+					<attribute name="Build-Jdk" value="${java.version}"/>
+					<attribute name="Specification-Title" value="${slbear}"/>
+					<attribute name="Specification-Version" value="${spec.version}"/>
+					<attribute name="Implementation-Version" value="${impl.version}"/>
+					<attribute name="Extension-Name" value="${slbear}"/>
+				</manifest>
+			</jar>
+			<!--copy file="${build.dir}/${slbear}-${impl.version}.ear" todir="${wls103.deploy.dir}" /-->
+		</target>
+
+<!-- Deploy SHAREDLIB	
+  <taskdef name="wldeploy" classname="weblogic.ant.taskdefs.management.WLDeploy">
+	<classpath>
+		<pathelement location="d:\Oracle\MiddleWare\wlserver_10.3\server\lib\weblogic.jar"/>
+	</classpath>
+  </taskdef>
+	
+  <target name="deploy">
+	<wldeploy action="deploy"
+          name="${slbear}"
+          source="build/registro-riesgo-sharedlib-${impl.version}.ear"
+          user="${wls.username}"
+          nostage="true"
+          password="${wls.password}"
+          verbose="true"
+		  library="true"
+          adminurl="t3://${wls.hostname}:${wls.port}" targets="${deploy.target}" />
+  </target>	
+	
+  <target name="redeploy">
+	<wldeploy action="redeploy"
+	      name="${slbear}"
+	      user="${wls.username}"
+	      password="${wls.password}"
+	      verbose="true"			  
+	      adminurl="t3://${wls.hostname}:${wls.port}" targets="${deploy.target}" />
+  </target>
+
+	
+  <target name="undeploy">
+	<wldeploy action="undeploy"
+	          name="${slbear}"
+	          failonerror="false"
+	          user="${wls.username}"
+	          password="${wls.password}"
+	          verbose="true"
+	          adminurl="t3://${wls.hostname}:${wls.port}" targets="${deploy.target}" />
+  </target>
+-->
+</project>

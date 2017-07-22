@@ -1,0 +1,699 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="maestropersonal">
+
+	<typeAlias alias="maestropersonal"
+		type="pe.gob.sunat.recurso2.administracion.siga.registro.model.bean.MaestroPersonalBean" />
+	
+	<resultMap id="resultado" class="maestropersonal">
+		<result property="codigoEmpleado" 	column="CODI_EMPL_PER" />
+		<result property="apellido_paterno" column="APE_PAT_PER" />
+		<result property="apellido_materno" column="APE_MAT_PER" />
+		<result property="nombre" 			column="NOM_EMP_PER" />
+		<result property="nombre_completo" 	column="NOMB_CORT_PER" />
+		<result property="estadoCivil" 		column="EST_CIV_PER" />
+		<result property="sexo" 			column="SEX_EMP_PER" />
+		<result property="fechaNac" 		column="FEC_NAC_PER" />
+		<result property="codigoDependencia" column="CODI_DEPE_TDE" />
+		<result property="nombre_completo" 	column="NOMB_CORT_PER" />
+		<result property="codigoAfp" 		column="CODI_AFP_PER" />
+		<result property="dni" 				column="LIBR_ELEC_PER" />
+		<result property="codigoSede" 		column="SEDE_ACTU_PER" />
+		<result property="codigoSede" 		column="SEDE_ACTU_PER" />
+		<result property="numero_registro" 	column="NUMERO_REGISTRO_ALTERNO" />
+		<result property="dependencia" 		column="DESC_DEPE_TDE" />
+		<result property="abrvDependencia" 	column="ABREVIATURA" />
+		<result property="uuoo"			 	column="UNIDAD_ORGANIZACIONAL" />
+		<result property="sede" 			column="DESC_SEDE_SED" />
+		<result property="cod_plaza" 		column="COD_PLAZA" />
+		<result property="codigoEstado" 	column="ESTA_TRAB_PER" />
+		<result property="estado" 			column="ESTADO" />
+		<result property="correo" 			column="CORREO" />
+		<result property="codigoJefeUuoo" 	column="CODI_JEFE_DEP" />
+		<result property="categoriaViatico" 	column="COD_CATEG_VIATICO" />
+		<result property="codigoNivel" 			column="CODI_NIVE_NVL" />
+		<result property="codigoNivelViatico" 	column="NIVE_VIAT_NVI" />
+		
+	</resultMap>
+	
+	<resultMap id="resultadoMovilidad" class="maestropersonal">
+		<result property="codigoEmpleado" 	column="CODI_EMPL_PER" />
+		<result property="apellido_paterno" column="APE_PAT_PER" />
+		<result property="apellido_materno" column="APE_MAT_PER" />
+		<result property="nombre" 			column="NOM_EMP_PER" />
+		<result property="nombre_completo" 	column="NOMB_CORT_PER" />
+		<result property="estadoCivil" 		column="EST_CIV_PER" />
+		<result property="sexo" 			column="SEX_EMP_PER" />
+		<result property="fechaNac" 		column="FEC_NAC_PER" />
+		<result property="codigoDependencia" column="CODI_DEPE_TDE" />
+		<result property="nombre_completo" 	column="NOMB_CORT_PER" />
+		<result property="codigoAfp" 		column="CODI_AFP_PER" />
+		<result property="dni" 				column="LIBR_ELEC_PER" />
+		<result property="codigoSede" 		column="SEDE_ACTU_PER" />
+		<result property="codigoSede" 		column="SEDE_ACTU_PER" />
+		<result property="numero_registro" 	column="NUMERO_REGISTRO_ALTERNO" />
+		<result property="dependencia" 		column="DESC_DEPE_TDE" />
+		<result property="abrvDependencia" 	column="ABREVIATURA" />
+		<result property="uuoo"			 	column="UNIDAD_ORGANIZACIONAL" />
+		<result property="sede" 			column="DESC_SEDE_SED" />
+		<result property="cod_plaza" 		column="COD_PLAZA" />
+		<result property="codigoEstado" 		column="ESTA_TRAB_PER" />
+		<result property="estado" 		column="ESTADO" />
+		<result property="correo" 			column="CORREO" />
+		<result property="codigoJefeUuoo" 	column="CODI_JEFE_DEP" />
+		<result property="categoriaViatico" 	column="COD_CATEG_VIATICO" />
+		<result property="codigoNivel" 			column="CODI_NIVE_NVL" />
+		<result property="codigoNivelViatico" 	column="NIVE_VIAT_NVI" />
+		<result property="situacionTrabajador" 		column="SITUACION_TRABAJADOR" />
+		
+		<result property="correo" 		column="CORREO" />
+	</resultMap>
+	
+	
+	<resultMap id="resultadoComisionadoInactivo" class="maestropersonal">
+		<result property="codigoEmpleado" 	column="CODI_EMPL_PER" />
+		<result property="apellido_paterno" column="APE_PAT_PER" />
+		<result property="apellido_materno" column="APE_MAT_PER" />
+		<result property="nombre" 			column="NOM_EMP_PER" />
+		<result property="nombre_completo" 	column="NOMB_CORT_PER" />
+		<result property="codigoDependencia" column="CODI_DEPE_TDE" />
+		<result property="numero_registro" 	column="NUMERO_REGISTRO_ALTERNO" />
+		<result property="dependencia" 		column="DESC_DEPE_TDE" />
+		<result property="abrvDependencia" 	column="ABREVIATURA" />
+		<result property="uuoo"			 	column="UNIDAD_ORGANIZACIONAL" />
+		<result property="codigoEstado" 	column="ESTA_TRAB_PER" />
+		<result property="estado" 	  		column="ESTADO" />
+	</resultMap>	
+	
+	<resultMap id="categoriaGastoList" class="maestropersonal">
+		<result property="codigoEmpleado" column="CODI_EMPL_PER" />
+		<result property="codigoCategoriaGasto" column="COD_ARGUMENTO" />
+		<result property="descripcionCategoriaGasto" column="DESC_LARGA" />
+	</resultMap>
+	
+	<select id="selectUser" parameterClass="map" resultMap="resultado">
+		SELECT M.CODI_EMPL_PER ,
+		M.APE_PAT_PER ,
+		M.APE_MAT_PER ,
+		M.NOM_EMP_PER ,
+		M.NOMB_CORT_PER , 
+        M.FEC_ING_PER,
+        M.EST_CIV_PER,
+        M.SEX_EMP_PER,
+        M.FEC_NAC_PER,
+        M.CODI_DEPE_TDE,
+        M.CODI_AFP_PER,
+        M.LIBR_ELEC_PER,
+        M.SEDE_ACTU_PER,
+        M.NUMERO_REGISTRO_ALTERNO,
+        D.DESC_DEPE_TDE,
+        D.ABREVIATURA,
+        D.UNIDAD_ORGANIZACIONAL,
+        S.DESC_SEDE_SED,
+        D.COD_PLAZA,
+        M.ESTA_TRAB_PER,
+        DECODE(M.ESTA_TRAB_PER,1,'ACTIVO','INACTIVO') AS ESTADO,
+        '' AS CORREO,
+        D.CODI_EMPL_PER AS CODI_JEFE_DEP,
+		D.COD_CATEG_VIATICO,
+		M.CODI_NIVE_NVL, 
+		M.NIVE_VIAT_NVI
+		FROM MAESTRO_PERSONAL M ,
+		SEG_USUARIO U , 
+		 TDEPENDENCIAS D,
+		  SEDES_INEI S
+		 
+    WHERE ( M.CODI_DEPE_TDE = D.CODI_DEPE_TDE (+) ) AND
+    ( M.CODI_EMPL_PER = U.CODI_EMPL_PER  ) AND
+    (M.SEDE_ACTU_PER = S.CODI_SEDE_SED (+)) AND
+     U.CODI_USUA_USU=#cod_use#
+	
+  </select>
+  
+  
+  <select id="selectEmpleado" parameterClass="map" resultMap="resultado">
+		SELECT M.CODI_EMPL_PER ,
+		M.APE_PAT_PER ,
+		M.APE_MAT_PER ,
+		M.NOM_EMP_PER ,
+		M.NOMB_CORT_PER , 
+        M.FEC_ING_PER,
+        M.EST_CIV_PER,
+        M.SEX_EMP_PER,
+        M.FEC_NAC_PER,
+        M.CODI_DEPE_TDE,
+        M.CODI_AFP_PER,
+        M.LIBR_ELEC_PER,
+        M.SEDE_ACTU_PER,
+        M.NUMERO_REGISTRO_ALTERNO,
+        D.DESC_DEPE_TDE,
+        D.ABREVIATURA,
+        D.UNIDAD_ORGANIZACIONAL,
+        S.DESC_SEDE_SED,
+        D.COD_PLAZA,
+         M.ESTA_TRAB_PER,
+        DECODE(M.ESTA_TRAB_PER,1,'ACTIVO','INACTIVO') AS ESTADO,
+         '' AS CORREO,
+           D.CODI_EMPL_PER AS CODI_JEFE_DEP,
+		D.COD_CATEG_VIATICO,
+		M.CODI_NIVE_NVL, 
+		M.NIVE_VIAT_NVI
+		FROM MAESTRO_PERSONAL M ,  TDEPENDENCIAS D, SEDES_INEI S
+	
+    WHERE ( M.CODI_DEPE_TDE = D.CODI_DEPE_TDE  ) AND
+    (M.SEDE_ACTU_PER = S.CODI_SEDE_SED (+)) AND
+   
+     M.CODI_EMPL_PER=#cod_empl#
+  </select>
+  
+  <select id="selectCorreoEmpleado" parameterClass="map" resultClass="java.lang.String">
+   	SELECT VWCORREOS."smtp" CORREO
+   	FROM VWCORREOS
+   WHERE VWCORREOS."cod_pers" =#numReg#
+  </select>
+  
+  <select id="selectRegistro" parameterClass="map" resultMap="resultado"> 
+  SELECT M.CODI_EMPL_PER ,
+    M.APE_PAT_PER ,
+    M.APE_MAT_PER ,
+    M.NOM_EMP_PER ,
+    M.NOMB_CORT_PER , 
+        M.FEC_ING_PER,
+        M.EST_CIV_PER,
+        M.SEX_EMP_PER,
+        M.FEC_NAC_PER,
+        M.CODI_DEPE_TDE,
+        M.CODI_AFP_PER,
+        M.LIBR_ELEC_PER,
+        M.SEDE_ACTU_PER,
+        M.NUMERO_REGISTRO_ALTERNO,
+        D.DESC_DEPE_TDE,
+        D.ABREVIATURA,
+        D.UNIDAD_ORGANIZACIONAL,
+        S.DESC_SEDE_SED,
+        D.COD_PLAZA,
+         M.ESTA_TRAB_PER,
+        DECODE(M.ESTA_TRAB_PER,1,'ACTIVO','INACTIVO') AS ESTADO,
+          '' AS CORREO,
+         D.CODI_EMPL_PER AS CODI_JEFE_DEP,
+		D.COD_CATEG_VIATICO,
+		M.CODI_NIVE_NVL, 
+		M.NIVE_VIAT_NVI
+    FROM MAESTRO_PERSONAL M, 
+     TDEPENDENCIAS D,
+      SEDES_INEI S
+   
+    WHERE ( M.CODI_DEPE_TDE = D.CODI_DEPE_TDE  ) AND
+    (M.SEDE_ACTU_PER = S.CODI_SEDE_SED (+)) AND
+       
+        M.ESTA_TRAB_PER='1'AND
+     M.NUMERO_REGISTRO_ALTERNO=#cod_reg#
+  </select>
+  
+  
+   <select id="selectConsulta" parameterClass="map" resultMap="resultado"> 
+  SELECT M.CODI_EMPL_PER ,
+    M.APE_PAT_PER ,
+    M.APE_MAT_PER ,
+    M.NOM_EMP_PER ,
+    M.NOMB_CORT_PER , 
+        M.FEC_ING_PER,
+        M.EST_CIV_PER,
+        M.SEX_EMP_PER,
+        M.FEC_NAC_PER,
+        M.CODI_DEPE_TDE,
+        M.CODI_AFP_PER,
+        M.LIBR_ELEC_PER,
+        M.SEDE_ACTU_PER,
+        M.NUMERO_REGISTRO_ALTERNO,
+        D.DESC_DEPE_TDE,
+        D.ABREVIATURA,
+        D.UNIDAD_ORGANIZACIONAL,
+        S.DESC_SEDE_SED,
+        D.COD_PLAZA,
+         M.ESTA_TRAB_PER,
+        DECODE(M.ESTA_TRAB_PER,1,'ACTIVO','INACTIVO') AS ESTADO,
+        '' AS CORREO,
+       D.CODI_EMPL_PER AS CODI_JEFE_DEP,
+		D.COD_CATEG_VIATICO,
+		M.CODI_NIVE_NVL, 
+		M.NIVE_VIAT_NVI
+    FROM MAESTRO_PERSONAL M, 
+     TDEPENDENCIAS D,
+      SEDES_INEI S
+    WHERE ( M.CODI_DEPE_TDE = D.CODI_DEPE_TDE  ) AND
+    (M.SEDE_ACTU_PER = S.CODI_SEDE_SED (+)) 
+      AND
+       M.ESTA_TRAB_PER='1'
+    <isNotNull prepend="AND" property="nom_per"> M.NOMB_CORT_PER like #nom_per#</isNotNull>
+	<isNotNull prepend="AND" property="cod_reg"> M.NUMERO_REGISTRO_ALTERNO like #cod_reg#</isNotNull>
+	<isNotNull prepend="AND" property="uuoo"> D.UNIDAD_ORGANIZACIONAL like #uuoo#</isNotNull>
+	<isNotNull prepend="AND" property="uuoo"> D.ESTADO_ID = 1</isNotNull>
+   ORDER BY M.NOMB_CORT_PER
+  </select>
+  
+  
+    <select id="selectConsultaInactivo" parameterClass="map" resultMap="resultado">
+		SELECT M.CODI_EMPL_PER,
+		M.APE_PAT_PER,
+		M.APE_MAT_PER,
+		M.NOM_EMP_PER,
+		M.NOMB_CORT_PER,
+		M.FEC_ING_PER,
+		M.EST_CIV_PER,
+		M.SEX_EMP_PER,
+		M.FEC_NAC_PER,
+		M.CODI_DEPE_TDE,
+		M.CODI_AFP_PER,
+		M.LIBR_ELEC_PER,
+		M.SEDE_ACTU_PER,
+		M.NUMERO_REGISTRO_ALTERNO,
+		D.DESC_DEPE_TDE,
+		D.ABREVIATURA,
+		D.UNIDAD_ORGANIZACIONAL,
+		S.DESC_SEDE_SED,
+		D.COD_PLAZA,
+		M.ESTA_TRAB_PER,
+		DECODE(M.ESTA_TRAB_PER, 1, 'ACTIVO', 'INACTIVO') AS ESTADO,
+		'' AS CORREO,
+		  D.CODI_EMPL_PER AS CODI_JEFE_DEP,
+		D.COD_CATEG_VIATICO,
+		M.CODI_NIVE_NVL, 
+		M.NIVE_VIAT_NVI
+		FROM MAESTRO_PERSONAL M,
+		TDEPENDENCIAS D,
+		SEDES_INEI S
+		WHERE
+		(M.CODI_DEPE_TDE = D.CODI_DEPE_TDE) AND
+		(M.SEDE_ACTU_PER = S.CODI_SEDE_SED (+)) AND
+		 M.NUMERO_REGISTRO_ALTERNO IS NOT NULL
+		<isNotNull prepend="AND" property="nom_per"> M.NOMB_CORT_PER LIKE #nom_per# </isNotNull>
+		<isNotNull prepend="AND" property="cod_reg"> M.NUMERO_REGISTRO_ALTERNO LIKE #cod_reg# </isNotNull>
+		<isNotNull prepend="AND" property="uuoo"> D.UNIDAD_ORGANIZACIONAL LIKE #uuoo# </isNotNull>
+		<isNotNull prepend="AND" property="estadoPersonal"> M.ESTA_TRAB_PER = #estadoPersonal# </isNotNull>
+		ORDER BY M.NOMB_CORT_PER
+	</select>
+
+	<select id="selectConsultaMovilidad" parameterClass="map" resultMap="resultadoMovilidad">
+		SELECT M.CODI_EMPL_PER,
+		M.APE_PAT_PER,
+		M.APE_MAT_PER,
+		M.NOM_EMP_PER,
+		M.NOMB_CORT_PER,
+		M.FEC_ING_PER,
+		M.EST_CIV_PER,
+		M.SEX_EMP_PER,
+		M.FEC_NAC_PER,
+		M.CODI_DEPE_TDE,
+		M.CODI_AFP_PER,
+		M.LIBR_ELEC_PER,
+		M.SEDE_ACTU_PER,
+		M.NUMERO_REGISTRO_ALTERNO,
+		D.DESC_DEPE_TDE,
+		D.ABREVIATURA,
+		D.UNIDAD_ORGANIZACIONAL,
+		S.DESC_SEDE_SED,
+		D.COD_PLAZA,
+		M.ESTA_TRAB_PER,
+		DECODE(M.ESTA_TRAB_PER, 1, 'ACTIVO', 'INACTIVO') AS ESTADO,
+		'' AS CORREO,
+		  D.CODI_EMPL_PER AS CODI_JEFE_DEP,
+		D.COD_CATEG_VIATICO,
+		M.CODI_NIVE_NVL, 
+		M.NIVE_VIAT_NVI,
+		M.ESTA_TRAB_PER AS SITUACION_TRABAJADOR
+		FROM
+		MAESTRO_PERSONAL M,
+		TDEPENDENCIAS D,
+		SEDES_INEI S
+		WHERE
+		(M.CODI_DEPE_TDE = D.CODI_DEPE_TDE ) AND
+		(M.SEDE_ACTU_PER = S.CODI_SEDE_SED (+)) AND
+		M.ESTA_TRAB_PER='1' AND
+		M.NUMERO_REGISTRO_ALTERNO IS NOT NULL AND
+		D.ESTADO_ID = 1 AND
+		D.codi_depe_tde in (select b.codi_depe_tde from registrador_movilidad b where b.codi_empl_per = #codRegistrador# and ind_del = '1')
+	    <isNotNull prepend="AND" property="nom_per"> M.NOMB_CORT_PER LIKE #nom_per#</isNotNull>
+		<isNotNull prepend="AND" property="cod_reg"> M.NUMERO_REGISTRO_ALTERNO LIKE #cod_reg#</isNotNull>
+		<isNotNull prepend="AND" property="uuoo"> D.UNIDAD_ORGANIZACIONAL LIKE #uuoo#</isNotNull>
+		
+		
+		UNION
+		
+		SELECT
+		M.CODI_EMPL_PER,
+		M.APE_PAT_PER,
+		M.APE_MAT_PER,
+		M.NOM_EMP_PER,
+		M.NOMB_CORT_PER,
+		M.FEC_ING_PER,
+		M.EST_CIV_PER,
+		M.SEX_EMP_PER,
+		M.FEC_NAC_PER,
+		D.CODI_DEPE_TDE,
+		M.LIBR_ELEC_PER,
+		M.SEDE_ACTU_PER,
+		M.CODI_AFP_PER,
+		M.NUMERO_REGISTRO_ALTERNO,
+		D.DESC_DEPE_TDE,
+		D.ABREVIATURA,
+		D.UNIDAD_ORGANIZACIONAL,
+		'' DESC_SEDE_SED,
+		D.COD_PLAZA,
+		'0' ESTA_TRAB_PER,
+		'INACTIVO' AS ESTADO,
+		'' AS CORREO,
+		  D.CODI_EMPL_PER AS CODI_JEFE_DEP,
+		D.COD_CATEG_VIATICO,
+		M.CODI_NIVE_NVL, 
+		M.NIVE_VIAT_NVI,
+		M.ESTA_TRAB_PER AS SITUACION_TRABAJADOR
+		FROM
+		SIGA.T01PARAMETRO,
+		SIGA.maestro_personal M,
+		SIGA.tdependencias D
+		WHERE
+		
+		   trim(SIGA.T01PARAMETRO.DESC_CORTA) = M.CODI_EMPL_PER AND   
+		trim(SUBSTR(cod_argumento,1,6)) = D.unidad_organizacional AND
+		cod_parametro='3079' AND
+		cod_tipo = 'D' AND
+		cod_modulo = 'SIGA' AND
+		cod_estado = '1' AND
+		M.NUMERO_REGISTRO_ALTERNO IS NOT NULL AND
+		trim(SUBSTR(cod_argumento,11,4)) = #num_reg_registrador# AND
+		trim(SUBSTR(cod_argumento,1,6)) LIKE '%'
+		<isNotNull prepend="AND" property="nom_per">  M.NOMB_CORT_PER LIKE #nom_per# </isNotNull>
+		<isNotNull prepend="AND" property="cod_reg"> trim(SUBSTR(cod_argumento,7,4)) LIKE #cod_reg# </isNotNull>
+		<isNotNull prepend="AND" property="uuoo"> trim(SUBSTR(cod_argumento,1,6)) LIKE #uuoo# </isNotNull>
+		
+		order by ESTADO,codi_depe_tde, nomb_cort_per    asc
+	</select>
+  
+  
+  <resultMap id="resultadoViatico" class="maestropersonal">
+		<result property="codigoEmpleado" 	column="CODI_EMPL_PER" />
+		<result property="apellido_paterno" column="APE_PAT_PER" />
+		<result property="apellido_materno" column="APE_MAT_PER" />
+		<result property="nombre" 			column="NOM_EMP_PER" />
+		<result property="nombre_completo" 	column="NOMB_CORT_PER" />
+		<result property="estadoCivil" 		column="EST_CIV_PER" />
+		<result property="sexo" 			column="SEX_EMP_PER" />
+		<result property="fechaNac" 		column="FEC_NAC_PER" />
+		<result property="codigoDependencia" column="CODI_DEPE_TDE" />
+		<result property="nombre_completo" 	column="NOMB_CORT_PER" />
+		<result property="codigoAfp" 		column="CODI_AFP_PER" />
+		<result property="dni" 				column="LIBR_ELEC_PER" />
+		<result property="codigoSede" 		column="SEDE_ACTU_PER" />
+		<result property="codigoSede" 		column="SEDE_ACTU_PER" />
+		<result property="numero_registro" 	column="NUMERO_REGISTRO_ALTERNO" />
+		<result property="dependencia" 		column="DESC_DEPE_TDE" />
+		<result property="abrvDependencia" 	column="ABREVIATURA" />
+		<result property="uuoo"			 	column="UNIDAD_ORGANIZACIONAL" />
+		<result property="sede" 			column="DESC_SEDE_SED" />
+		<result property="cod_plaza" 		column="COD_PLAZA" />
+		<result property="codigoEstado" 	column="ESTA_TRAB_PER" />
+		<result property="estado" 			column="ESTADO" />
+		<result property="correo" 			column="CORREO" />
+		<result property="codigoEncargado" 	column="CODI_EMPL_PER_ENCARGADO" />
+		<result property="codigoCategoriaViatico" 		column="COD_CATEG_VIATICO" />
+		<result property="codigoNivelNvl" 			column="CODI_NIVE_NVL" />
+		<result property="codigoViaticoNvi" 		 	column="NIVE_VIAT_NVI" />
+	</resultMap>
+  
+  
+  <select id="selectConsultaViaticos" parameterClass="map" resultMap="resultadoViatico">
+		SELECT M.CODI_EMPL_PER,
+		M.APE_PAT_PER,
+		M.APE_MAT_PER,
+		M.NOM_EMP_PER,
+		M.NOMB_CORT_PER,
+		M.FEC_ING_PER,
+		M.EST_CIV_PER,
+		M.SEX_EMP_PER,
+		M.FEC_NAC_PER,
+		M.CODI_DEPE_TDE,
+		M.CODI_AFP_PER,
+		M.LIBR_ELEC_PER,
+		M.SEDE_ACTU_PER,
+		M.NUMERO_REGISTRO_ALTERNO,
+		D.DESC_DEPE_TDE,
+		D.ABREVIATURA,
+		D.UNIDAD_ORGANIZACIONAL,
+		S.DESC_SEDE_SED,
+		D.COD_PLAZA,
+		M.ESTA_TRAB_PER,
+		DECODE(M.ESTA_TRAB_PER, 1, 'ACTIVO', 'INACTIVO') AS ESTADO,
+		'' AS CORREO,
+		D.CODI_EMPL_PER AS CODI_EMPL_PER_ENCARGADO,
+		D.COD_CATEG_VIATICO,
+		M.CODI_NIVE_NVL, 
+		M.NIVE_VIAT_NVI
+		FROM
+		MAESTRO_PERSONAL M,
+		TDEPENDENCIAS D,
+		SEDES_INEI S
+		WHERE
+		(M.CODI_DEPE_TDE = D.CODI_DEPE_TDE ) AND
+		(M.SEDE_ACTU_PER = S.CODI_SEDE_SED (+)) AND
+		M.ESTA_TRAB_PER='1' AND M.NUMERO_REGISTRO_ALTERNO IS NOT NULL AND
+		D.codi_depe_tde in (select b.codi_depe_tde from registrador_movilidad b where b.codi_empl_per = #codRegistrador# and ind_del = '1'  AND IND_PROC in('V','X') )
+	    <isNotNull prepend="AND" property="nom_per"> M.NOMB_CORT_PER LIKE #nom_per#</isNotNull>
+		<isNotNull prepend="AND" property="cod_reg"> M.NUMERO_REGISTRO_ALTERNO LIKE #cod_reg#</isNotNull>
+		<isNotNull prepend="AND" property="uuoo"> D.UNIDAD_ORGANIZACIONAL LIKE #uuoo#</isNotNull>
+		<isNotNull prepend="AND" property="uuoo"> D.ESTADO_ID =1</isNotNull>
+		
+		
+		
+		order by ESTADO,codi_depe_tde, nomb_cort_per    asc
+	</select>
+	
+	<select id="selectRegPersonal" parameterClass="map" resultClass="java.lang.String">
+		SELECT COD_PERSONAL FROM SEG_USUARIO WHERE CODI_USUA_USU =#cod_use#
+	</select>
+    
+   <select id="rqnp_jefe_inmediato" parameterClass="map" resultClass="java.lang.String">
+		SELECT SIGA01.SER_RNP.FN_JEFE_INMEDIATO(#cod_empl#) AS RESULTADO FROM DUAL
+  </select>
+  
+  <select id="rqnp_jefe_intendencia" parameterClass="map" resultClass="java.lang.String">
+		SELECT SIGA01.SER_RNP.FN_JEFE_INTENDENCIA(#cod_empl#) AS RESULTADO FROM DUAL
+  </select>
+  
+  
+   <select id="rqnp_jefe_super_intendencia" parameterClass="map" resultClass="java.lang.String">
+		SELECT SIGA01.SER_RNP.FN_JEFE_SUPERINTENDENCIA(#cod_empl#) AS RESULTADO FROM DUAL
+  </select>
+  
+  <select id="rqnp_es_intendencia" parameterClass="map" resultClass="java.lang.String">
+		SELECT SIGA01.SER_RNP.FN_ES_INTENDENTE(#cod_empl#) AS RESULTADO FROM DUAL
+  </select>
+  
+  <select id="rqnp_jefe_UBG" parameterClass="map" resultClass="java.lang.String">
+		SELECT SIGA01.SER_RNP.FN_ES_JEFE_UBG(#cod_empl#) AS RESULTADO FROM DUAL
+  </select>
+  
+   <select id="rqnp_jefe_aprobador" parameterClass="map" resultClass="java.lang.String">
+		SELECT SIGA01.SER_RNP.FN_RESP_APROBADOR(#cod_empl#) AS RESULTADO FROM DUAL
+  </select>
+  
+  <select id="rqnp_jefe_aprobador_auc" parameterClass="map" resultClass="java.lang.String">
+		SELECT SIGA01.SER_RNP.FN_RESP_APROBADOR_AUC(#cod_auc#) AS RESULTADO FROM DUAL
+  </select>
+  
+   <select id="rqnp_es_aprobador" parameterClass="map" resultClass="java.lang.String">
+		SELECT SIGA01.SER_RNP.FN_ES_APROBADOR(#cod_empl#) AS RESULTADO FROM DUAL
+  </select>
+  
+  <select id="rqnp_jefe_inmediato_encargado" parameterClass="map" resultClass="java.lang.String">
+		SELECT SIGA01.SER_RNP.FN_JEFE_INMEDIATO_ENCARGADO(#cod_empl#, #cod_encargado#) AS RESULTADO FROM DUAL
+  </select>
+  
+  <select id="rqnp_jefe_aprobador_ecargado" parameterClass="map" resultClass="java.lang.String">
+		SELECT SIGA01.SER_RNP.FN_RESP_APROBADOR_ENCARGADO(#cod_empl#, #cod_encargado#) AS RESULTADO FROM DUAL
+  </select>
+  
+  <select id="rqnp_jefe_aprobador_ecargado_auc" parameterClass="map" resultClass="java.lang.String">
+		SELECT SIGA01.SER_RNP.FN_RESP_APROBADOR_ENCARGADO_AU(#cod_auc#, #cod_encargado#) AS RESULTADO FROM DUAL
+  </select>
+  
+   <select id="rqnp_es_aprobador_encargado" parameterClass="map" resultClass="java.lang.String">
+		SELECT SIGA01.SER_RNP.FN_ES_APROBADOR_ENCARGADO(#cod_empl#) AS RESULTADO FROM DUAL
+  </select>
+  
+ <!-- INICIO: DPORRASC -->
+  <select id="rqnp_es_jefe" parameterClass="map" resultClass="java.lang.String">
+ 		SELECT SIGA01.SER_RNP.FN_ES_JEFE(#cod_empl#,#cod_dep#) AS RESULTADO FROM DUAL  	
+  </select>
+  
+  	<select id="rqnp_jefe_auc" parameterClass="java.util.HashMap"	resultClass="java.lang.String">
+	SELECT CODI_EMPL_PER 
+	FROM TDEPENDENCIAS 
+	WHERE CODI_DEPE_TDE= #cod_dep#
+	AND ESTADO_ID='1'
+	
+	</select>
+	
+	
+	<select id="rqnp_verifica_encargo" parameterClass="java.util.HashMap"	resultClass="java.lang.String">
+	SELECT codi_empl_per 
+	FROM encargos_persona
+	WHERE  flag_enca_enc='S'
+		AND cod_dependencia=(select codi_depe_tde from maestro_personal where codi_empl_per=#cod_empl# )
+		AND codi_empl_per =#cod_empl#
+		AND codi_enca_enc=#cod_encargado#
+		AND ( TO_CHAR(SYSDATE,'YYYYMMDD')  BETWEEN TO_CHAR(FECH_INIC_ENC,'YYYYMMDD') AND TO_CHAR(FECH_FINA_ENC,'YYYYMMDD'))
+	</select>
+	
+	<select id="obtenerCategoriaGasto" parameterClass="java.util.HashMap" resultMap="categoriaGastoList">
+		SELECT
+		PERSONAL.CODI_EMPL_PER,
+		TRIM(PARAMETRO.COD_ARGUMENTO) COD_ARGUMENTO,
+		PARAMETRO.DESC_LARGA
+		FROM
+		MAESTRO_PERSONAL PERSONAL,
+		T01PARAMETRO PARAMETRO
+		WHERE
+		PERSONAL.TIPO_PLAN_TPL = PARAMETRO.COD_ARGUMENTO AND
+		PARAMETRO.COD_PARAMETRO = '3153'
+		<isNotNull prepend="AND" property="codigoEmpleado"> PERSONAL.CODI_EMPL_PER = #codigoEmpleado# </isNotNull>
+	</select>
+		
+	<select id="rqnp_es_jefe_inmediato" parameterClass="map" resultClass="java.lang.String">
+		SELECT SIGA01.SER_RNP.FNESJEFEMOVI(#codigoEmpleado#) AS RESULTADO FROM DUAL
+	</select>
+	
+	<select id="rqnp_es_autorizador_gasto" parameterClass="map" resultClass="java.lang.String">
+		SELECT SIGA01.SER_RNP.FNESAUTORIZAMOVI(#codigoEmpleado#) AS RESULTADO FROM DUAL
+	</select>
+	
+	<select id="rqnp_es_autorizador_gasto_viatico" parameterClass="map" resultClass="java.lang.String">
+		SELECT siga01.sip_viaticos.fn_get_autoriza('0', #codigoEmpleado#, '') FROM DUAL
+	</select>
+	
+	<select id="selectConsultaComisionadoInactivo" parameterClass="map" resultMap="resultadoComisionadoInactivo"> 
+		SELECT
+			M.CODI_EMPL_PER,
+			M.APE_PAT_PER,
+			M.APE_MAT_PER,
+			M.NOM_EMP_PER,
+			M.NOMB_CORT_PER, 
+			M.CODI_DEPE_TDE,
+			M.NUMERO_REGISTRO_ALTERNO,
+			D.DESC_DEPE_TDE,
+			D.ABREVIATURA,
+			D.UNIDAD_ORGANIZACIONAL,		      
+			M.ESTA_TRAB_PER,
+			DECODE(P.cod_estado,'1','ACTIVO','INACTIVO') AS ESTADO
+		FROM T01PARAMETRO P, MAESTRO_PERSONAL M, TDEPENDENCIAS D
+		WHERE
+			TRIM(SUBSTR(P.cod_argumento,7,4)) = M.numero_registro_alterno 
+			AND TRIM(SUBSTR(P.cod_argumento,1,6)) = D.unidad_organizacional 
+			AND P.cod_parametro='3079' 
+			AND P.cod_tipo='D' 
+			AND P.cod_modulo='SIGA'  
+			<isNotNull prepend="AND" property="num_reg_registrador"> TRIM(SUBSTR(P.cod_argumento,11,4)) = #num_reg_registrador# </isNotNull>
+		ORDER BY M.NOMB_CORT_PER
+	  </select>
+	  	
+	  <select id="nombreAutorizador"  parameterClass="java.util.HashMap" resultClass="java.lang.String">
+	  	SELECT p.nomb_cort_per FROM TDEPENDENCIAS T, MAESTRO_PERSONAL P WHERE 
+	  	T.UNIDAD_ORGANIZACIONAL IN ( SELECT SUBSTR(dep.unidad_organizacional,1,4)||'00'
+         FROM maestro_personal emp, tdependencias dep, maestro_personal jef WHERE emp.codi_depe_tde = dep.codi_depe_tde
+                                     AND DEP.CODI_EMPL_PER = JEF.CODI_EMPL_PER
+                                     AND emp.CODI_EMPL_PER = #codigoEmpleado# )
+                                     AND T.CODI_EMPL_PER = P.CODI_EMPL_PER 
+		</select>
+	
+	
+	<!-- INICIO: OBTENER JEFE Y ENCARGADO  PAS201780000300007-->
+	<resultMap id="resultadoPerfilColaborador" class="maestropersonal">
+		<result property="codigoEmpleado" 		column="CODI_EMPL_PER" />
+		<result property="nombre_completo" 		column="NOMB_CORT_PER" />
+		<result property="codigoDependencia" 	column="CODI_DEPE_TDE" />
+		<result property="numero_registro" 		column="NUMERO_REGISTRO_ALTERNO" />
+	</resultMap>
+	
+	<select id="esPerfilColaboradorJefe" parameterClass="java.util.HashMap"	resultMap="resultadoPerfilColaborador">
+		SELECT TD.CODI_EMPL_PER, MP.NUMERO_REGISTRO_ALTERNO, MP.NOMB_CORT_PER, TD.CODI_DEPE_TDE 
+		FROM MAESTRO_PERSONAL MP, TDEPENDENCIAS TD
+		WHERE TD.CODI_EMPL_PER=MP.CODI_EMPL_PER
+		AND TD.ESTADO_ID='1'
+		AND TD.FLAG_INFO_INF NOT IN ('6')
+		<isNotNull prepend="AND" property="codDependencia"> TD.CODI_DEPE_TDE = #codDependencia#</isNotNull>
+		<isNotNull prepend="AND" property="codEmpleado"> MP.CODI_EMPL_PER = #codEmpleado#</isNotNull>
+		AND ROWNUM =1
+	</select>
+	
+	<select id="esPerfilColaboradorEncargado" parameterClass="java.util.HashMap"	resultMap="resultadoPerfilColaborador">
+		SELECT MP.CODI_EMPL_PER, MP.NUMERO_REGISTRO_ALTERNO, MP.NOMB_CORT_PER, EP.COD_DEPENDENCIA CODI_DEPE_TDE
+		FROM MAESTRO_PERSONAL MP, ENCARGOS_PERSONA EP, TDEPENDENCIAS TD
+		WHERE MP.CODI_EMPL_PER=EP.CODI_ENCA_ENC
+		AND TRIM(EP.COD_DEPENDENCIA)=TD.CODI_DEPE_TDE
+		AND TD.ESTADO_ID='1'
+		AND EP.FLAG_ENCA_ENC='S'
+		AND EP.COD_TIPO_PROCESO IN ('00','05')
+		AND TO_DATE(TO_CHAR(SYSDATE,'YYYYMMDD'),'YYYYMMDD') &gt;=EP.FECH_INIC_ENC
+		AND TO_DATE(TO_CHAR(SYSDATE,'YYYYMMDD'),'YYYYMMDD') &lt;=EP.FECH_FINA_ENC
+		<isNotNull prepend="AND" property="codDependencia"> EP.COD_DEPENDENCIA = #codDependencia#</isNotNull> 
+		<isNotNull prepend="AND" property="codEmpleado"> MP.CODI_EMPL_PER = #codEmpleado#</isNotNull>
+		AND ROWNUM =1
+	</select>
+	
+	<select id="esEncargadoOtraUuoo" parameterClass="java.util.HashMap"	resultMap="resultadoPerfilColaborador">
+		SELECT DISTINCT MP.CODI_EMPL_PER, MP.NUMERO_REGISTRO_ALTERNO, MP.NOMB_CORT_PER, EP.COD_DEPENDENCIA CODI_DEPE_TDE
+        FROM MAESTRO_PERSONAL MP, ENCARGOS_PERSONA EP, TDEPENDENCIAS TD
+        WHERE MP.CODI_EMPL_PER=EP.CODI_ENCA_ENC
+        AND TRIM(EP.COD_DEPENDENCIA) NOT IN (MP.CODI_DEPE_TDE)
+        AND TD.ESTADO_ID='1'
+        AND EP.FLAG_ENCA_ENC='S'
+        AND EP.COD_TIPO_PROCESO IN ('00','05')
+        AND TO_DATE(TO_CHAR(SYSDATE,'YYYYMMDD'),'YYYYMMDD') &gt;=EP.FECH_INIC_ENC
+        AND TO_DATE(TO_CHAR(SYSDATE,'YYYYMMDD'),'YYYYMMDD') &lt;=EP.FECH_FINA_ENC
+		<isNotNull prepend="AND" property="codDependencia"> TD.CODI_DEPE_TDE = #codDependencia#</isNotNull>
+		<isNotNull prepend="AND" property="codEmpleado"> MP.CODI_EMPL_PER = #codEmpleado#</isNotNull>
+		AND ROWNUM =1
+	</select>
+	
+	<select id="esEncargadoAuc" parameterClass="java.util.HashMap"	resultMap="resultadoPerfilColaborador">
+		SELECT DISTINCT MP.CODI_EMPL_PER, MP.NUMERO_REGISTRO_ALTERNO, MP.NOMB_CORT_PER, EP.COD_DEPENDENCIA CODI_DEPE_TDE         
+		FROM MAESTRO_PERSONAL MP, ENCARGOS_PERSONA EP, TDEPENDENCIAS TD         
+		WHERE MP.CODI_EMPL_PER=EP.CODI_ENCA_ENC         
+		AND TRIM(EP.COD_DEPENDENCIA) NOT IN (MP.CODI_DEPE_TDE)
+		AND TRIM(EP.COD_DEPENDENCIA) IN (
+										SELECT DISTINCT COD_AUC_TECNICA FROM CATALOGO_BIEN_SERVICIO 
+										WHERE SITU_BSER_CAT ='A' AND COD_AUC_TECNICA IS NOT NULL AND COD_AUC_TECNICA NOT IN ('0000')
+										)
+		AND TD.ESTADO_ID='1'
+		AND EP.FLAG_ENCA_ENC='S'
+		AND EP.COD_TIPO_PROCESO IN ('00','05')
+		AND TO_DATE(TO_CHAR(SYSDATE,'YYYYMMDD'),'YYYYMMDD') &gt;=EP.FECH_INIC_ENC
+		AND TO_DATE(TO_CHAR(SYSDATE,'YYYYMMDD'),'YYYYMMDD') &lt;=EP.FECH_FINA_ENC
+		<isNotNull prepend="AND" property="codDependencia"> TD.CODI_DEPE_TDE = #codDependencia#</isNotNull>
+		<isNotNull prepend="AND" property="codEmpleado"> MP.CODI_EMPL_PER = #codEmpleado#</isNotNull>
+		AND ROWNUM =1
+	</select>
+	
+	<select id="obtenerCadenaUuoosQueEsJefe" parameterClass="java.util.HashMap"	resultClass="java.lang.String">
+		<!-- 
+		SELECT LISTAGG (TD.CODI_DEPE_TDE || '-') WITHIN GROUP (ORDER BY TD.CODI_DEPE_TDE ) AS CADENA
+			FROM TDEPENDENCIAS TD
+			WHERE TD.ESTADO_ID='1'
+		<isNotNull prepend="AND" property="codEmpleadoJefe"> TD.CODI_EMPL_PER = #codEmpleadoJefe#</isNotNull> 
+		-->
+		SELECT LISTAGG (TDX.CODI_DEPE_TDE || '-') WITHIN GROUP (ORDER BY TDX.CODI_DEPE_TDE ) AS CADENA
+            FROM 
+            (
+            (SELECT CODI_DEPE_TDE FROM TDEPENDENCIAS TD WHERE TD.FLAG_INFO_INF NOT IN ('6') AND TD.ESTADO_ID='1'  AND TD.CODI_EMPL_PER = #codEmpleadoJefe#) 
+            UNION
+             ( SELECT DISTINCT ENCARGOS_PERSONA.COD_DEPENDENCIA FROM ENCARGOS_PERSONA, MAESTRO_PERSONAL
+                WHERE ENCARGOS_PERSONA.CODI_ENCA_ENC = #codEmpleadoJefe#
+                AND ENCARGOS_PERSONA.FLAG_ENCA_ENC = 'S'
+                AND (TO_CHAR (SYSDATE, 'YYYYMMDD') BETWEEN TO_CHAR (ENCARGOS_PERSONA.FECH_INIC_ENC,'YYYYMMDD') AND TO_CHAR (ENCARGOS_PERSONA.FECH_FINA_ENC,'YYYYMMDD'))
+                AND ENCARGOS_PERSONA.CODI_EMPL_PER = MAESTRO_PERSONAL.CODI_EMPL_PER
+                ) 
+             ) TDX
+		
+	</select>
+</sqlMap>

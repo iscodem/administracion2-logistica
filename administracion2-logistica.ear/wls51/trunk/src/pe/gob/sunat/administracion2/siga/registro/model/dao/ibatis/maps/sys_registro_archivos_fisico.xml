@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="registro_archivos_fisico">
+
+	<typeAlias alias="registroArchivosFisicoBean"
+		type="pe.gob.sunat.administracion2.siga.registro.model.domain.RegistroArchivosFisicoBean" />
+	
+	
+	<resultMap id="lstArchivos" class="registroArchivosFisicoBean">
+			<result property="num_reg" 		column="NUME_REGI_ARC" />
+			<result property="sec_reg" 		column="SECU_REGI_ARC" />
+			<result property="file_name" 		column="FILENAME" />
+			<result property="file_ext" 		column="FILEEXTENSION" />
+			<result property="nom_object" 		column="NOMBRE_OBJETO" />
+			<result property="descrip_reg" 		column="DESCRIPCION" />
+			<result property="fuente_reg" 		column="FUENTE" />
+			<result property="fec_carga" 		column="FECH_CARG_ARC" />
+			<result property="flag_imagen" 		column="FLAG_IMAGEN" />
+			<result property="flag_security" 	column="FLAG_RESTRINGIDO" />
+			<result property="size" 			column="TAMANO" />
+	</resultMap>
+	<select id="selectArchivos" parameterClass="java.util.HashMap" resultMap="lstArchivos">	
+	  SELECT  SYS_REGISTRO_ARCHIVOS_FISICO.NUME_REGI_ARC ,   
+	          SYS_REGISTRO_ARCHIVOS_FISICO.SECU_REGI_ARC ,   
+	          SYS_REGISTRO_ARCHIVOS_FISICO.FILENAME ,   
+	          SYS_REGISTRO_ARCHIVOS_FISICO.FILEEXTENSION ,   
+	          SYS_REGISTRO_ARCHIVOS_FISICO.NOMBRE_OBJETO ,   
+	          SYS_REGISTRO_ARCHIVOS_FISICO.DESCRIPCION ,   
+	          SYS_REGISTRO_ARCHIVOS_FISICO.FUENTE ,   
+	          SYS_REGISTRO_ARCHIVOS_FISICO.FECH_CARG_ARC ,   
+	          SYS_REGISTRO_ARCHIVOS_FISICO.FLAG_IMAGEN ,   
+	          SYS_REGISTRO_ARCHIVOS_FISICO.FLAG_RESTRINGIDO ,   
+	          NVL(SYS_REGISTRO_ARCHIVOS_FISICO.TAMANO,0)TAMANO   
+	    FROM  SYS_REGISTRO_ARCHIVOS_FISICO   
+	   WHERE (  SYS_REGISTRO_ARCHIVOS_FISICO.NUME_REGI_ARC  = #num_reg# ) AND  
+	         (  SYS_REGISTRO_ARCHIVOS_FISICO.FLAG_RESTRINGIDO  = 'N' )  AND 
+	         (  SYS_REGISTRO_ARCHIVOS_FISICO.COD_ESTADO =  '1'  )   
+	
+	</select>
+	
+	<resultMap id="selectArchivoMap" class="registroArchivosFisicoBean">
+			<result property="num_reg" 		column="NUME_REGI_ARC" />
+			<result property="sec_reg" 		column="SECU_REGI_ARC" />
+			<result property="file_name" 		column="FILENAME" />
+			<result property="file_ext" 		column="FILEEXTENSION" />
+			<result property="descrip_reg" 		column="DESCRIPCION" />
+			<result property="size" 			column="TAMANO" />
+			<result property="data" 			column="DATAOBJECT" />
+	</resultMap>	
+	
+	<select id="selectArchivoDescarga" parameterClass="java.util.HashMap" resultMap="selectArchivoMap">	
+	  SELECT  SYS_REGISTRO_ARCHIVOS_FISICO.NUME_REGI_ARC ,   
+	          SYS_REGISTRO_ARCHIVOS_FISICO.SECU_REGI_ARC ,   
+	          SYS_REGISTRO_ARCHIVOS_FISICO.FILENAME ,   
+	          SYS_REGISTRO_ARCHIVOS_FISICO.FILEEXTENSION ,   
+	          SYS_REGISTRO_ARCHIVOS_FISICO.DESCRIPCION ,   
+	          SYS_REGISTRO_ARCHIVOS_FISICO.TAMANO ,
+	          SYS_REGISTRO_ARCHIVOS_FISICO.DATAOBJECT 
+	    FROM  SYS_REGISTRO_ARCHIVOS_FISICO   
+	   WHERE (  SYS_REGISTRO_ARCHIVOS_FISICO.SECU_REGI_ARC  = #sec_reg# ) AND  
+	         (  SYS_REGISTRO_ARCHIVOS_FISICO.FLAG_RESTRINGIDO  = 'N' )  AND 
+	         (  SYS_REGISTRO_ARCHIVOS_FISICO.COD_ESTADO =  '1'  )   
+	
+	</select>
+	
+	
+	
+	
+	<select id="selectCount"  parameterClass="java.util.HashMap" resultClass="java.lang.Long">
+	SELECT SE_REG_ARFISICO.NEXTVAL 
+	FROM DUAL
+	</select>
+	
+	
+	<insert id="insert" parameterClass="registroArchivosFisicoBean">
+	  INSERT INTO sys_registro_archivos_fisico
+	            (NUME_REGI_ARC,
+	             SECU_REGI_ARC,
+	             FECH_CARG_ARC,
+	             FLAG_IMAGEN,
+	             FILENAME,
+	             FILEEXTENSION,
+	             NOMBRE_OBJETO,
+	             DESCRIPCION,
+	             FUENTE,
+	             FLAG_RESTRINGIDO,
+	             TAMANO,
+	             DATAOBJECT
+	            )
+	     VALUES (#num_reg#,
+	             #sec_reg#,
+	             sysdate,
+	             #flag_imagen#,
+	             #file_name#,
+	             #file_ext#,
+	             #nom_object#,
+	             #descrip_reg#,
+	             #fuente_reg#,
+	             'N',
+	             #size#,
+	             #data#
+            ) 
+   </insert>
+   
+	<update id="eliminaArchivo"  parameterClass="registroArchivosFisicoBean">
+		UPDATE SYS_REGISTRO_ARCHIVOS_fisico
+		SET COD_ESTADO = '0'
+		WHERE SECU_REGI_ARC = #sec_reg#
+	</update>
+	
+		
+</sqlMap>

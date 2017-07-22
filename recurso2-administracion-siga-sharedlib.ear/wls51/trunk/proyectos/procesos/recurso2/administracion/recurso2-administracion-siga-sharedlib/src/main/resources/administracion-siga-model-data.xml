@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/aop
+	    http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	    http://www.springframework.org/schema/jee
+        http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
+        http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+	<!-- <import resource="classpath*:controlpatrimonial-muebles-model-cacheparam.xml" 
+		/> -->
+
+	<!-- ======================== Configuracion de los datasource =============== -->
+	<jee:jndi-lookup id="sigaADMDSGrabacion" jndi-name="jdbc/dgsig"
+		resource-ref="true" />
+	<jee:jndi-lookup id="sigaADMDSConsulta" jndi-name="jdbc/dcsig"
+		resource-ref="true" />
+
+	<!-- ======================== SqlMap setup for iBATIS Database Layer =============== -->
+	<bean id="sigaadmistracion.sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean"
+		p:configLocation="classpath:administracion-siga-model-sql-map-config.xml"
+		p:dataSource-ref="sigaADMDSGrabacion" />
+		
+			
+	<bean id="sigaregistro.sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean"
+		p:configLocation="classpath:administracion-siga-model-sql-map-config.xml"
+		p:dataSource-ref="sigaADMDSConsulta" />
+	
+	
+	<!-- ======================== SqlDAO setup for iBATIS Database Layer =============== -->
+	<bean id="administracion.daoBase.siga" class="pe.gob.sunat.framework.spring.util.dao.SqlMapDAOBase"
+		p:sqlMapClient-ref="sigaadmistracion.sqlMapClient" />
+		
+		
+		
+	<bean id="registro.daoBase.siga" class="pe.gob.sunat.framework.spring.util.dao.SqlMapDAOBase"
+		p:sqlMapClient-ref="sigaregistro.sqlMapClient" />
+
+
+	
+	<!-- ======================== ARCHIVO ====================================================== -->
+	<bean id="sysRegistroArchivosDao"
+		class="pe.gob.sunat.recurso2.administracion.siga.archivo.model.dao.ibatis.SqlMapSysRegistroArchivosDAOImpl"
+		parent="administracion.daoBase.siga">
+	</bean>
+
+	<bean id="sysRegistroArchivosFisicoDao"
+		class="pe.gob.sunat.recurso2.administracion.siga.archivo.model.dao.ibatis.SqlMapSysRegistroArchivosFisicoDAOImpl"
+		parent="administracion.daoBase.siga">
+	</bean>
+	<!-- ======================== EXPEDIENTE ====================================================== -->
+	<bean id="paExpedienteDAO"
+		class="pe.gob.sunat.recurso2.administracion.siga.expediente.model.dao.ibatis.SqlMapPaExpedienteDAOImpl"
+		parent="administracion.daoBase.siga">
+	</bean>
+		<bean id="expedienteInternoAccionDao"
+		class="pe.gob.sunat.recurso2.administracion.siga.expediente.model.dao.ibatis.SqlMapExpedienteInternoAccionDAOImpl"
+		parent="registro.daoBase.siga">
+	</bean>
+	
+	<!-- ======================== MENSAJERIA ====================================================== -->
+	
+	<bean id="sysMensajeriaDAO"
+		class="pe.gob.sunat.recurso2.administracion.siga.mensajeria.model.dao.ibatis.SqlMapSysMensajeriaDAOImpl"
+		parent="administracion.daoBase.siga">
+	</bean>
+	
+	<!-- ======================== PARAMETRO ====================================================== -->
+		<bean id="objetivosDao"
+		class="pe.gob.sunat.recurso2.administracion.siga.parametro.model.dao.ibatis.SqlMapObjetivosDAOImpl"
+		parent="registro.daoBase.siga">
+	</bean>
+	
+	<bean id="prgAnnoDao"
+		class="pe.gob.sunat.recurso2.administracion.siga.parametro.model.dao.ibatis.SqlMapPrgAnnoDAOImpl"
+		parent="registro.daoBase.siga">
+	</bean>
+	
+	<bean id="sysEstadosDao"
+		class="pe.gob.sunat.recurso2.administracion.siga.parametro.model.dao.ibatis.SqlMapSysEstadosDAOImpl"
+		parent="registro.daoBase.siga">
+	</bean>
+	<bean id="sysParametrosDao"
+		class="pe.gob.sunat.recurso2.administracion.siga.parametro.model.dao.ibatis.SqlMapSysParametrosDAOImpl"
+		parent="registro.daoBase.siga">
+	</bean>
+	
+	<bean id="t01ParametroDao"
+		class="pe.gob.sunat.recurso2.administracion.siga.parametro.model.dao.ibatis.SqlMapT01ParametroDAOImpl"
+		parent="registro.daoBase.siga"> <!-- movilidad.daoBase.siga -->
+	</bean>
+	<!-- ======================== REGISTRO ====================================================== -->
+	<bean id="accesoDao"
+		class="pe.gob.sunat.recurso2.administracion.siga.registro.model.dao.ibatis.SqlMapAccesoDAOImpl"
+		parent="administracion.daoBase.siga">
+	</bean>
+	<bean id="dependenciaDao"
+		class="pe.gob.sunat.recurso2.administracion.siga.registro.model.dao.ibatis.SqlMapDependenciaDAOImpl"
+		parent="registro.daoBase.siga">
+	</bean>
+	<bean id="encargosPersonaDao"
+		class="pe.gob.sunat.recurso2.administracion.siga.registro.model.dao.ibatis.SqlMapEncargosPersonaDAOImpl"
+		parent="registro.daoBase.siga">
+	</bean>
+	<bean id="maestroContratistasDao"
+		class="pe.gob.sunat.recurso2.administracion.siga.registro.model.dao.ibatis.SqlMapMaestroContratistasDAOImpl"
+		parent="registro.daoBase.siga">
+	</bean>
+	<bean id="maestroPersonalDao"
+		class="pe.gob.sunat.recurso2.administracion.siga.registro.model.dao.ibatis.SqlMapMaestroPersonalDAOImpl"
+		parent="registro.daoBase.siga">
+	</bean>
+	<bean id="personaDao"
+		class="pe.gob.sunat.recurso2.administracion.siga.registro.model.dao.ibatis.SqlMapPersonaDAOImpl"
+		parent="registro.daoBase.siga">
+	</bean>
+	<bean id="segRolesUsuariosDao"
+		class="pe.gob.sunat.recurso2.administracion.siga.registro.model.dao.ibatis.SqlMapSegRolesUsuariosDAOImpl"
+		parent="registro.daoBase.siga">
+	</bean>
+	<bean id="tcargosDAO"
+		class="pe.gob.sunat.recurso2.administracion.siga.registro.model.dao.ibatis.SqlMapTcargosDAOImpl"
+		parent="registro.daoBase.siga">
+	</bean>
+	<bean id="paFirmaElectronicaDAO"
+		class="pe.gob.sunat.recurso2.administracion.siga.registro.model.dao.ibatis.SqlMapPaFirmaElectronicaDAOImpl"
+		parent="registro.daoBase.siga">
+	</bean>
+	
+	<bean id="ddpDao"
+		class="pe.gob.sunat.recurso2.administracion.siga.registro.model.dao.ibatis.SqlMapDdpDAOImpl"
+		parent="registro.daoBase.siga">
+	</bean>
+	<bean id="ddsDao"
+		class="pe.gob.sunat.recurso2.administracion.siga.registro.model.dao.ibatis.SqlMapDdsDAOImpl"
+		parent="registro.daoBase.siga">
+	</bean>
+	<bean id="t733pernatDao"
+		class="pe.gob.sunat.recurso2.administracion.siga.registro.model.dao.ibatis.SqlMapT733PernatDAOImpl"
+		parent="registro.daoBase.siga">
+	</bean>
+	
+	<!-- ======================== UBIGEO ====================================================== -->
+	<bean id="tDepartamentosDao"
+		class="pe.gob.sunat.recurso2.administracion.siga.ubigeo.model.dao.ibatis.SqlMapTDepartamentosDAOImpl"
+		parent="registro.daoBase.siga">
+	</bean>
+	<bean id="tProvinciasDao"
+		class="pe.gob.sunat.recurso2.administracion.siga.ubigeo.model.dao.ibatis.SqlMapTProvinciasDAOImpl"
+		parent="registro.daoBase.siga">
+	</bean>
+	<bean id="tDistritosDao"
+		class="pe.gob.sunat.recurso2.administracion.siga.ubigeo.model.dao.ibatis.SqlMapTDistritosDAOImpl"
+		parent="registro.daoBase.siga">
+	</bean>
+	
+</beans>
+
+
+

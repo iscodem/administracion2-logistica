@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="tdepartamentos">
+
+	<typeAlias alias="tDepartamentosBean"
+		type="pe.gob.sunat.recurso2.administracion.siga.ubigeo.model.bean.TDepartamentosBean" />
+
+	<resultMap id="departamentoList" class="tDepartamentosBean">
+		<result property="codiDepaDpt" column="CODI_DEPA_DPT" />
+		<result property="nombDptoDpt" column="NOMB_DPTO_DPT" />
+	</resultMap>
+
+	<select id="obtenerDepartamentos" parameterClass="java.util.HashMap"
+		resultMap="departamentoList">
+		SELECT
+		DEPARTAMENTO.CODI_DEPA_DPT,
+		DEPARTAMENTO.NOMB_DPTO_DPT
+		FROM TDEPARTAMENTOS DEPARTAMENTO
+		ORDER BY DEPARTAMENTO.NOMB_DPTO_DPT
+	</select>
+
+</sqlMap>
+

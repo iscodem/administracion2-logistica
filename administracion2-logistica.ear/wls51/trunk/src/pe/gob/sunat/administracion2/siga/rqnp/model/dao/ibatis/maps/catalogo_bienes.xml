@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="catalogobienes">
+	<typeAlias alias="catalogoBienesBean"
+		type="pe.gob.sunat.administracion2.siga.rqnp.model.domain.CatalogoBienesBean" />
+	
+	<resultMap id="lstCatalogo" class="catalogoBienesBean">
+		<result property="codigo_bien" 			column="CODI_BSER_CAT" />
+		<result property="desc_bien" 			column="DESC_BSER_CAT" />
+		<result property="tipo_bien" 			column="TIPO_BSER_CAT" />
+		<result property="codigo_unidad" 		column="UNID_MUSO_CAT" />
+    	<result property="precio_bien" 			column="PREC_SPROM_CAT" />
+    	<result property="asignacion_especi"	column="PLAN_CNTA_GAS" />
+    	<result property="auct1"				column="AUCT1" />
+    	<result property="desc_unidad" 			column="DESC_MEDI_UND" />
+		<result property="codigo_gasto" 		column="PART_GAST_CAT" />
+		<result property="desc_gasto" 			column="DESC_GAST_GAS" />
+		<!-- <result property="auct2" 				column="MEDI_PRES_CAT" />
+		<result property="auct3" 				column="PROC_ARTI_CAT" /> -->
+		<result property="saldo"				column="SALDO" />
+		<result property="ind_recurrente"		column="IND_RECURRENTE" />
+		<result property="tipo_ruta"			column="PLAN_CTA_TRAN" />
+		<result property="cod_ambito"			column="COD_AMBITO" />
+		<result property="cod_tipo_prog"		column="PLAN_CTA_TRAN" />
+	</resultMap>
+
+	<select id="selectCatalogo" parameterClass="java.util.HashMap" resultMap="lstCatalogo">
+	SELECT C.CODI_BSER_CAT,
+		C.DESC_BSER_CAT,  
+		C.TIPO_BSER_CAT, 
+		C.UNID_MUSO_CAT,
+		NVL(C.PREC_SPROM_CAT,0) PREC_SPROM_CAT,
+		NVL(C.PLAN_CNTA_GAS,'0') PLAN_CNTA_GAS,
+		(SELECT SER_RNP.FN_AUCT(C.CODI_BSER_CAT,#cod_dep#) AS RESULTADO FROM DUAL) AUCT1,
+		U.DESC_MEDI_UND,   
+		F.PART_GAST_CAT,
+		G.DESC_GAST_GAS,
+		<!-- NVL(C.MEDI_PRES_CAT,'') MEDI_PRES_CAT ,
+		NVL(C.PROC_ARTI_CAT,'') PROC_ARTI_CAT, -->
+		(SELECT SER_RNP.FN_SALDO_CD (#anio_ejec#,#cod_plaza#,C.CODI_BSER_CAT) AS RESULTADO FROM DUAL)  SALDO ,
+		IND_RECURRENTE ,
+		C.PLAN_CTA_TRAN,
+		COD_AMBITO  
+	FROM CATALOGO_BIEN_SERVICIO C,   
+		UNIDADES_DE_MEDIDAS U,
+		CATALOGO_FILTRO F,
+		CLASIFICADOR_GASTO G
+	WHERE (C.unid_muso_cat = U.codi_medi_und (+)) and  
+		(nvl(C.SITU_BSER_CAT,'A') = 'A' ) AND  
+		G.Ann_Clasificador=F.Ann_Clasificador AND  
+		C.CODI_BSER_CAT = F.CODI_BSER_CAT (+) AND
+		F.PART_GAST_CAT = G.CLAS_GAST_GAS (+) AND
+		C.TIPO_BSER_CAT IN ('B','S','O') AND
+		G.ann_clasificador = to_char(sysdate,'yyyy') AND
+		(SELECT SER_RNP.FN_AUCT(C.CODI_BSER_CAT,#cod_dep#) AS RESULTADO FROM DUAL)  IS NOT NULL
+		AND SUBSTR(C.CODI_BSER_CAT,1,1) in ('B','S','O')
+		<isNotNull prepend="AND" property="des_bien"> C.DESC_BSER_CAT like #des_bien#</isNotNull>
+		<isNotNull prepend="AND" property="cod_bien"> C.CODI_BSER_CAT like #cod_bien#</isNotNull>
+		AND ROWNUM &lt;=40
+	</select>
+
+	<resultMap id="lstCatalogoFamilia" 		class="catalogoBienesBean">
+		<result property="codigo_bien" 			column="CODI_BSER_CAT" />
+		<result property="desc_bien" 			column="DESC_BSER_CAT" />
+		<result property="tipo_bien" 			column="TIPO_BSER_CAT" />
+		<result property="codigo_unidad" 		column="UNID_MUSO_CAT" />
+    	<result property="precio_bien" 			column="PREC_SPROM_CAT" />
+    	<result property="asignacion_especi" 	column="PLAN_CNTA_GAS" />
+       	<result property="desc_unidad" 			column="DESC_MEDI_UND" />
+		<result property="auct_name" 			column="AUC" />
+		
+	</resultMap>
+	
+	<select id="selectCatalogoFamilia" parameterClass="java.util.HashMap" resultMap="lstCatalogoFamilia">
+		SELECT C.CODI_BSER_CAT,   
+			C.DESC_BSER_CAT,  
+			C.TIPO_BSER_CAT, 
+			C.UNID_MUSO_CAT,
+			NVL(C.PREC_SPROM_CAT,0) PREC_SPROM_CAT,
+			NVL(C.PLAN_CNTA_GAS,'0') PLAN_CNTA_GAS,
+			U.DESC_MEDI_UND,   
+			(select unidad_organizacional||' '||desc_depe_tde from tdependencias where codi_depe_tde = ser_rnp.FN_AUCT(codi_bser_cat, #cod_uuoo#)) as AUC
+		FROM CATALOGO_BIEN_SERVICIO C,   
+			UNIDADES_DE_MEDIDAS U
+		WHERE (C.unid_muso_cat = U.codi_medi_und (+)) 
+			AND (nvl(C.SITU_BSER_CAT,'A') = 'A' ) 
+			AND	C.TIPO_BSER_CAT IN ('B','S','O') 
+			AND	C.CODI_BSER_CAT like #cod_familia#
+			AND SUBSTR(C.CODI_BSER_CAT,1,1) in ('B','S','O')
+			AND ser_rnp.fn_auct(C.CODI_BSER_CAT, #cod_uuoo#) =  #cod_uuoo#
+	</select>
+	
+	<select id="selectCatalogoBien" parameterClass="java.util.HashMap" resultMap="lstCatalogo">
+	SELECT C.CODI_BSER_CAT,   
+		C.DESC_BSER_CAT,  
+		C.TIPO_BSER_CAT, 
+		C.UNID_MUSO_CAT,
+		NVL(C.PREC_SPROM_CAT,0) PREC_SPROM_CAT,
+		NVL(C.PLAN_CNTA_GAS,'0') PLAN_CNTA_GAS,
+		'' AUCT1,
+		U.DESC_MEDI_UND,   
+		F.PART_GAST_CAT,
+		G.DESC_GAST_GAS,
+		<!-- NVL(C.MEDI_PRES_CAT,'') MEDI_PRES_CAT ,
+		NVL(C.PROC_ARTI_CAT,'') PROC_ARTI_CAT, -->
+		'0' SALDO,
+		IND_RECURRENTE ,
+		C.PLAN_CTA_TRAN,
+		COD_AMBITO  
+	FROM CATALOGO_BIEN_SERVICIO C,   
+		UNIDADES_DE_MEDIDAS U,
+		CATALOGO_FILTRO F,
+		CLASIFICADOR_GASTO G
+	WHERE (C.unid_muso_cat = U.codi_medi_und (+)) and  
+		(nvl(C.SITU_BSER_CAT,'A') = 'A' ) AND  
+		G.Ann_Clasificador=F.Ann_Clasificador AND  
+		C.CODI_BSER_CAT = F.CODI_BSER_CAT (+) AND
+		F.PART_GAST_CAT = G.CLAS_GAST_GAS (+) and
+		G.ann_clasificador = to_char(sysdate,'yyyy') 
+		<isNotNull prepend="AND" property="cod_bien"> C.CODI_BSER_CAT = #cod_bien#</isNotNull>
+  </select>
+	
+</sqlMap>
+

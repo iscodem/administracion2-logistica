@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="unidadmedida">
+	<typeAlias alias="unidadMedidaBean"
+		type="pe.gob.sunat.administracion2.siga.rqnp.model.domain.UnidadMedidaBean" />
+	
+	<resultMap id="lstUnidad" class="unidadMedidaBean">
+		<result property="cod_unidad" 		column="CODI_MEDI_UND" />
+		<result property="nom_corto" 			column="UNID_MEDI_UND" />
+		<result property="nom_largo" 		column="DESC_MEDI_UND" />
+		<result property="equi_unid" 			column="CODI_EQUI_UND" />
+	</resultMap>
+
+	<select id="selectAll" parameterClass="java.util.HashMap" resultMap="lstUnidad">
+		SELECT DISTINCT CODI_MEDI_UND,   
+         UNID_MEDI_UND ,
+         DESC_MEDI_UND ,
+         CODI_EQUI_UND
+    	FROM UNIDADES_DE_MEDIDAS
+    	ORDER BY DESC_MEDI_UND
+  </select>
+	
+</sqlMap>
+

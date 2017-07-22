@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="expedienteinternoaccion">
+
+	<typeAlias alias="expedienteInternoAccionBean"
+		type="pe.gob.sunat.recurso2.administracion.siga.expediente.model.bean.ExpedienteInternoAccionBean" />
+	
+	<resultMap id="resultado" class="expedienteInternoAccionBean">
+		<result property="num_exp" 		column="NUME_EXPE_EXP" />
+		<result property="sec_accion" 	column="SECU_ACCI_ACC" />
+		<result property="cod_accion" 	column="CODI_ACCI_ACC" />
+		<result property="des_accion" 	column="DESC_ACCI_ACC" />
+		<result property="cod_emp" 		column="CODI_EMPL_PER" />
+		<result property="nom_emp" 		column="NOMB_CORT_PER" />
+		<result property="fecha_ini" 	column="FECH_INIC_ACC" />
+		<result property="fecha_ter" 	column="FECH_TERM_ACC" />
+		<result property="observacion" 	column="OBSE_TERM_ACC" />
+		<result property="estado" 		column="ESTA_FINA_ACC" />
+		<result property="nom_estado" 	column="DESC_ESTA_EST" />
+		
+	</resultMap>
+	
+	
+	<select id="selectExp" parameterClass="map" resultMap="resultado">
+	
+   SELECT E.NUME_EXPE_EXP,
+    E.SECU_ACCI_ACC,
+   E.CODI_ACCI_ACC,
+   P.DESC_ACCI_ACC ,
+    E.CODI_EMPL_PER,
+   M.NOMB_CORT_PER ,
+    E.FECH_INIC_ACC,
+   E.FECH_TERM_ACC,
+   E.OBSE_TERM_ACC,
+   E.ESTA_FINA_ACC,
+   AE.DESC_ESTA_EST
+   FROM EXPEDIENTES_INTERNOS_ACCIONES E,
+   PROCESOS_ACCIONES P, MAESTRO_PERSONAL M , PROCESOS_ACCIONES_ESTADOS AE
+   WHERE E.CODI_ACCI_ACC = P.CODI_ACCI_ACC AND
+   E.CODI_PROC_PRO = P.CODI_PROC_PRO AND
+   E.CODI_EMPL_PER = M.CODI_EMPL_PER AND 
+   AE.CODI_PROC_PRO = E.CODI_PROC_PRO AND
+   AE.CODI_ACCI_ACC =E.CODI_ACCI_ACC AND
+   AE.CODI_ESTA_ACT = E.ESTA_FINA_ACC AND
+   NUME_EXPE_EXP = #num_expediente#  
+   ORDER BY SECU_ACCI_ACC
+   
+  </select>
+  
+  
+  
+</sqlMap>

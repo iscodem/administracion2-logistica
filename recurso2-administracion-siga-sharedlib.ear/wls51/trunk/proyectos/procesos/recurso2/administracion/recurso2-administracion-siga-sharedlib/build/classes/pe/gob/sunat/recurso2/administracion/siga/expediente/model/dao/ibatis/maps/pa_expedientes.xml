@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="paExpedientes">
+
+
+	<parameterMap id="crear_exp_parm"
+		class="map">
+		<parameter property="anio_pro" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+		<parameter property="cod_sede" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+		
+		<parameter property="cod_proceso" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+		
+		<parameter property="cod_responsable" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+		
+		<parameter property="cod_doc" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+		
+		<parameter property="cod_exp" jdbcType="CHAR" javaType="java.lang.String"
+			mode="OUT" />
+			
+	</parameterMap>
+	
+	
+	 <procedure id="sp_crear_exp" parameterMap="crear_exp_parm" >
+		{call SIGA.PA_EXPEDIENTES.sp_crear_exp(?,?,?,?,?,?)}
+	</procedure>
+	
+	
+	
+ 
+ 	<parameterMap id="crear_acc_parm"
+		class="map">
+		<parameter property="cod_exp" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+		<parameter property="cod_proceso" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+		
+		<parameter property="cod_accion" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+		
+		<parameter property="cod_sede" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+		
+		<parameter property="cod_responsable" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+		
+		<parameter property="exp_estado" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+		
+		<parameter property="exp_obs" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+	</parameterMap>
+	
+	<procedure id="sp_crear_acc" parameterMap="crear_acc_parm" >
+		{call SIGA.PA_EXPEDIENTES.sp_crear_acc(?,?,?,?,?,?,?)}
+	</procedure>
+	
+</sqlMap>

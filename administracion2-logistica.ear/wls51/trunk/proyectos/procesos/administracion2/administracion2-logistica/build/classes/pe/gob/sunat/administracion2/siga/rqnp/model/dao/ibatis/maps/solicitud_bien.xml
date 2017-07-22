@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="solicitudbien">
+	<typeAlias alias="solicitudBienBean"
+		type="pe.gob.sunat.administracion2.siga.rqnp.model.domain.SolicitudBienBean" />
+	
+	<resultMap id="lstSolicitud" class="solicitudBienBean">
+		<result property="cod_solicitud" 	column="CODI_BIEN_CAT" />
+		<result property="cod_bien_rpta" 	column="CODI_BSER_CAT" />
+		<result property="cod_empl_sol" 	column="CODI_EMPL_PER" />
+		<result property="nombre_bien" 		column="NOMB_BIEN_CAT" />
+		<result property="otras_caract" 	column="DESC_BIEN_CAT" />
+		<result property="fecha_sol" 		column="FECH_BIEN_CAT" />
+		<result property="unidad_sol" 		column="UNID_MEDI_CAT" />
+		<result property="precio_sol" 		column="PREC_UNIT_CAT" />
+		<result property="comentario_rpta" 	column="COME_BIEN_RES" />
+		<result property="estado" 			column="ESTA_BIEN_CAT" />
+		<result property="fecha_rpta" 		column="FECH_RESP_RES" />
+		
+		<result property="fecha_aprueba" 	column="FEC_APRUEBA_AUC" />
+		<result property="fecha_envio" 		column="FEC_ENVIO" />
+		
+		<result property="cod_emp_rpta" 	column="CODI_EMPL_RES" />
+		<result property="cod_sede_sol" 	column="CODI_SEDE_SED" />
+		<result property="flag" 			column="FLAG_REVI_CAT" />
+		<result property="tipo_bien" 		column="TIPO_BSER_CAT" />
+		<result property="tipo_sol" 		column="CONS_BIEN_CAT" />
+		<result property="presentacion" 	column="PRES_BIEN_CAT" />
+		<result property="caract_tecnica" 	column="COMP_BIEN_CAT" />
+		<result property="caract_fisica" 	column="FISI_BIEN_CAT" />
+		<result property="suger_proveedor" 	column="REFE_BIEN_CAT" />
+		<result property="tiempo_expira" 	column="TIEM_EXPI_CAT" />
+		<result property="envase" 			column="DESC_ENVA_CAT" />
+		
+		<result property="nombre_sol" 		column="SOLICITANTE" />
+		<result property="nombre_uuo" 		column="NOMBRE_UUO" />
+		<result property="cod_unidad_rpta" 	column="UNID_MUSO_CAT" />
+		<result property="precio_rpta" 		column="PREC_SPROM_CAT" />
+		<result property="nom_bien_rpta" 	column="DESC_BSER_CAT" />
+		<result property="unidad_rpta" 		column="DESC_MEDI_UND" />
+		<result property="nom_estado" 		column="DESC_REGI_EST" />
+		<result property="cod_categoria" 	column="COD_CATEGORIA" />
+		<result property="numeroArchivo" 	column="COD_ADJUNTOS" />
+		<result property="cod_auc" 			column="COD_AUC" />
+		
+		<result property="cod_contacto" 		column="COD_CONTACTO" />
+		<result property="num_anexo_contacto" 	column="NUM_ANEXO_CONTACTO" />
+		<result property="obs_motivo" 			column="OBS_MOTIVO" />
+		
+	</resultMap>
+
+	
+	<select id="selectSolicitud" parameterClass="java.util.HashMap" resultMap="lstSolicitud">
+  SELECT SOLICITUD_BIEN_CATALOGO.CODI_BIEN_CAT,   
+         SOLICITUD_BIEN_CATALOGO.CODI_BSER_CAT,   
+         SOLICITUD_BIEN_CATALOGO.CODI_EMPL_PER,   
+         SOLICITUD_BIEN_CATALOGO.NOMB_BIEN_CAT,   
+         SOLICITUD_BIEN_CATALOGO.DESC_BIEN_CAT,   
+         SOLICITUD_BIEN_CATALOGO.FECH_BIEN_CAT,   
+         SOLICITUD_BIEN_CATALOGO.UNID_MEDI_CAT,   
+         SOLICITUD_BIEN_CATALOGO.PREC_UNIT_CAT,   
+         SOLICITUD_BIEN_CATALOGO.COME_BIEN_RES,   
+         SOLICITUD_BIEN_CATALOGO.ESTA_BIEN_CAT,   
+         SOLICITUD_BIEN_CATALOGO.FECH_RESP_RES, 
+         
+         SOLICITUD_BIEN_CATALOGO.FEC_APRUEBA_AUC,  
+         SOLICITUD_BIEN_CATALOGO.FEC_ENVIO, 
+         
+         SOLICITUD_BIEN_CATALOGO.CODI_EMPL_RES,   
+         SOLICITUD_BIEN_CATALOGO.CODI_SEDE_SED,   
+         SOLICITUD_BIEN_CATALOGO.FLAG_REVI_CAT,   
+         SOLICITUD_BIEN_CATALOGO.TIPO_BSER_CAT,   
+         SOLICITUD_BIEN_CATALOGO.CONS_BIEN_CAT,   
+         SOLICITUD_BIEN_CATALOGO.PRES_BIEN_CAT,   
+         SOLICITUD_BIEN_CATALOGO.COMP_BIEN_CAT,   
+         SOLICITUD_BIEN_CATALOGO.FISI_BIEN_CAT,   
+         SOLICITUD_BIEN_CATALOGO.REFE_BIEN_CAT,
+         SOLICITUD_BIEN_CATALOGO.TIEM_EXPI_CAT,
+         SOLICITUD_BIEN_CATALOGO.DESC_ENVA_CAT,
+         
+         rtrim(MAESTRO_PERSONAL.APE_PAT_PER)||' '||rtrim(MAESTRO_PERSONAL.APE_MAT_PER)||' '||rtrim(MAESTRO_PERSONAL.NOM_EMP_PER) SOLICITANTE,
+         UNIDAD_ORGANIZACIONAL||' '||DESC_DEPE_TDE NOMBRE_UUO,
+         CATALOGO_BIEN_SERVICIO.UNID_MUSO_CAT,   
+         CATALOGO_BIEN_SERVICIO.PREC_SPROM_CAT ,
+         CATALOGO_BIEN_SERVICIO.DESC_BSER_CAT,  
+         SOLICITUD_BIEN_CATALOGO.DESC_ENVA_CAT,
+    UNIDADES_DE_MEDIDAS.DESC_MEDI_UND,
+      SYS_ESTADOS.DESC_REGI_EST,
+      SOLICITUD_BIEN_CATALOGO.COD_CATEGORIA,
+      SOLICITUD_BIEN_CATALOGO.COD_ADJUNTOS,
+      NVL(SOLICITUD_BIEN_CATALOGO.COD_AUC,'0' )  COD_AUC,
+      SOLICITUD_BIEN_CATALOGO.COD_CONTACTO,
+	  SOLICITUD_BIEN_CATALOGO.NUM_ANEXO_CONTACTO,
+	  SOLICITUD_BIEN_CATALOGO.OBS_MOTIVO
+    FROM SOLICITUD_BIEN_CATALOGO,
+         MAESTRO_PERSONAL ,
+      TDEPENDENCIAS,
+       CATALOGO_BIEN_SERVICIO,
+    UNIDADES_DE_MEDIDAS  ,   
+         SYS_ESTADOS  
+   WHERE
+         SOLICITUD_BIEN_CATALOGO.CODI_EMPL_PER = MAESTRO_PERSONAL.CODI_EMPL_PER (+) AND
+  MAESTRO_PERSONAL.CODI_DEPE_TDE = TDEPENDENCIAS.CODI_DEPE_TDE AND
+( SOLICITUD_BIEN_CATALOGO.CODI_BSER_CAT = CATALOGO_BIEN_SERVICIO.CODI_BSER_CAT  (+)   ) AND
+      CATALOGO_BIEN_SERVICIO.UNID_MUSO_CAT = UNIDADES_DE_MEDIDAS.CODI_MEDI_UND (+)AND
+ SOLICITUD_BIEN_CATALOGO.CODI_BIEN_CAT = #cod_sol#  AND  
+         ( SYS_ESTADOS.NOMB_TABL_EST (+)= 'SOLICITUD_BIEN_CATALOGO' ) AND  
+         ( SYS_ESTADOS.VALO_ESTA_EST (+)= SOLICITUD_BIEN_CATALOGO.ESTA_BIEN_CAT ) 
+  </select>
+  
+  <resultMap id="lstAll" class="solicitudBienBean">
+	<result property="estado" 			column="ESTA_BIEN_CAT" />
+	<result property="nom_estado" 		column="DESC_REGI_EST" />
+	<result property="cod_solicitud" 	column="CODI_BIEN_CAT" />
+	<result property="nombre_bien" 		column="NOMB_BIEN_CAT" />
+	<result property="cod_bien_rpta" 	column="CODI_BSER_CAT" />	
+	<result property="cod_empl_sol" 	column="CODI_EMPL_PER" />
+	<result property="nombre_sol" 		column="SOLICITANTE" />
+	<result property="fecha_sol" 		column="FECH_BIEN_CAT" />		
+	<result property="fecha_rpta" 		column="FECH_RESP_RES" />
+	<result property="fecha_aprueba" 	column="FEC_APRUEBA_AUC" />
+	<result property="fecha_envio" 		column="FEC_ENVIO" />	
+</resultMap>
+  
+	
+	<select id="selectAll" parameterClass="java.util.HashMap" resultMap="lstAll">
+	SELECT SOLICITUD_BIEN_CATALOGO.ESTA_BIEN_CAT,   
+		SYS_ESTADOS.DESC_REGI_EST,
+		SOLICITUD_BIEN_CATALOGO.CODI_BIEN_CAT,   
+		SOLICITUD_BIEN_CATALOGO.NOMB_BIEN_CAT,   
+		SOLICITUD_BIEN_CATALOGO.CODI_BSER_CAT,   
+		SOLICITUD_BIEN_CATALOGO.CODI_EMPL_PER,   
+		rtrim(MAESTRO_PERSONAL.APE_PAT_PER)||' '||rtrim(MAESTRO_PERSONAL.APE_MAT_PER)||' '||rtrim(MAESTRO_PERSONAL.NOM_EMP_PER) SOLICITANTE,
+    	SOLICITUD_BIEN_CATALOGO.fech_bien_cat,
+    	SOLICITUD_BIEN_CATALOGO.FECH_RESP_RES,
+    	SOLICITUD_BIEN_CATALOGO.FEC_APRUEBA_AUC,  
+        SOLICITUD_BIEN_CATALOGO.FEC_ENVIO 
+    FROM SOLICITUD_BIEN_CATALOGO,   
+		MAESTRO_PERSONAL,   
+		SYS_ESTADOS  
+   WHERE 
+   (SOLICITUD_BIEN_CATALOGO.CODI_EMPL_PER = MAESTRO_PERSONAL.CODI_EMPL_PER (+)) and  
+         ( SOLICITUD_BIEN_CATALOGO.ESTA_BIEN_CAT like #cod_estado# ) AND  
+         SOLICITUD_BIEN_CATALOGO.COD_AUC IS NOT NULL AND 
+         ( SYS_ESTADOS.NOMB_TABL_EST (+)= 'SOLICITUD_BIEN_CATALOGO' ) AND  
+         ( SYS_ESTADOS.VALO_ESTA_EST (+)= SOLICITUD_BIEN_CATALOGO.ESTA_BIEN_CAT )
+         <!-- EXTRACT (YEAR FROM SOLICITUD_BIEN_CATALOGO.FECH_CREA) &gt;= (EXTRACT (YEAR FROM SYSDATE) -2 ) -->
+        <isNotNull prepend="AND" property="cod_per"> SOLICITUD_BIEN_CATALOGO.CODI_EMPL_PER = #cod_per#</isNotNull>
+  		<!-- <isNotNull prepend="AND" property="cod_dep"> SOLICITUD_BIEN_CATALOGO.COD_AUC = #cod_dep#</isNotNull> ORIGINAL-->
+  		<isNotNull prepend="AND" property="cod_dep"> #cod_dep# like '%'||SOLICITUD_BIEN_CATALOGO.COD_AUC ||'%'</isNotNull>
+		ORDER BY SOLICITUD_BIEN_CATALOGO.CODI_BIEN_CAT DESC
+	 </select>
+	
+	<select id="selectCount"   resultClass="java.lang.Long">
+		SELECT NVL( MAX(CODI_BIEN_CAT),0) cant_max
+		FROM SOLICITUD_BIEN_CATALOGO
+	</select>
+	
+	
+	<insert id="insertar" parameterClass="solicitudBienBean">
+		INSERT INTO SOLICITUD_BIEN_CATALOGO(
+		CODI_BIEN_CAT,
+	
+		CODI_EMPL_PER,
+	  	NOMB_BIEN_CAT ,   
+        DESC_BIEN_CAT ,   
+        FECH_BIEN_CAT ,   
+        UNID_MEDI_CAT ,   
+        PREC_UNIT_CAT ,   
+        COME_BIEN_RES ,   
+        ESTA_BIEN_CAT ,   
+        CODI_SEDE_SED ,   
+        FLAG_REVI_CAT ,   
+        TIPO_BSER_CAT ,   
+        CONS_BIEN_CAT ,   
+        PRES_BIEN_CAT ,   
+        COMP_BIEN_CAT ,   
+        FISI_BIEN_CAT ,   
+        REFE_BIEN_CAT , 
+		TIEM_EXPI_CAT,   
+	 	DESC_ENVA_CAT,
+	 	COD_CATEGORIA,
+	 	COD_AUC,
+	 	
+	 	COD_CONTACTO,
+		NUM_ANEXO_CONTACTO,
+		OBS_MOTIVO
+		
+		)VALUES(
+		 #cod_solicitud#,
+		
+		 #cod_empl_sol#,
+		 #nombre_bien#,
+		 #otras_caract#,
+		 #fecha_sol#,
+		 #unidad_sol#,
+		 #precio_sol#,
+		 #comentario_rpta#,
+		 #estado#,
+		 #cod_sede_sol#,
+		 #flag#,
+		 #tipo_bien#,
+		 #tipo_sol#,
+		 #presentacion#,
+		 #caract_tecnica#,
+		 #caract_fisica#,
+	
+		 #suger_proveedor#,
+		 #tiempo_expira#,
+		 #envase#,
+		 #cod_categoria#,
+		 #cod_auc#,
+		 
+		 #cod_contacto#,
+		 #num_anexo_contacto#,
+		 #obs_motivo#
+		)
+	</insert>
+	
+	<update id="update"  parameterClass="solicitudBienBean">
+		UPDATE  SOLICITUD_BIEN_CATALOGO  
+		SET CODI_EMPL_PER = #cod_empl_sol#,
+	  	NOMB_BIEN_CAT = #nombre_bien# ,   
+        DESC_BIEN_CAT = #otras_caract# ,   
+        FECH_BIEN_CAT = #fecha_sol# ,   
+        UNID_MEDI_CAT = #unidad_sol#,   
+        PREC_UNIT_CAT = #precio_sol#,   
+        COME_BIEN_RES = #comentario_rpta#,   
+        ESTA_BIEN_CAT = #estado#,   
+        CODI_SEDE_SED = #cod_sede_sol#,   
+        FLAG_REVI_CAT = #flag#,   
+        TIPO_BSER_CAT = #tipo_bien#,   
+        CONS_BIEN_CAT = #tipo_sol#,   
+        PRES_BIEN_CAT = #presentacion#,   
+        COMP_BIEN_CAT =#caract_tecnica#,   
+        FISI_BIEN_CAT =#caract_fisica#,   
+        REFE_BIEN_CAT =#suger_proveedor#, 
+		TIEM_EXPI_CAT =#tiempo_expira#,   
+	 	DESC_ENVA_CAT = #envase#,
+	 	COD_CATEGORIA=	#cod_categoria#,
+	 	COD_AUC= #cod_auc#,
+	 	
+	 	COD_CONTACTO=#cod_contacto#,
+		NUM_ANEXO_CONTACTO=#num_anexo_contacto#,
+		OBS_MOTIVO=#obs_motivo#
+		 
+		WHERE CODI_BIEN_CAT = 	#cod_solicitud# 
+		
+	</update>
+	
+	<update id="updateEstado"  parameterClass="solicitudBienBean">
+		UPDATE  SOLICITUD_BIEN_CATALOGO  
+		SET    ESTA_BIEN_CAT = #estado#  ,
+		FEC_ENVIO =#fecha_envio#
+		WHERE CODI_BIEN_CAT = 	#cod_solicitud# 
+	</update>
+	
+	<update id="updateAprueba"  parameterClass="solicitudBienBean">
+		UPDATE  SOLICITUD_BIEN_CATALOGO  
+		SET    ESTA_BIEN_CAT = #estado#  ,
+		FEC_APRUEBA_AUC =#fecha_aprueba#,
+		COD_RESPONSABLE_AUC=#cod_res_aprueba#
+		WHERE CODI_BIEN_CAT = 	#cod_solicitud# 
+	</update>
+	
+	<update id="updateRechaza"  parameterClass="solicitudBienBean">
+		UPDATE  SOLICITUD_BIEN_CATALOGO  
+		SET    ESTA_BIEN_CAT = #estado#  ,
+		FECH_RESP_RES =#fecha_rpta#,
+		CODI_EMPL_RES=#cod_emp_rpta#,
+		COME_BIEN_RES=#comentario_rpta#
+		WHERE CODI_BIEN_CAT = 	#cod_solicitud# 
+	</update>
+	
+	
+	<update id="updateFile"  parameterClass="solicitudBienBean">
+		UPDATE  SOLICITUD_BIEN_CATALOGO  
+		SET    		COD_ADJUNTOS =#numeroArchivo#
+		WHERE CODI_BIEN_CAT = 	#cod_solicitud# 
+	</update>
+	
+	<!-- INICIO DE METODOS DE ENVIO DE CORREO -->
+	
+	<parameterMap id="rqnp_parm_derivar"
+		class="map">
+		<parameter property="tipo_msg" jdbcType="CHAR" javaType="java.lang.String"	mode="IN" />
+		<parameter property="cod_sol" jdbcType="CHAR" javaType="java.lang.String"	mode="IN" />
+	</parameterMap>
+	
+	
+	 <procedure id="rqnp_mail_derivar" parameterMap="rqnp_parm_derivar">
+	
+		{call SIGA01.SER_CATALOGO.MENSAJERIA_INCORPORA(?,?)}
+		
+	</procedure>
+	
+</sqlMap>
+

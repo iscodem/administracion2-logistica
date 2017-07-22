@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="tdistritos">
+
+	<typeAlias alias="tDistritosBean"
+		type="pe.gob.sunat.recurso2.administracion.siga.ubigeo.model.bean.TDistritosBean" />
+
+	<resultMap id="distritoList" class="tDistritosBean">
+		<result property="codiDistTdi" column="CODI_DIST_TDI" />
+		<result property="nombDistTdi" column="NOMB_DIST_TDI" />
+		<result property="codiDepaDpt" column="CODI_DEPA_DPT" />
+		<result property="codiProvTpr" column="CODI_PROV_TPR" />
+	</resultMap>
+
+	<select id="obtenerDistritosByCodDepartamentoCodProvincia" parameterClass="java.util.HashMap"
+		resultMap="distritoList">
+		SELECT
+		DISTRITO.CODI_DIST_TDI,
+		DISTRITO.NOMB_DIST_TDI,
+		DISTRITO.CODI_DEPA_DPT,
+		DISTRITO.CODI_PROV_TPR
+		FROM TDISTRITOS DISTRITO
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="codiDepaDpt"> CODI_DEPA_DPT = #codiDepaDpt# </isNotNull>
+			<isNotNull prepend="AND" property="codiProvTpr"> CODI_PROV_TPR = #codiProvTpr# </isNotNull>
+		</dynamic>
+		ORDER BY DISTRITO.NOMB_DIST_TDI
+	</select>
+
+</sqlMap>

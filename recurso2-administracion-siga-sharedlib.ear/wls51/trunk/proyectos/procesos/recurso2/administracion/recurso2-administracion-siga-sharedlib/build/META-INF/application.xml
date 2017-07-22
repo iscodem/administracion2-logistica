@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:application="http://java.sun.com/xml/ns/javaee/application_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/application_5.xsd" id="Application_ID" version="5">
+
+	<display-name>recurso2-administracion-siga-sharedlib</display-name>
+	
+	<module>
+		<java>lib/recurso2-administracion-siga-model-1.6.0.jar</java>
+	</module>
+	<module>
+		<java>lib/recurso2-administracion-siga-dao-ifz-1.6.0.jar</java>
+	</module>
+	<module>
+		<java>lib/recurso2-administracion-siga-dao-imp-1.6.0.jar</java>
+	</module>
+	<module>
+		<java>lib/recurso2-administracion-siga-service-ifz-1.6.0.jar</java>
+	</module>
+	
+	<module>
+		<java>lib/recurso2-administracion-siga-service-imp-1.6.0.jar</java>
+	</module>
+	<module>
+		<java>lib/recurso2-administracion-siga-util-1.6.0.jar</java>
+	</module>
+	
+	
+</application>

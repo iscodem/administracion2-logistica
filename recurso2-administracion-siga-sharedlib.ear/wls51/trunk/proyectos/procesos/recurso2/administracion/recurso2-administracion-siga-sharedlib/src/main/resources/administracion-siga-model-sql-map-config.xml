@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN" "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+	<!-- Identifica todos los ficheros de mapeos XML usados en SQL Map para cargar los mapeos SQL.
+		 Notese que las rutas son relativas al classpath. -->
+	<settings
+		cacheModelsEnabled="true"
+		enhancementEnabled="true"
+		useStatementNamespaces="true"
+		maxSessions="64"
+		maxTransactions="8"
+		maxRequests="128"/>
+	
+	
+	<!-- MAPAS DE ARCHIVOS ================================================================== -->
+	<sqlMap resource="pe/gob/sunat/recurso2/administracion/siga/archivo/model/dao/ibatis/maps/sys_registro_archivos_fisico.xml" />
+	<sqlMap resource="pe/gob/sunat/recurso2/administracion/siga/archivo/model/dao/ibatis/maps/sys_registro_archivos.xml" />
+	<!-- MAPAS DE EXPEDIENTE ================================================================== -->
+	<sqlMap resource="pe/gob/sunat/recurso2/administracion/siga/expediente/model/dao/ibatis/maps/expediente_interno_accion.xml" />
+	<sqlMap resource="pe/gob/sunat/recurso2/administracion/siga/expediente/model/dao/ibatis/maps/pa_expedientes.xml" />
+	<!-- MAPAS DE MENSAJERIA ================================================================== -->
+	<sqlMap resource="pe/gob/sunat/recurso2/administracion/siga/mensajeria/model/dao/ibatis/maps/sys_mensajeria.xml" />
+	<!-- MAPAS DE PARAMETRO ================================================================== -->
+	<sqlMap resource="pe/gob/sunat/recurso2/administracion/siga/parametro/model/dao/ibatis/maps/objetivos.xml" />
+	<sqlMap resource="pe/gob/sunat/recurso2/administracion/siga/parametro/model/dao/ibatis/maps/prg_anno.xml" />
+	<sqlMap resource="pe/gob/sunat/recurso2/administracion/siga/parametro/model/dao/ibatis/maps/sys_estados.xml" />
+	<sqlMap resource="pe/gob/sunat/recurso2/administracion/siga/parametro/model/dao/ibatis/maps/sys_parametros.xml" />
+	<sqlMap resource="pe/gob/sunat/recurso2/administracion/siga/parametro/model/dao/ibatis/maps/t01parametro.xml" />
+	<!-- MAPAS DE REGISTRO ================================================================== -->
+	<sqlMap resource="pe/gob/sunat/recurso2/administracion/siga/registro/model/dao/ibatis/maps/acceso.xml" />
+	<sqlMap resource="pe/gob/sunat/recurso2/administracion/siga/registro/model/dao/ibatis/maps/encargos_persona.xml" />
+	<sqlMap resource="pe/gob/sunat/recurso2/administracion/siga/registro/model/dao/ibatis/maps/maestro_contratistas.xml" />
+	<sqlMap resource="pe/gob/sunat/recurso2/administracion/siga/registro/model/dao/ibatis/maps/maestro_personal.xml" />
+	<sqlMap resource="pe/gob/sunat/recurso2/administracion/siga/registro/model/dao/ibatis/maps/persona.xml" />
+	<sqlMap resource="pe/gob/sunat/recurso2/administracion/siga/registro/model/dao/ibatis/maps/seg_roles_usuarios.xml" />
+	<sqlMap resource="pe/gob/sunat/recurso2/administracion/siga/registro/model/dao/ibatis/maps/tcargos.xml" />
+	<sqlMap resource="pe/gob/sunat/recurso2/administracion/siga/registro/model/dao/ibatis/maps/tdependencias.xml" />
+	<sqlMap resource="pe/gob/sunat/recurso2/administracion/siga/registro/model/dao/ibatis/maps/pafirmaelectronica.xml" />
+	
+	<sqlMap resource="pe/gob/sunat/recurso2/administracion/siga/registro/model/dao/ibatis/maps/VWDDP.xml" />
+	<sqlMap resource="pe/gob/sunat/recurso2/administracion/siga/registro/model/dao/ibatis/maps/VWDDS.xml" />
+	<sqlMap resource="pe/gob/sunat/recurso2/administracion/siga/registro/model/dao/ibatis/maps/VWT733PERNAT.xml" />
+	<!-- MAPAS DE UBIGEO ================================================================== -->
+	<sqlMap resource="pe/gob/sunat/recurso2/administracion/siga/ubigeo/model/dao/ibatis/maps/tdepartamentos.xml" />
+	<sqlMap resource="pe/gob/sunat/recurso2/administracion/siga/ubigeo/model/dao/ibatis/maps/tdistritos.xml" />
+	<sqlMap resource="pe/gob/sunat/recurso2/administracion/siga/ubigeo/model/dao/ibatis/maps/tprovincias.xml" />
+	
+</sqlMapConfig>

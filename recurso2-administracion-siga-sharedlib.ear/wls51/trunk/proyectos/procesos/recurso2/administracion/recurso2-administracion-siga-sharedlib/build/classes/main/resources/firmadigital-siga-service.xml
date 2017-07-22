@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+	<import resource="classpath*:firmadigital-siga-data.xml" />
+	<import resource="classpath*:firmadigital-siga-tx.xml" />
+
+	<bean id="firma.firmaUrl" class="java.lang.String">
+	    <constructor-arg type="java.lang.String" value="http://wssunat:8080/cl-ti-iagenerador-service/GeneradorReportService" />
+	</bean>
+
+	<bean id="validadorLdapService"
+		class="pe.gob.sunat.recurso2.administracion.siga.ldap.service.ValidadorLdapServiceImpl">
+		<property name="consultaFirmaService" ref="consultaFirmaService"></property>
+	</bean>
+	
+	<bean id="grabarDocumentoFirmaService"
+		class="pe.gob.sunat.recurso2.administracion.siga.firma.service.GrabarDocumentoFirmaServiceImpl">
+        <property name="firmaelectronDao" ref="firma.firmaelectronDao" />
+        <property name="documentofirmDao" ref="firma.documentofirmDao" />
+		<property name="maestroPersonalDao" ref="firma.maestroPersonalDao"></property>
+	</bean>
+
+	<bean id="consultaFirmaService"
+		class="pe.gob.sunat.recurso2.administracion.siga.firma.service.ConsultaFirmaServiceImpl">
+        <property name="archbinDao" ref="firma.archbinDao" />
+        <property name="firmaelectronDao" ref="firma.firmaelectronDao" />
+        <property name="documentofirmDao" ref="firma.documentofirmDao" />
+        <property name="terminocondDao" ref="firma.terminocondDao" />
+        <property name="delegacfirmaDao" ref="firma.delegacfirmaDao" />
+		<property name="maestroPersonalDao" ref="firma.maestroPersonalDao"></property>
+		<property name="dependenciaDao" ref="firma.dependenciaDao"></property>
+		<property name="t01parametroDao" ref="firma.t01parametroDao"></property>
+	</bean>
+	
+	<bean id="validarFirmarService"
+		class="pe.gob.sunat.recurso2.administracion.siga.firma.service.ValidarFirmarServiceImpl">
+        <property name="archbinDao" ref="firma.archbinDao" />
+        <property name="firmaelectronDao" ref="firma.firmaelectronDao" />
+        <property name="documentofirmDao" ref="firma.documentofirmDao" />
+        <property name="terminocondDao" ref="firma.terminocondDao" />
+        <property name="delegacfirmaDao" ref="firma.delegacfirmaDao" />
+		<property name="maestroPersonalDao" ref="firma.maestroPersonalDao"></property>
+		<property name="dependenciaDao" ref="firma.dependenciaDao"></property>
+		<property name="consultaFirmaService" ref="consultaFirmaService"></property>
+		<property name="grabarDocumentoFirmaService" ref="grabarDocumentoFirmaService"></property>
+		<property name="validadorLdapService" ref="validadorLdapService"></property>
+		<property name="urlFirma" ref="firma.firmaUrl"></property>
+	</bean>
+	
+</beans>

@@ -1,0 +1,11 @@
+/*
+* CSS comunes para la APP solo para IE
+*/
+
+/* CSS - Boton */
+.centerBlockBotonXMiniSmallClass {width: 35px !important;}
+.centerBlockBotonXSmallClass {width: 50px !important;}
+.centerBlockBotonSmallClass {width: 75px !important;}
+.centerBlockBotonMediumClass {width: 100px !important;}
+.centerBlockBotonLargeClass {width: 125px !important;}
+.centerBlockBotonXLargeClass {width: 125px !important;}

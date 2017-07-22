@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="tdbeneficiarios">
+
+	<typeAlias alias="tdBeneficiarioBean"
+		type="pe.gob.sunat.administracion2.siga.registro.model.domain.TdBeneficiarioBean" />
+	
+<insert id="insertarTdBeneficiarios" parameterClass="tdBeneficiarioBean">
+	   <!-- INSERT INTO TD_BENEFICIARIOS (
+        ID_BENEFICIARIOS,
+        UNIDAD_ORGANIZACIONAL,
+        DESC_DEPE_TDE,
+        CANTIDAD)
+       VALUES (
+        #idBeneficiarios#,
+        #unidadOrganizacional#,
+        #descDepeTde#,
+        #cantidad#
+        ) -->
+        
+        INSERT INTO REG_ADQUISICIONES_BIENES_TEMP (
+        CORR_BIEN_ADQ,
+        CODI_REGI_ADQ,
+        NUME_ITEM_CON,
+        CODI_BSER_CAT,
+        DESC_TECN_RES,
+        CANT_INIC_RES)
+       VALUES (
+        #idBeneficiarios#,
+        #codiRegiAdq#,
+        #numeItemCon#,
+        #unidadOrganizacional#,
+        #descDepeTde#,
+        #cantidad#
+        )
+</insert>
+
+<select id="selectSecuencia" parameterClass="java.util.HashMap" resultClass="java.lang.String" >
+		SELECT (NVL(MAX(CORR_BIEN_ADQ),'0') +1) CORRELATIVO
+        FROM REG_ADQUISICIONES_BIENES_TEMP
+	</select>
+	
+</sqlMap>

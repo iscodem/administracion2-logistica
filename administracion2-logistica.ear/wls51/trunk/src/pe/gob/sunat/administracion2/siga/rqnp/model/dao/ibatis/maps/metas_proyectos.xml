@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="metasproyectos">
+	<typeAlias alias="metasProyectosBean"
+		type="pe.gob.sunat.administracion2.siga.rqnp.model.domain.MetasProyectosBean" />
+		
+		<!-- RESULTADO PARA PROYECTOS -->
+		<resultMap id="lstMetasProyectos" 	class="metasProyectosBean">
+			<result property="nomActividad" column="NOM_ACTIVIDAD" />
+			<result property="nomProducto" 	column="NOM_PRODUCTO" />
+			<result property="nomMeta" 		column="NOM_META" />
+			<!-- <result property="anioEjec" 	column="ANNO_EJEC_EJE" /> -->
+			<result property="secuFunc" 	column="SECU_FUNC_SFU" />
+			<result property="metaSiaf" column="META_SIAF"/>
+		</resultMap>
+		
+		<select id="selectMetasProyectos" parameterClass="java.util.HashMap" resultMap="lstMetasProyectos">
+			SELECT 
+			PROYECTOS.CODI_PROY_PRY||' '||PROYECTOS.DESC_PROY_PRY AS NOM_ACTIVIDAD,
+			PRODUCTOS.CODI_PROY_PRY||'.'||PRODUCTOS.CODI_PROD_PRD||' '||PRODUCTOS.DESC_PROD_PRD AS NOM_PRODUCTO,
+			METAS_PRODUCTOS.CODI_PROY_PRY||'.'||METAS_PRODUCTOS.CODI_PROD_PRD||'.'||METAS_PRODUCTOS.CODI_META_MET||' '||METAS_PRODUCTOS.DESC_LARG_MET AS NOM_META,
+			METAS.SECU_FUNC_SFU,
+			METAS.CADE_SIAF_CAD||' '||METAS_PRESUPUESTALES.DESC_META_SFU AS META_SIAF
+			FROM
+			METAS,
+			PROYECTOS,
+			PRODUCTOS,
+			METAS_PRODUCTOS,
+			TDEPENDENCIAS,
+			METAS_PRESUPUESTALES
+			WHERE
+			METAS.ANNO_EJEC_EJE = #anio_ejec#
+			AND METAS.CODI_DEPE_TDE = #cod_dep#
+			AND PROYECTOS.CODI_PROY_PRY = METAS.CODI_PROY_PRY
+			AND PRODUCTOS.CODI_PROY_PRY = METAS.CODI_PROY_PRY
+			AND PRODUCTOS.CODI_PROD_PRD = METAS.CODI_PROD_PRD
+			AND METAS_PRODUCTOS.CODI_PROY_PRY = METAS.CODI_PROY_PRY
+			AND METAS_PRODUCTOS.CODI_PROD_PRD = METAS.CODI_PROD_PRD
+			AND METAS_PRODUCTOS.CODI_META_MET = METAS.CODI_META_MET
+			AND TDEPENDENCIAS.CODI_DEPE_TDE = METAS.CODI_DEPE_TDE
+			AND METAS_PRESUPUESTALES.ANNO_EJEC_EJE = METAS.ANNO_EJEC_EJE
+			AND METAS_PRESUPUESTALES.CADE_FUNC_MEF = METAS.CADE_SIAF_CAD
+		</select>
+
+</sqlMap>

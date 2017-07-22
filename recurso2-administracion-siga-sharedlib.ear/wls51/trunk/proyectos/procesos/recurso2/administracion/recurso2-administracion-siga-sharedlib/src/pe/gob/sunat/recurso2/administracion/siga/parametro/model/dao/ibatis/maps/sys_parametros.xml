@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="sysparametros">
+
+	<typeAlias alias="sysParametrosBean"
+		type="pe.gob.sunat.recurso2.administracion.siga.parametro.model.bean.SysParametrosBean" />
+	
+	<resultMap id="lstparametros" class="sysParametrosBean">
+		<result property="desc_var" 		column="DESC_VAR_PAR" />
+		<result property="val_char_par" 	column="VALOR_CHAR_PAR" />
+		<result property="val_num_par" 	column="VALOR_NUME_PAR" />
+		<result property="peri_anno" 	column="PERI_ANNO_PAR" />
+	</resultMap>
+
+	<select id="rqnp_permite_exceso" parameterClass="java.util.HashMap" resultMap="lstparametros">
+		SELECT 	DESC_VAR_PAR,
+			VALOR_CHAR_PAR, VALOR_NUME_PAR   
+		FROM SYS_PARAMETROS 
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="nom_var"> NOM_VAR_PAR = #nom_var# </isNotNull>
+			<isNotNull prepend="AND" property="peri_anno"> PERI_ANNO_PAR  = #peri_anno# </isNotNull>
+		</dynamic>
+  </select>
+  
+  <!-- AGREGADO PARA ACTIVAR FLUJO DE AUC -->
+
+	<select id="activar_flujo_auc" parameterClass="java.util.HashMap" resultMap="lstparametros">
+		SELECT 	DESC_VAR_PAR,
+			VALOR_CHAR_PAR
+		FROM SYS_PARAMETROS
+		WHERE NOM_VAR_PAR = #nom_var#
+  </select>
+	
+	<!-- PAS201780000300007 -->
+	<select id="obtenerNumUitAnio" parameterClass="map" resultClass="java.lang.String">
+		SELECT 	VALOR_NUME_PAR
+		FROM SYS_PARAMETROS
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="nom_var"> NOM_VAR_PAR = #nom_var# </isNotNull>
+			<isNotNull prepend="AND" property="peri_anno"> PERI_ANNO_PAR  = #peri_anno# </isNotNull>
+		</dynamic>
+	</select>
+  
+  <!-- PAS201780000300007 -->
+	<select id="obtenerValUitAnio" parameterClass="java.util.HashMap" resultClass="java.lang.String">
+		SELECT 	VALOR_NUME_PAR
+		FROM SYS_PARAMETROS
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="nom_var"> NOM_VAR_PAR = #nom_var# </isNotNull>
+			<isNotNull prepend="AND" property="peri_anno"> PERI_ANNO_PAR  = #peri_anno# </isNotNull>
+		</dynamic>
+  </select>
+</sqlMap>
+

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="registro_archivos">
+
+	<typeAlias alias="registroArchivosBean"
+		type="pe.gob.sunat.administracion2.siga.registro.model.domain.RegistroArchivosBean" />
+	
+		
+	<select id="selectCount"   resultClass="java.lang.String">
+		SELECT SUBSTR('00000000'||TO_CHAR(SE_REG_ARCHIVOS.NEXTVAL),-8,8)
+		FROM DUAL		
+	</select>
+	
+	
+	<insert id="insert" parameterClass="registroArchivosBean">
+	  INSERT INTO SYS_REGISTRO_ARCHIVOS (
+							NUME_REGI_ARC,
+							FECH_REGI_ARC,
+							APLICACION,
+							MODULO,
+							REGISTRO,
+							DESCRIPCION_REGISTRO)
+			values(#num_reg#,
+					 sysdate,
+					 #aplicacion#,
+					 #modulo#,
+					 #registro#,
+					 #descripcion#) 
+   </insert>
+	
+</sqlMap>

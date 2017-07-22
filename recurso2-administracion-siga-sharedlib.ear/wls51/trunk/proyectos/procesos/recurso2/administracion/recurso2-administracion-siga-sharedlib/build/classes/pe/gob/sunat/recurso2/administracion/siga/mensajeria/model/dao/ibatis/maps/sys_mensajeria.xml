@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="sysMensajeria">
+
+
+
+	<parameterMap id="sys_parm_crear_mensaje"
+		class="map">
+		<parameter property="codigoMensaje" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+		<parameter property="remitenteNombre" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+		<parameter property="remitenteFirma" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+		<parameter property="remitenteEmail" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+		<parameter property="asunto" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+		<parameter property="mensaje" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+		<parameter property="nroMensaje" jdbcType="NUMERIC" javaType="java.lang.Long"
+			mode="OUT" />	
+		
+	</parameterMap>
+	
+	
+	 <procedure id="sys_mail_crear_mensaje" parameterMap="sys_parm_crear_mensaje">
+		{call SISTEMAS.sys_mensajeria.crearmensaje(?,?,?,?,?,?,?)}
+	</procedure>
+	
+	
+	
+	<parameterMap id="sys_parm_send_mensaje"
+		class="map">
+		
+		<parameter property="nroMensaje" jdbcType="NUMERIC" javaType="java.lang.Long"
+			mode="IN" />	
+		
+	</parameterMap>
+	
+	<procedure id="sys_mail_send_mensaje" parameterMap="sys_parm_send_mensaje">
+		{call SISTEMAS.sys_mensajeria.sendmensaje(?)}
+	</procedure>
+	
+
+	<parameterMap id="sys_parm_add_destino"
+		class="map">
+		
+		<parameter property="nroMensaje" jdbcType="NUMERIC" javaType="java.lang.Long"
+			mode="IN" />	
+		<parameter property="destinoNombre" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+
+		<parameter property="destinoEmail" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+		<parameter property="tipoDestino" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+		
+	</parameterMap>
+	
+ 	<procedure id="sys_mail_add_destino" parameterMap="sys_parm_add_destino">
+		{call SISTEMAS.sys_mensajeria.adddestinomail(?,?,?,?)}
+	</procedure>
+
+	</sqlMap>

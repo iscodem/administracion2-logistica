@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="sysestados">
+
+	<typeAlias alias="sysEstadosBean"
+		type="pe.gob.sunat.recurso2.administracion.siga.parametro.model.bean.SysEstadosBean" />
+	
+	<resultMap id="lstestados" class="sysEstadosBean">
+		<result property="nom_tabla" 		column="NOMB_TABL_EST" />
+		<result property="desc_reg" 			column="DESC_REGI_EST" />
+		<result property="val_estado" 		column="VALO_ESTA_EST" />
+		<result property="desc_estado" 			column="DESC_ESTA_EST" />
+	</resultMap>
+
+	<select id="selectAll" parameterClass="java.util.HashMap" resultMap="lstestados">
+		SELECT NOMB_TABL_EST,DESC_REGI_EST, VALO_ESTA_EST, DESC_ESTA_EST  
+		FROM SYS_ESTADOS 
+		WHERE NOMB_TABL_EST=#nom_tabla#
+		ORDER BY VALO_ESTA_EST
+  </select>
+	
+</sqlMap>
+

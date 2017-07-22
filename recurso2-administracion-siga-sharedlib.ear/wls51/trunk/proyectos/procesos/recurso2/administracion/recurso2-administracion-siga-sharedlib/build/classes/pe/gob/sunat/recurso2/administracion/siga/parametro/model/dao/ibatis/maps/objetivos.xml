@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="objetivos">
+
+	<typeAlias alias="objetivosBean"
+		type="pe.gob.sunat.recurso2.administracion.siga.parametro.model.bean.ObjetivosBean" />
+	
+	<resultMap id="lstObjetivos" class="objetivosBean">
+		<result property="des_obj" 		column="DESC_CORT_OBJE" />
+		<result property="tip_obj" 		column="TIPO_OBJE_OBJ" />
+		<result property="cod_obj" 		column="CODI_OBJE_OBJ" />
+	</resultMap>
+
+	<select id="selectAll" parameterClass="java.util.HashMap" resultMap="lstObjetivos">
+		SELECT
+			DESC_CORT_OBJE,
+			TIPO_OBJE_OBJ,
+			CODI_OBJE_OBJ
+		FROM OBJETIVOS
+		WHERE
+		TIPO_OBJE_OBJ = 'Institucional'
+		ORDER BY DESC_CORT_OBJE
+  </select>
+	
+</sqlMap>
+

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN" "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+	<settings cacheModelsEnabled="true" enhancementEnabled="true"
+		useStatementNamespaces="true" maxSessions="64" maxTransactions="8"
+		maxRequests="128" />
+		
+	<sqlMap resource="pe/gob/sunat/administracion2/siga/registro/model/dao/ibatis/maps/tdbeneficiarios.xml" />
+	<sqlMap resource="pe/gob/sunat/administracion2/siga/registro/model/dao/ibatis/maps/sys_registro_archivos_fisico.xml" />
+	<sqlMap resource="pe/gob/sunat/administracion2/siga/registro/model/dao/ibatis/maps/sys_registro_archivos.xml" />
+	<sqlMap resource="pe/gob/sunat/administracion2/siga/rqnp/model/dao/ibatis/maps/requerimiento_noprogramado.xml" />
+	<sqlMap resource="pe/gob/sunat/administracion2/siga/rqnp/model/dao/ibatis/maps/requerimiento_noprog_bienes.xml" />
+	<sqlMap resource="pe/gob/sunat/administracion2/siga/rqnp/model/dao/ibatis/maps/requerimiento_noprog_metas.xml" />
+	<sqlMap resource="pe/gob/sunat/administracion2/siga/rqnp/model/dao/ibatis/maps/solicitud_bien.xml" />
+	<sqlMap resource="pe/gob/sunat/administracion2/siga/rqnp/model/dao/ibatis/maps/unidad_medida.xml" />
+	<sqlMap resource="pe/gob/sunat/administracion2/siga/rqnp/model/dao/ibatis/maps/catalogo_bienes.xml" />
+	<sqlMap resource="pe/gob/sunat/administracion2/siga/rqnp/model/dao/ibatis/maps/rqnp_bandeja.xml" />
+	<sqlMap resource="pe/gob/sunat/administracion2/siga/rqnp/model/dao/ibatis/maps/auc_bandeja.xml" />
+
+<!-- INICIO: DPORRASC -->
+	<sqlMap resource="pe/gob/sunat/administracion2/siga/rqnp/model/dao/ibatis/maps/metas_proyectos.xml" />
+	<sqlMap resource="pe/gob/sunat/administracion2/siga/rqnp/model/dao/ibatis/maps/consulta_catalogo.xml" />
+	<sqlMap resource="pe/gob/sunat/administracion2/siga/rqnp/model/dao/ibatis/maps/auc_metas.xml" />
+</sqlMapConfig>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="t01parametrofirma">
+
+	<typeAlias alias="t01Parametro"
+		type="pe.gob.sunat.recurso2.administracion.siga.firma.model.bean.T01Parametro" />
+	
+	<resultMap id="lstparametros" class="t01Parametro">
+		<result property="cod_parametro" 		column="COD_PARAMETRO" />
+		<result property="cod_modulo" 		column="COD_MODULO" />
+		<result property="cod_tipo" 		column="COD_TIPO" />
+		<result property="cod_argumento" 		column="COD_ARGUMENTO" />
+		<result property="nom_largo" 		column="DESC_LARGA" />
+		<result property="nom_corto" 		column="DESC_CORTA" />
+		<result property="desc_abrv" 		column="DESC_ABREVIATURA" />
+	</resultMap>
+
+	<select id="select_arg" parameterClass="pe.gob.sunat.recurso2.administracion.siga.firma.model.bean.T01Parametro" resultMap="lstparametros">
+		SELECT COD_PARAMETRO,
+		 COD_MODULO, 
+		 COD_TIPO, 
+		 COD_ARGUMENTO,
+		  DESC_LARGA,
+ 		DESC_CORTA,
+ 		DESC_ABREVIATURA 
+ 		FROM T01PARAMETRO 
+ 		WHERE 
+		COD_ESTADO='1'
+
+		<isNotNull prepend="AND" property="cod_parametro"> COD_PARAMETRO = rpad(#cod_parametro#,10)</isNotNull>
+        <isNotNull prepend="AND" property="cod_argumento"> COD_ARGUMENTO = rpad(#cod_argumento#,15)</isNotNull>
+        <isNotNull prepend="AND" property="cod_tipo"> COD_TIPO  = #cod_tipo#</isNotNull>
+        <isNotNull prepend="AND" property="cod_modulo"> COD_MODULO  = #cod_modulo#</isNotNull>
+		ORDER BY COD_ARGUMENTO ASC
+  </select>
+	
+</sqlMap>

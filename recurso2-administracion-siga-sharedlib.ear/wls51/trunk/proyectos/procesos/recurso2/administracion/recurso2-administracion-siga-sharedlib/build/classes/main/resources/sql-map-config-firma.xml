@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN" "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+	<settings cacheModelsEnabled="true" enhancementEnabled="true"
+		useStatementNamespaces="true" maxSessions="64" maxTransactions="8"
+		maxRequests="128" />
+		
+	<!-- typeHandler callback="pe.gob.sunat.framework.spring.util.FechaTypeHandler"
+		javaType="pe.gob.sunat.framework.spring.util.date.FechaBean" / -->
+
+	<typeHandler javaType="java.lang.String" jdbcType="CLOB" 
+		callback="org.springframework.orm.ibatis.support.ClobStringTypeHandler"/>
+		
+	<!-- 1. JCORTEZRO -->
+
+	<sqlMap resource="pe/gob/sunat/recurso2/administracion/siga/firma/model/dao/ibatis/maps/maestro_personal.xml" />
+	<sqlMap resource="pe/gob/sunat/recurso2/administracion/siga/firma/model/dao/ibatis/maps/t5282archbin.xml" />
+	<sqlMap resource="pe/gob/sunat/recurso2/administracion/siga/firma/model/dao/ibatis/maps/t7073firmaelectron.xml" />
+	<sqlMap resource="pe/gob/sunat/recurso2/administracion/siga/firma/model/dao/ibatis/maps/t7074documentofirm.xml" />
+	<sqlMap resource="pe/gob/sunat/recurso2/administracion/siga/firma/model/dao/ibatis/maps/t7075terminocond.xml" />
+	<sqlMap resource="pe/gob/sunat/recurso2/administracion/siga/firma/model/dao/ibatis/maps/t7076delegacfirma.xml" />
+	<sqlMap resource="pe/gob/sunat/recurso2/administracion/siga/firma/model/dao/ibatis/maps/tdependencias.xml" />
+	<sqlMap resource="pe/gob/sunat/recurso2/administracion/siga/firma/model/dao/ibatis/maps/t01parametro.xml" />
+
+	<!-- 2. JCORTEZRO -->
+</sqlMapConfig>

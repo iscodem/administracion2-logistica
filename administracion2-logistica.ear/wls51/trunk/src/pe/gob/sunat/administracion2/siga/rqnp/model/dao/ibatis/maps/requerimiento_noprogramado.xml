@@ -1,0 +1,677 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="requerimientonoprogramado">
+	<typeAlias alias="requerimientonoprogramadoBean"
+		type="pe.gob.sunat.administracion2.siga.rqnp.model.domain.RequerimientoNoProgramadoBean" />
+	
+	<resultMap id="lstRqnp" class="requerimientonoprogramadoBean">
+		<result property="codigoRqnp" column="CODI_RQNP_SRM" />
+		<result property="anioProceso" column="ANO_PROC_SRM" />
+		<result property="mesProeso" column="MES_PROC_SRM" />
+		<result property="numeroRqnp" column="NRO_REQU_SRM" />
+		<result property="codigoDependencia" column="CODI_DEPE_TDE" />
+		<result property="fechaRqnp" column="FECH_REQU_SRM" />
+		<result property="codigoSede" column="CODI_SEDE_SED" />
+		<result property="montoRqnp" column="MTO_VALO_SRM" />
+		<result property="tipoMoneda" column="TIPO_MONE_SRM" />
+		<result property="estadoRqnp" column="FLAG_PASE_SRM" />
+		<result property="motivoSolicitud" column="MOTI_SOLI_SRM" />
+		<result property="nombreSolicitante" column="NOMB_CORT_PER" />
+		<result property="fechaEnvioSolicitud" column="FECH_ENVI_SOL" />
+		<result property="nombreEstado" column="Desc_estado" />
+		<result property="codigoReqNoProgramado" column="COD_RQTO_NO_PROG" />
+		<result property="numeroRegistro" column="NUMERO_REGISTRO_ALTERNO" />
+		<result property="nombreUOSolicitante" column="DESC_DEPE_TDE" />
+		<result property="uuoo" column="UNIDAD_ORGANIZACIONAL" />
+		<result property="codigoResposanble" column="CODI_RESP_SRM" />
+		<result property="numeroArchivo" column="NUME_REGI_ARC" />
+		<result property="ind_solicitud" column="IND_SOLICITUD" />
+		<result property="cod_contacto" column="COD_CONTACTO" />
+		<result property="anexo_contacto" column="NUM_ANEXO_CONTACTO" />
+		<result property="cod_necesidad" column="COD_NECESIDAD" />
+		<result property="cod_tip_nececidad" column="COD_TIPO_NECESIDAD" />
+		<result property="nom_tip_necesidad" column="DES_TIPO_NECESIDAD" />
+		<result property="cod_finalidad" column="COD_FINALIDAD" />
+		<result property="cod_proveedor" column="COD_PROVEEDOR" />
+		<result property="obs_justificacion" column="OBS_JUSTIFICACION" />
+		<result property="obs_plazo_entrega" column="OBS_PLAZOENTREGA" />
+		<result property="obs_lugar_entrega" column="OBS_LUGARENTREGA" />
+		<result property="obs_dir_entrega" column="OBS_DIRECCENTREGA" />
+		<result property="cod_objeto" column="COD_OBJETO" />
+		<result property="des_proceso" column="DES_PROCESO" />
+		<result property="des_meta" column="DES_META" />
+		<result property="cod_uoc1" column="COD_CONFORM1" />
+		<result property="cod_uoc2" column="COD_CONFORM2" />
+		<result property="cod_uoc3" column="COD_CONFORM3" />
+		<result property="anio_atencion" column="ANN_ATENCION" />
+		<result property="mes_atencion" column="MES_ATENCION" />
+		<result property="tipo_vinculo" column="TIPO_VINCULO" />
+		<result property="vinculo" column="VINCULO_NECESIDAD" />
+		<!-- AGREGADO PARA EL PASE -->
+		<result property="ind_comite" column="IND_COMITE" />
+		<result property="ind_tec_tit" column="IND_TEC_TIT" />
+		<result property="ind_tec_sup" column="IND_TEC_SUP" />
+		<result property="cod_au_tit" column="COD_AU_TIT" />
+		<result property="cod_au_sup" column="COD_AU_SUP" />
+		<result property="cod_tec_tit" column="COD_TEC_TIT" />
+		<result property="cod_tec_sup" column="COD_TEC_SUP" />
+		<result property="nom_tec_tit" column="NOM_TEC_TIT" />
+		<result property="nom_tec_sup" column="NOM_TEC_SUP" />			
+		<result property="ind_vinculo" column="IND_VINCULO" />		
+		<result property="ind_prestamo" column="IND_PRESTAMO" />		 
+	</resultMap>
+	
+	<select id="selectRqnp" parameterClass="java.util.HashMap" resultMap="lstRqnp">
+		SELECT   
+	    REQUERIMIENTO_NO_PROG.CODI_RQNP_SRM,   
+	    REQUERIMIENTO_NO_PROG.ANO_PROC_SRM,   
+	    REQUERIMIENTO_NO_PROG.MES_PROC_SRM,   
+	    REQUERIMIENTO_NO_PROG.NRO_REQU_SRM,   
+	    REQUERIMIENTO_NO_PROG.CODI_DEPE_TDE,   
+	    REQUERIMIENTO_NO_PROG.FECH_REQU_SRM,   
+	    REQUERIMIENTO_NO_PROG.CODI_SEDE_SED,   
+	    REQUERIMIENTO_NO_PROG.MTO_VALO_SRM,   
+	    REQUERIMIENTO_NO_PROG.TIPO_MONE_SRM,   
+	    REQUERIMIENTO_NO_PROG.FLAG_PASE_SRM,   
+	    REQUERIMIENTO_NO_PROG.MOTI_SOLI_SRM, 
+	    REQUERIMIENTO_NO_PROG.NUME_REGI_ARC,  
+	    MA.NOMB_CORT_PER,   
+	    REQUERIMIENTO_NO_PROG.FECH_ENVI_SOL,
+	    ESTADOS.Desc_estado,
+	    REQUERIMIENTO_NO_PROG.COD_RQTO_NO_PROG   ,
+	    MA.NUMERO_REGISTRO_ALTERNO ,
+	    DE.DESC_DEPE_TDE,
+	    DE.UNIDAD_ORGANIZACIONAL,
+	    REQUERIMIENTO_NO_PROG.CODI_RESP_SRM,
+	 	NVL(( SELECT DISTINCT IND_ESTADO FROM REQUERIMIENTO_NO_PROG_BIENES WHERE CODI_RQNP_SRM   =REQUERIMIENTO_NO_PROG.CODI_RQNP_SRM AND IND_ESTADO='06'),'00')IND_SOLICITUD,
+		REQUERIMIENTO_NO_PROG.COD_CONTACTO,
+		REQUERIMIENTO_NO_PROG.NUM_ANEXO_CONTACTO,
+		REQUERIMIENTO_NO_PROG.COD_NECESIDAD,
+		REQUERIMIENTO_NO_PROG.COD_TIPO_NECESIDAD,
+		REQUERIMIENTO_NO_PROG.DES_TIPO_NECESIDAD,
+		REQUERIMIENTO_NO_PROG.COD_FINALIDAD,
+		REQUERIMIENTO_NO_PROG.COD_PROVEEDOR,
+		REQUERIMIENTO_NO_PROG.OBS_JUSTIFICACION,
+		REQUERIMIENTO_NO_PROG.OBS_PLAZOENTREGA,
+		REQUERIMIENTO_NO_PROG.OBS_LUGARENTREGA,
+		REQUERIMIENTO_NO_PROG.OBS_DIRECCENTREGA,
+		REQUERIMIENTO_NO_PROG.COD_OBJETO,
+		REQUERIMIENTO_NO_PROG.DES_PROCESO,
+		REQUERIMIENTO_NO_PROG.DES_META,
+		REQUERIMIENTO_NO_PROG.COD_CONFORM1,
+		REQUERIMIENTO_NO_PROG.COD_CONFORM2,
+		REQUERIMIENTO_NO_PROG.COD_CONFORM3,
+		NVL(REQUERIMIENTO_NO_PROG.ANN_ATENCION, REQUERIMIENTO_NO_PROG.ANO_PROC_SRM) ANN_ATENCION,
+		NVL(REQUERIMIENTO_NO_PROG.MES_ATENCION,REQUERIMIENTO_NO_PROG.MES_PROC_SRM ) MES_ATENCION,
+		REQUERIMIENTO_NO_PROG.TIPO_VINCULO,
+		REQUERIMIENTO_NO_PROG.VINCULO_NECESIDAD,
+		REQUERIMIENTO_NO_PROG.IND_COMITE,
+		REQUERIMIENTO_NO_PROG.IND_TEC_TIT,
+		REQUERIMIENTO_NO_PROG.IND_TEC_SUP,
+		REQUERIMIENTO_NO_PROG.COD_AU_TIT,
+		REQUERIMIENTO_NO_PROG.COD_AU_SUP,
+		REQUERIMIENTO_NO_PROG.COD_TEC_TIT,
+		REQUERIMIENTO_NO_PROG.COD_TEC_SUP,
+		REQUERIMIENTO_NO_PROG.NOM_TEC_TIT,
+		REQUERIMIENTO_NO_PROG.NOM_TEC_SUP,
+		REQUERIMIENTO_NO_PROG.IND_VINCULO,
+		REQUERIMIENTO_NO_PROG.IND_PRESTAMO
+		FROM REQUERIMIENTO_NO_PROG, MAESTRO_PERSONAL MA, TDEPENDENCIAS DE,
+	    (SELECT DESC_REGI_EST Desc_estado, VALO_ESTA_EST Valor FROM  SYS_ESTADOS WHERE NOMB_TABL_EST='REQUERIMIENTO_NO_PROG') ESTADOS
+		WHERE 
+		( REQUERIMIENTO_NO_PROG.FLAG_PASE_SRM = ESTADOS.Valor (+) ) and 
+	    ( REQUERIMIENTO_NO_PROG.codi_resp_srm = MA.codi_empl_per (+) ) and 
+		(REQUERIMIENTO_NO_PROG.CODI_DEPE_TDE= DE.CODI_DEPE_TDE (+) )
+		<isNotNull prepend="AND" property="ano_pro"> REQUERIMIENTO_NO_PROG.ANO_PROC_SRM = #ano_pro#</isNotNull>
+		<isNotNull prepend="AND" property="est_req"> REQUERIMIENTO_NO_PROG.FLAG_PASE_SRM = #est_req#</isNotNull>
+		<isNotNull prepend="AND" property="cod_sed"> REQUERIMIENTO_NO_PROG.CODI_SEDE_SED = #cod_sed#</isNotNull>
+		<isNotNull prepend="AND" property="cod_dep"> REQUERIMIENTO_NO_PROG.CODI_DEPE_TDE = #cod_dep#</isNotNull>
+		<isNotNull prepend="AND" property="cod_res"> REQUERIMIENTO_NO_PROG.CODI_RESP_SRM = #cod_res#</isNotNull>
+		<isNotNull prepend="AND" property="mes_pro"> to_char(REQUERIMIENTO_NO_PROG.fech_requ_srm,'MM') = #mes_pro#</isNotNull>
+		<isNotNull prepend="AND" property="cod_req"> REQUERIMIENTO_NO_PROG.CODI_RQNP_SRM = #cod_req#</isNotNull>
+		<isNotNull prepend="AND" property="ind_registropor"> REQUERIMIENTO_NO_PROG.IND_REGISTROPOR = #ind_registropor#</isNotNull>
+		ORDER BY REQUERIMIENTO_NO_PROG.CODI_RQNP_SRM DESC
+	</select>
+
+	<select id="selectRqnpJefeInmediato" parameterClass="java.util.HashMap" resultMap="lstRqnp">
+		SELECT   
+	    REQUERIMIENTO_NO_PROG.CODI_RQNP_SRM,
+	    REQUERIMIENTO_NO_PROG.ANO_PROC_SRM,
+	    REQUERIMIENTO_NO_PROG.MES_PROC_SRM,
+	    REQUERIMIENTO_NO_PROG.NRO_REQU_SRM,
+	    REQUERIMIENTO_NO_PROG.CODI_DEPE_TDE,
+	    REQUERIMIENTO_NO_PROG.FECH_REQU_SRM,
+	    REQUERIMIENTO_NO_PROG.CODI_SEDE_SED,
+	    REQUERIMIENTO_NO_PROG.MTO_VALO_SRM,
+	    REQUERIMIENTO_NO_PROG.TIPO_MONE_SRM,
+	    REQUERIMIENTO_NO_PROG.FLAG_PASE_SRM,
+	    REQUERIMIENTO_NO_PROG.MOTI_SOLI_SRM,
+	    REQUERIMIENTO_NO_PROG.NUME_REGI_ARC,
+	    MA.NOMB_CORT_PER,
+	    REQUERIMIENTO_NO_PROG.FECH_ENVI_SOL,
+	    ESTADOS.Desc_estado,
+	    REQUERIMIENTO_NO_PROG.COD_RQTO_NO_PROG,
+	    MA.NUMERO_REGISTRO_ALTERNO ,
+	    DE.DESC_DEPE_TDE,
+	    DE.UNIDAD_ORGANIZACIONAL,
+	    REQUERIMIENTO_NO_PROG.CODI_RESP_SRM,
+	 	NVL(( SELECT DISTINCT IND_ESTADO FROM REQUERIMIENTO_NO_PROG_BIENES WHERE CODI_RQNP_SRM   =REQUERIMIENTO_NO_PROG.CODI_RQNP_SRM AND IND_ESTADO='06'),'00')IND_SOLICITUD,
+		COD_CONTACTO,
+		NUM_ANEXO_CONTACTO,
+		COD_NECESIDAD,
+		COD_TIPO_NECESIDAD,
+		DES_TIPO_NECESIDAD,
+		REQUERIMIENTO_NO_PROG.COD_FINALIDAD,
+		REQUERIMIENTO_NO_PROG.COD_PROVEEDOR,
+		REQUERIMIENTO_NO_PROG.OBS_JUSTIFICACION,
+		REQUERIMIENTO_NO_PROG.OBS_PLAZOENTREGA,
+		REQUERIMIENTO_NO_PROG.OBS_LUGARENTREGA,
+		REQUERIMIENTO_NO_PROG.OBS_DIRECCENTREGA,
+		REQUERIMIENTO_NO_PROG.COD_OBJETO,
+		REQUERIMIENTO_NO_PROG.DES_PROCESO,
+		REQUERIMIENTO_NO_PROG.DES_META,
+		REQUERIMIENTO_NO_PROG.COD_CONFORM1,
+		REQUERIMIENTO_NO_PROG.COD_CONFORM2,
+		REQUERIMIENTO_NO_PROG.COD_CONFORM3,
+		NVL(REQUERIMIENTO_NO_PROG.ANN_ATENCION, REQUERIMIENTO_NO_PROG.ANO_PROC_SRM) ANN_ATENCION,
+		NVL(REQUERIMIENTO_NO_PROG.MES_ATENCION,REQUERIMIENTO_NO_PROG.MES_PROC_SRM ) MES_ATENCION,
+		REQUERIMIENTO_NO_PROG.TIPO_VINCULO,
+		REQUERIMIENTO_NO_PROG.VINCULO_NECESIDAD,
+		REQUERIMIENTO_NO_PROG.IND_COMITE,
+		REQUERIMIENTO_NO_PROG.IND_TEC_TIT,
+		REQUERIMIENTO_NO_PROG.IND_TEC_SUP,
+		REQUERIMIENTO_NO_PROG.COD_AU_TIT,
+		REQUERIMIENTO_NO_PROG.COD_AU_SUP,
+		REQUERIMIENTO_NO_PROG.COD_TEC_TIT,
+		REQUERIMIENTO_NO_PROG.COD_TEC_SUP,
+		REQUERIMIENTO_NO_PROG.NOM_TEC_TIT,
+		REQUERIMIENTO_NO_PROG.NOM_TEC_SUP,	
+		REQUERIMIENTO_NO_PROG.IND_VINCULO,
+		REQUERIMIENTO_NO_PROG.IND_PRESTAMO
+		FROM REQUERIMIENTO_NO_PROG, MAESTRO_PERSONAL MA, TDEPENDENCIAS DE,
+	    (SELECT DESC_REGI_EST Desc_estado,VALO_ESTA_EST Valor FROM  SYS_ESTADOS WHERE NOMB_TABL_EST='REQUERIMIENTO_NO_PROG') ESTADOS
+		WHERE 
+		( REQUERIMIENTO_NO_PROG.FLAG_PASE_SRM = ESTADOS.Valor (+) ) and 
+	    ( REQUERIMIENTO_NO_PROG.codi_resp_srm = MA.codi_empl_per (+) ) and 
+		(REQUERIMIENTO_NO_PROG.CODI_DEPE_TDE= DE.CODI_DEPE_TDE (+) )
+		<isNotNull prepend="AND" property="ano_pro"> REQUERIMIENTO_NO_PROG.ANO_PROC_SRM = #ano_pro#</isNotNull>
+		<isNotNull prepend="AND" property="est_req"> REQUERIMIENTO_NO_PROG.FLAG_PASE_SRM = #est_req#</isNotNull>
+		<isNotNull prepend="AND" property="cod_sed"> REQUERIMIENTO_NO_PROG.CODI_SEDE_SED = #cod_sed#</isNotNull>
+		<isNotNull prepend="AND" property="cod_res"> REQUERIMIENTO_NO_PROG.CODI_RESP_SRM = #cod_res#</isNotNull>
+		<isNotNull prepend="AND" property="mes_pro"> to_char(REQUERIMIENTO_NO_PROG.fech_requ_srm,'MM') = #mes_pro#</isNotNull>
+		<isNotNull prepend="AND" property="cod_req"> REQUERIMIENTO_NO_PROG.CODI_RQNP_SRM = #cod_req#</isNotNull>
+		and	(
+		<!-- SER_RNP.FN_JEFE_INMEDIATO(REQUERIMIENTO_NO_PROG.CODI_RESP_SRM) = #cod_per# 
+		OR -->
+		SER_RNP.FN_JEFE_INMEDIATO_ENCARGADO(REQUERIMIENTO_NO_PROG.CODI_RESP_SRM, #cod_per#) = #cod_per# 
+		)
+		ORDER BY REQUERIMIENTO_NO_PROG.CODI_RQNP_SRM DESC
+	</select>
+  
+  
+	<select id="selectRqnpIntendente" parameterClass="java.util.HashMap" resultMap="lstRqnp">
+			SELECT   
+		REQUERIMIENTO_NO_PROG.CODI_RQNP_SRM,
+		REQUERIMIENTO_NO_PROG.ANO_PROC_SRM,
+		REQUERIMIENTO_NO_PROG.MES_PROC_SRM,
+		REQUERIMIENTO_NO_PROG.NRO_REQU_SRM,
+		REQUERIMIENTO_NO_PROG.CODI_DEPE_TDE,
+		REQUERIMIENTO_NO_PROG.FECH_REQU_SRM,
+		REQUERIMIENTO_NO_PROG.CODI_SEDE_SED,
+		REQUERIMIENTO_NO_PROG.MTO_VALO_SRM, 
+		REQUERIMIENTO_NO_PROG.TIPO_MONE_SRM,
+		REQUERIMIENTO_NO_PROG.FLAG_PASE_SRM,
+		REQUERIMIENTO_NO_PROG.MOTI_SOLI_SRM,
+		REQUERIMIENTO_NO_PROG.NUME_REGI_ARC,
+		MA.NOMB_CORT_PER,
+		REQUERIMIENTO_NO_PROG.FECH_ENVI_SOL,
+		ESTADOS.Desc_estado,
+		REQUERIMIENTO_NO_PROG.COD_RQTO_NO_PROG ,
+		MA.NUMERO_REGISTRO_ALTERNO ,
+		DE.DESC_DEPE_TDE,
+		DE.UNIDAD_ORGANIZACIONAL,
+		REQUERIMIENTO_NO_PROG.CODI_RESP_SRM,
+		NVL(( SELECT DISTINCT IND_ESTADO FROM REQUERIMIENTO_NO_PROG_BIENES WHERE CODI_RQNP_SRM =REQUERIMIENTO_NO_PROG.CODI_RQNP_SRM AND IND_ESTADO='06'),'00')IND_SOLICITUD,
+		COD_CONTACTO,
+		NUM_ANEXO_CONTACTO,
+		COD_NECESIDAD,
+		COD_TIPO_NECESIDAD,
+		DES_TIPO_NECESIDAD,
+		REQUERIMIENTO_NO_PROG.COD_FINALIDAD,
+		REQUERIMIENTO_NO_PROG.COD_PROVEEDOR,
+		REQUERIMIENTO_NO_PROG.OBS_JUSTIFICACION,
+		REQUERIMIENTO_NO_PROG.OBS_PLAZOENTREGA,
+		REQUERIMIENTO_NO_PROG.OBS_LUGARENTREGA,
+		REQUERIMIENTO_NO_PROG.OBS_DIRECCENTREGA,
+		REQUERIMIENTO_NO_PROG.COD_OBJETO,
+		REQUERIMIENTO_NO_PROG.DES_PROCESO,
+		REQUERIMIENTO_NO_PROG.DES_META,
+		REQUERIMIENTO_NO_PROG.COD_CONFORM1,
+		REQUERIMIENTO_NO_PROG.COD_CONFORM2,
+		REQUERIMIENTO_NO_PROG.COD_CONFORM3,
+		NVL(REQUERIMIENTO_NO_PROG.ANN_ATENCION, REQUERIMIENTO_NO_PROG.ANO_PROC_SRM) ANN_ATENCION,
+		NVL(REQUERIMIENTO_NO_PROG.MES_ATENCION,REQUERIMIENTO_NO_PROG.MES_PROC_SRM ) MES_ATENCION,
+		REQUERIMIENTO_NO_PROG.TIPO_VINCULO,
+		REQUERIMIENTO_NO_PROG.VINCULO_NECESIDAD,
+		REQUERIMIENTO_NO_PROG.IND_COMITE,
+		REQUERIMIENTO_NO_PROG.IND_TEC_TIT,
+		REQUERIMIENTO_NO_PROG.IND_TEC_SUP,
+		REQUERIMIENTO_NO_PROG.COD_AU_TIT,
+		REQUERIMIENTO_NO_PROG.COD_AU_SUP,
+		REQUERIMIENTO_NO_PROG.COD_TEC_TIT,
+		REQUERIMIENTO_NO_PROG.COD_TEC_SUP,
+		REQUERIMIENTO_NO_PROG.NOM_TEC_TIT,
+		REQUERIMIENTO_NO_PROG.NOM_TEC_SUP,
+		REQUERIMIENTO_NO_PROG.IND_VINCULO,
+		REQUERIMIENTO_NO_PROG.IND_PRESTAMO
+		FROM REQUERIMIENTO_NO_PROG, MAESTRO_PERSONAL MA, TDEPENDENCIAS DE,
+		(SELECT DESC_REGI_EST Desc_estado, VALO_ESTA_EST Valor FROM  SYS_ESTADOS WHERE NOMB_TABL_EST='REQUERIMIENTO_NO_PROG') ESTADOS
+		WHERE 
+		( REQUERIMIENTO_NO_PROG.FLAG_PASE_SRM = ESTADOS.Valor (+) ) and 
+		( REQUERIMIENTO_NO_PROG.codi_resp_srm = MA.codi_empl_per (+) ) and 
+		(REQUERIMIENTO_NO_PROG.CODI_DEPE_TDE= DE.CODI_DEPE_TDE (+) )
+		<isNotNull prepend="AND" property="ano_pro"> REQUERIMIENTO_NO_PROG.ANO_PROC_SRM = #ano_pro#</isNotNull>
+		<isNotNull prepend="AND" property="est_req"> REQUERIMIENTO_NO_PROG.FLAG_PASE_SRM = #est_req#</isNotNull>
+		<isNotNull prepend="AND" property="cod_sed"> REQUERIMIENTO_NO_PROG.CODI_SEDE_SED = #cod_sed#</isNotNull>
+		<isNotNull prepend="AND" property="cod_res"> REQUERIMIENTO_NO_PROG.CODI_RESP_SRM = #cod_res#</isNotNull>
+		<isNotNull prepend="AND" property="mes_pro"> to_char(REQUERIMIENTO_NO_PROG.fech_requ_srm,'MM') = #mes_pro#</isNotNull>
+		<isNotNull prepend="AND" property="cod_req"> REQUERIMIENTO_NO_PROG.CODI_RQNP_SRM = #cod_req#</isNotNull>
+		and
+		(SER_RNP.FN_RESP_APROBADOR(REQUERIMIENTO_NO_PROG.CODI_RESP_SRM) = #cod_per# 
+	 	OR 
+		SER_RNP.FN_RESP_APROBADOR_ENCARGADO(REQUERIMIENTO_NO_PROG.CODI_RESP_SRM ,#cod_per#) = #cod_per#  
+		)
+		ORDER BY REQUERIMIENTO_NO_PROG.CODI_RQNP_SRM DESC
+	</select>
+
+	<select id="secuencialRqnpByAnio" parameterClass="java.util.HashMap"
+		resultClass="java.lang.String">
+		SELECT LPAD(NVL(MAX(SUBSTR(CODI_RQNP_SRM,5,8)),0)+1,8,'0') CORRELATIVO
+		FROM REQUERIMIENTO_NO_PROG
+		WHERE
+		SUBSTR(CODI_RQNP_SRM,1,4) = #anio_pro#
+	</select>
+	
+	
+	<select id="secuencialRqnpUuooByAnio" parameterClass="java.util.HashMap"
+		resultClass="java.lang.String">
+		SELECT LPAD(NVL(MAX(SUBSTR(COD_RQTO_NO_PROG,11,7)),0)+1,7,'0') CORRELATIVO
+		FROM REQUERIMIENTO_NO_PROG
+		WHERE
+		SUBSTR(COD_RQTO_NO_PROG,1,4) = #anio_pro#
+		AND SUBSTR(COD_RQTO_NO_PROG,5,6) = #cod_uuoo# 
+	</select>
+	
+	<select id="tipoObjetoRqnp" parameterClass="java.util.HashMap" 	resultClass="java.lang.String">
+		 SELECT TIPO
+ 		 FROM (  SELECT SUBSTR (codi_bser_cat, 1, 1) AS TIPO, SUM (cant_tota_dsr * puni_naci_dsr) AS TOTAL
+            FROM requerimiento_no_prog_bienes
+           WHERE codi_rqnp_srm = #cod_req#
+        GROUP BY SUBSTR (codi_bser_cat, 1, 1)
+        ORDER BY 2 DESC)
+ 		WHERE ROWNUM = 1
+	</select>
+	
+	<!-- INICIO:DPORRASC CREADO PARA DEVOLVER EL TIPO DE AUC (TECNICA O DESCONCENTRADA) -->
+ 
+		<select id="tipoAuc" parameterClass="java.util.HashMap" resultClass="java.lang.String">
+		 SELECT UPPER(TIPO_AUC)
+			FROM
+		        ( 
+		           (
+		           SELECT CODI_DEPE_TDE,'T' AS TIPO_AUC
+		            FROM
+		             (
+		              (SELECT codi_depe_tde FROM TDEPENDENCIAS 
+		               WHERE CODI_DEPE_TDE  in (SELECT DISTINCT COD_AUC_TECNICA 
+		                                        FROM CATALOGO_BIEN_SERVICIO 
+		                                        WHERE SITU_BSER_CAT = 'A'
+		                                        AND COD_AUC_TECNICA IS NOT NULL
+		                                        AND COD_AUC_TECNICA NOT IN ('0000'))
+		                AND  estado_id = '1')))
+			UNION
+	            (
+		            SELECT CODI_DEPE_TDE, 'D' AS TIPO_AUC
+		            FROM
+		            (SELECT codi_depe_tde FROM TDEPENDENCIAS 
+		            WHERE CODI_DEPE_TDE in (SELECT COD_OEC_DEFECTO 
+		                                     FROM TDEPENDENCIAS
+		                                     WHERE estado_id = '1')
+		            AND estado_id = '1'
+		            AND CODI_DEPE_TDE NOT IN( (SELECT TRIM(VALOR_CHAR_PAR) FROM SYS_PARAMETROS WHERE NOM_VAR_PAR = 'ind_oec_ina'))
+		          ))
+	          )
+		WHERE CODI_DEPE_TDE=#cod_dep#
+		AND ROWNUM = 1
+
+	</select>
+	<!-- FIN: DPORRASC -->
+
+	<insert id="insertar" parameterClass="requerimientonoprogramadoBean">
+		INSERT INTO REQUERIMIENTO_NO_PROG(
+		   CODI_RQNP_SRM,
+		   ANO_PROC_SRM,
+		   MES_PROC_SRM,
+		    NRO_REQU_SRM,
+		    <!-- CODI_SEDE_SED, -->
+		    FECH_REQU_SRM,
+		    MOTI_SOLI_SRM,
+		    FLAG_PASE_SRM,
+		    MTO_VALO_SRM,
+		    CODI_DEPE_TDE,
+		    TIPO_MONE_SRM,
+		    CODI_RESP_SRM,
+		    COD_RQTO_NO_PROG,
+		    TIPO_BSER_SRM,
+            TIPO_PPTO_TPR,
+            COD_CONTACTO,
+            NUM_ANEXO_CONTACTO,
+            COD_NECESIDAD,
+            COD_TIPO_NECESIDAD,
+            DES_TIPO_NECESIDAD,
+            IND_REGISTROPOR, 
+            COD_FINALIDAD,
+            COD_PROVEEDOR,
+            OBS_JUSTIFICACION,
+            OBS_PLAZOENTREGA,
+            OBS_LUGARENTREGA,
+            OBS_DIRECCENTREGA,
+            ANN_ATENCION,
+            MES_ATENCION,
+            TIPO_VINCULO,
+            VINCULO_NECESIDAD,
+            IND_VINCULO,
+            IND_PRESTAMO
+            )VALUES(
+		    #codigoRqnp#,
+		    #anioProceso#,
+		    #mesProeso#,
+		    #numeroRqnp#,
+		    <!-- #codigoSede#, -->
+		    #fechaRqnp#,
+		    #motivoSolicitud#,
+		    #estadoRqnp#,
+		    #montoRqnp#,
+		    #codigoDependencia#,
+		    #tipoMoneda#,
+		    #codigoResposanble#,
+		    #codigoReqNoProgramado#,
+		    #tipoBien#,
+		    #tipoPpto#,
+		    #cod_contacto#,
+		    #anexo_contacto#,
+		    #cod_necesidad#,
+		    #cod_tip_nececidad#,
+		    #nom_tip_necesidad#,
+		    #ind_registropor#,
+		    #cod_finalidad#,
+		  	#cod_proveedor#,
+		  	#obs_justificacion#,
+		  	#obs_plazo_entrega#,
+		  	#obs_lugar_entrega#,
+		  	#obs_dir_entrega#,
+		  	#anio_atencion#,
+		  	#mes_atencion#,
+		  	#tipo_vinculo#,
+		  	#vinculo#,
+		  	#ind_vinculo#,
+		  	#ind_prestamo#
+		)
+	</insert>	
+	<!-- INICIO: DPORRASC -->
+	<insert id="insertarAUC" parameterClass="requerimientonoprogramadoBean">
+		INSERT INTO REQUERIMIENTO_NO_PROG(
+		   CODI_RQNP_SRM,
+		   ANO_PROC_SRM,
+		   MES_PROC_SRM,
+		    NRO_REQU_SRM,
+		    <!-- CODI_SEDE_SED, -->
+		    FECH_REQU_SRM,
+		    MOTI_SOLI_SRM,
+		    FLAG_PASE_SRM,
+		    MTO_VALO_SRM,
+		    CODI_DEPE_TDE,
+		    TIPO_MONE_SRM,
+		    CODI_RESP_SRM,
+		    COD_RQTO_NO_PROG,
+		    TIPO_BSER_SRM,
+            TIPO_PPTO_TPR,
+            COD_CONTACTO,
+            NUM_ANEXO_CONTACTO,
+            COD_NECESIDAD,
+            COD_TIPO_NECESIDAD,
+            DES_TIPO_NECESIDAD,
+            IND_REGISTROPOR, 
+            COD_FINALIDAD,
+            COD_PROVEEDOR,
+            OBS_JUSTIFICACION,
+            OBS_PLAZOENTREGA,
+            OBS_LUGARENTREGA,
+            OBS_DIRECCENTREGA,
+            ANN_ATENCION,
+            MES_ATENCION,
+            TIPO_VINCULO,
+            VINCULO_NECESIDAD,
+            IND_VINCULO,
+            IND_PRESTAMO,
+            COD_CONFORM1, 	
+			COD_CONFORM2,	
+			COD_CONFORM3,	
+			IND_COMITE,
+			IND_TEC_TIT,
+			IND_TEC_SUP,
+			COD_AU_TIT,
+			COD_AU_SUP,
+			COD_TEC_TIT,
+			COD_TEC_SUP,
+			NOM_TEC_TIT,
+			NOM_TEC_SUP
+            )VALUES(
+		    #codigoRqnp#,
+		    #anioProceso#,
+		    #mesProeso#,
+		    #numeroRqnp#,
+		    <!-- #codigoSede#, -->
+		    #fechaRqnp#,
+		    #motivoSolicitud#,
+		    #estadoRqnp#,
+		    #montoRqnp#,
+		    #codigoDependencia#,
+		    #tipoMoneda#,
+		    #codigoResposanble#,
+		    #codigoReqNoProgramado#,
+		    #tipoBien#,
+		    #tipoPpto#,
+		    #cod_contacto#,
+		    #anexo_contacto#,
+		    #cod_necesidad#,
+		    #cod_tip_nececidad#,
+		    #nom_tip_necesidad#,
+		    #ind_registropor#,	
+		    #cod_finalidad#,
+		  	#cod_proveedor#,
+		  	#obs_justificacion#,
+		  	#obs_plazo_entrega#,
+		  	#obs_lugar_entrega#,
+		  	#obs_dir_entrega#,
+		  	#anio_atencion#,
+		  	#mes_atencion#,
+		  	#tipo_vinculo#,
+		  	#vinculo#,
+		  	#ind_vinculo#,
+		  	#ind_prestamo#,
+		  	#cod_uoc1#,	
+		  	#cod_uoc2#,	
+		  	#cod_uoc3#,	
+		  	#ind_comite#,
+			#ind_tec_tit#,
+			#ind_tec_sup#,
+			#cod_au_tit#,
+			#cod_au_sup#,
+			#cod_tec_tit#,
+			#cod_tec_sup#,
+			#nom_tec_tit#,
+			#nom_tec_sup#
+		)
+	</insert>	
+	<!-- FIN: DPORRASC -->
+
+	
+	<update id="updateCab"  parameterClass="requerimientonoprogramadoBean">
+		UPDATE  REQUERIMIENTO_NO_PROG  
+		SET MOTI_SOLI_SRM = #motivoSolicitud#,
+		COD_CONTACTO = #cod_contacto#,
+		NUM_ANEXO_CONTACTO=#anexo_contacto#,
+		COD_NECESIDAD=   #cod_necesidad#,
+		COD_TIPO_NECESIDAD=  #cod_tip_nececidad#,
+	   	DES_TIPO_NECESIDAD=  #nom_tip_necesidad#,
+	   	COD_FINALIDAD=#cod_finalidad#,
+	   	COD_PROVEEDOR=#cod_proveedor#,
+	   	OBS_JUSTIFICACION=#obs_justificacion#,
+	   	OBS_PLAZOENTREGA=#obs_plazo_entrega#,
+	   	OBS_LUGARENTREGA=#obs_lugar_entrega#,
+	   	OBS_DIRECCENTREGA=#obs_dir_entrega#,
+	   	ANN_ATENCION=#anio_atencion#,
+        MES_ATENCION=#mes_atencion#,
+        TIPO_VINCULO=#tipo_vinculo#,
+		VINCULO_NECESIDAD=#vinculo#,
+		IND_VINCULO=#ind_vinculo#,
+		IND_PRESTAMO=#ind_prestamo#
+		WHERE CODI_RQNP_SRM = 	#codigoRqnp# 
+	</update>
+	
+	<update id="updateCabAuc"  parameterClass="requerimientonoprogramadoBean">
+		UPDATE  REQUERIMIENTO_NO_PROG  
+		SET COD_CONTACTO = #cod_contacto#,
+		NUM_ANEXO_CONTACTO=#anexo_contacto#,
+		COD_NECESIDAD=   #cod_necesidad#,
+		COD_TIPO_NECESIDAD=  #cod_tip_nececidad#,
+	   	DES_TIPO_NECESIDAD=  #nom_tip_necesidad#,
+	   	COD_FINALIDAD=#cod_finalidad#,
+	   	COD_PROVEEDOR=#cod_proveedor#,
+	   	OBS_JUSTIFICACION=#obs_justificacion#,
+	   	OBS_PLAZOENTREGA=#obs_plazo_entrega#,
+	   	OBS_LUGARENTREGA=#obs_lugar_entrega#,
+	   	OBS_DIRECCENTREGA=#obs_dir_entrega#,
+	   	DES_PROCESO=#des_proceso#,
+	   	DES_META=#des_meta#,
+	   	COD_CONFORM1=#cod_uoc1#,
+	   	COD_CONFORM2=#cod_uoc2#,
+	   	COD_CONFORM3=#cod_uoc3#,
+	   	COD_OBJETO=#cod_objeto#,
+	   	ANN_ATENCION=#anio_atencion#,
+        MES_ATENCION=#mes_atencion#,
+        TIPO_VINCULO=#tipo_vinculo#,
+		VINCULO_NECESIDAD=#vinculo#,
+		MOTI_SOLI_SRM=#motivoSolicitud#,
+		IND_COMITE=#ind_comite#,
+		IND_TEC_TIT=#ind_tec_tit#,
+		IND_TEC_SUP=#ind_tec_sup#,
+		COD_AU_TIT=#cod_au_tit#,
+		COD_AU_SUP=#cod_au_sup#,
+		COD_TEC_TIT=#cod_tec_tit#,
+		COD_TEC_SUP=#cod_tec_sup#,
+		NOM_TEC_TIT=#nom_tec_tit#,
+		NOM_TEC_SUP=#nom_tec_sup#,
+		
+		IND_VINCULO=#ind_vinculo#,
+		IND_PRESTAMO=#ind_prestamo#
+
+		WHERE CODI_RQNP_SRM = 	#codigoRqnp# 
+	</update>
+	<update id="updateCab_Objeto"  parameterClass="requerimientonoprogramadoBean">
+		UPDATE  REQUERIMIENTO_NO_PROG  
+		SET COD_OBJETO=#cod_objeto#
+		WHERE CODI_RQNP_SRM = 	#codigoRqnp# 
+	</update>		
+		
+	<update id="updateMonto"  parameterClass="requerimientonoprogramadoBean">
+		UPDATE  REQUERIMIENTO_NO_PROG  
+		SET MTO_VALO_SRM = #montoRqnp#
+		WHERE CODI_RQNP_SRM = 	#codigoRqnp# 
+	</update>
+	
+	<update id="updateEstado"  parameterClass="requerimientonoprogramadoBean">
+		UPDATE  REQUERIMIENTO_NO_PROG  
+		SET FLAG_PASE_SRM = #estadoRqnp#
+		WHERE CODI_RQNP_SRM = 	#codigoRqnp# 
+	</update>
+	
+	<update id="updateAnula"  parameterClass="requerimientonoprogramadoBean">
+		UPDATE  REQUERIMIENTO_NO_PROG  
+		SET FLAG_PASE_SRM = #estadoRqnp#,
+		FECH_RECH_LOG=#fec_rech#,
+		MOTI_RECH_LOG =#motivoRechazo#
+		WHERE CODI_RQNP_SRM = 	#codigoRqnp# 
+	</update>
+	
+	<update id="updateEnvio"  parameterClass="requerimientonoprogramadoBean">
+		UPDATE  REQUERIMIENTO_NO_PROG  
+		SET FLAG_PASE_SRM = #estadoRqnp#,
+		FECH_ENVI_SOL=#fechaEnvioSolicitud#
+		WHERE CODI_RQNP_SRM = 	#codigoRqnp# 
+	</update>
+	
+	<update id="updateFile"  parameterClass="requerimientonoprogramadoBean">
+		UPDATE  REQUERIMIENTO_NO_PROG  
+		SET NUME_REGI_ARC = #numeroArchivo#
+		WHERE CODI_RQNP_SRM = 	#codigoRqnp# 
+	</update>
+  
+  
+ 	<parameterMap id="rqnp_parm"
+	class="map">
+	<parameter property="cod_rqnp" jdbcType="CHAR" javaType="java.lang.String"
+		mode="IN" />
+	<parameter property="cod_bien" jdbcType="CHAR" javaType="java.lang.String"
+		mode="IN" />
+	
+	</parameterMap>
+
+	<procedure id="rqnp_mail_uct" parameterMap="rqnp_parm">
+		{call SIGA01.SER_RNP.mensajeria(?,?)}
+	</procedure>
+	
+	
+	
+	<parameterMap id="rqnp_parm_rechazo"
+		class="map">
+		<parameter property="cod_rqnp" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+		<parameter property="cod_bien" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+		<parameter property="cod_bandeja" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+	</parameterMap>
+	
+	
+	<procedure id="rqnp_mail_rechazo" parameterMap="rqnp_parm_rechazo">
+		{call SIGA01.SER_RNP.MENSAJERIA_RECHAZO(?,?,?)}
+	</procedure>
+		
+	<parameterMap id="rqnp_parm_derivar"
+		class="map">
+		<parameter property="cod_rqnp" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+		<parameter property="cod_bien" jdbcType="CHAR" javaType="java.lang.String"
+			mode="IN" />
+	</parameterMap>
+	
+	
+	<procedure id="rqnp_mail_derivar" parameterMap="rqnp_parm_derivar">
+		{call SIGA01.SER_RNP.MENSAJERIA_DERIVAR(?,?)}
+	</procedure>
+	
+	<select id="rqnp_valida_user_au_auc" parameterClass="map" resultClass="java.lang.String">
+		SELECT SIGA01.SER_RNP.FN_ES_USUARIO_AU_AUC(#cod_empl#) AS RESULTADO FROM DUAL
+  </select>
+  
+  <select id="obtenerAucOfRqnp" parameterClass="map" resultClass="java.lang.String">
+		SELECT DISTINCT COD_AUCT1 
+		FROM REQUERIMIENTO_NO_PROG_BIENES 
+		WHERE CODI_RQNP_SRM = #codRqnp#
+		AND ROWNUM=1
+  </select>
+  
+</sqlMap>

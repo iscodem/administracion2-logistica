@@ -1,0 +1,287 @@
+	<project name="logistica2-rqnp" default="ear-gen" basedir=".">
+	<tstamp>
+		<format property="TODAY" pattern="dd-MM-yyyy" />
+		<format property="touch.time" pattern="yyyyMMddhhmm" />
+	</tstamp>
+		
+	<property name="wls103.deploy.dir" value="D:/bea10/user_projects/domains/Endor/autodeploy"/>
+	<property name="webapp.dir" value="webapp"/>
+	
+	<property name="impl.version" value="1.0.0"/>
+	<property name="user.name" value="SIGA"/>
+	<property name="java.version" value="1.6"/>
+	<property name="spec.version" value="1.0"/>
+
+	<property name="build.dir" value="build"/>
+	<property name="classes.dir" value="build/classes"/>
+	<property name="project.lib" value="build/lib"/>
+	<property name="java.lib.dir" value="D:/dev/libs"/>
+		
+	<!-- Nombres de los WAR -->
+	<property name="WARNAME1" value="iarqnp"/>
+
+	<!-- Nombre del Controller, Classes, Services, Model -->
+	<property name="CONTROLLER" value="rqnp-controllers"/>
+	<property name="CLASSES" value="rqnp-classes"/>
+	<property name="SERVICES" value="rqnp-services"/>
+	<property name="MODEL" value="rqnp-model"/>
+	<property name="UTIL" value="rqnp-util"/>
+		
+	<property name="slbear" value="administracion2-logistica"/>
+		 
+	<!-- generador de la aplicacion -->
+	<target name="${WARNAME1}-gen">
+		<jar jarfile="${build.dir}/${WARNAME1}-${impl.version}.war" basedir="${webapp.dir}/${WARNAME1}">
+			<include name="**/*.htm" />
+			<include name="**/*.html" />
+			<include name="**/*.jsp" />
+			<include name="**/*.js" />
+			<include name="**/*.css" />
+			<include name="**/*.tld" />
+			<include name="**/*.jasper" />
+			<include name="**/*.jrxml" />
+			<include name="**/*.txt" />
+			<include name="WEB-INF/*.xml" />
+			<manifest>
+				<attribute name="Built-By" value="${user.name}" />
+				<section name="common">
+					<attribute name="Specification-Title" value="${WARNAME1}" />
+					<attribute name="Specification-Version" value="${spec.version} ${TODAY}" />
+					<attribute name="Specification-Vendor" value="SUNAT - SIGA" />
+					<attribute name="Implementation-Title" value="${WARNAME1}" />
+					<attribute name="Implementation-Version" value="${impl.version}" />
+					<attribute name="Implementation-Vendor" value="SUNAT - SIGA" />
+				</section>
+				<!-- indique las librerias que necesita la aplicacion para funcionar -->
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="${CONTROLLER}-gen">
+		<tstamp>
+			<format property="TODAY" pattern="dd-MM-yyyy" />
+		</tstamp>
+		<jar jarfile="${project.lib}/${CONTROLLER}-${impl.version}.jar">
+			<fileset dir="${classes.dir}">
+				<!-- indique las clases que necesita para generar el jar -->
+				<!-- <include name="[Nombre completo de la clase].class" /> -->
+				<include name="**/administracion2/siga/rqnp/web/controller/*.class" />
+				<include name="**/administracion2/siga/auc/web/controller/*.class" />
+				<include name="**/administracion2/siga/archivo/web/controller/*.class" />
+				<include name="**/administracion2/siga/expediente/web/controller/*.class" />
+				<include name="**/administracion2/siga/registro/web/controller/*.class" />
+				<include name="**/administracion2/siga/catalogo/web/controller/*.class" />
+					
+				<include name="**/administracion2/siga/rqnp/web/view/*.class" />
+			</fileset>
+			<!-- indique la version del jar, y las clases con sus versiones que van dentro del jar -->
+			<manifest>
+				<attribute name="Built-By" value="${user.name}" />
+				<section name="common">
+					<attribute name="Specification-Title" value="[indicar el contenido]" />
+					<attribute name="Specification-Version" value="1.0 ${TODAY}" />
+					<attribute name="Specification-Vendor" value="SUNAT - INSI" />
+					<attribute name="Implementation-Title" value="[indicar el paquete principal o paquetes contenidos]" />
+					<attribute name="Implementation-Version" value="build[1]" />
+					<attribute name="Implementation-Vendor" value="SUNAT - INSI" />
+				</section>
+			</manifest>
+		</jar>
+	</target>
+	<target name="${SERVICES}-gen">
+		<tstamp>
+			<format property="TODAY" pattern="dd-MM-yyyy" />
+		</tstamp>
+		<jar jarfile="${project.lib}/${SERVICES}-${impl.version}.jar">
+			<fileset dir="${classes.dir}">
+				<!-- indique las clases que necesita para generar el jar -->
+				<!-- <include name="[Nombre completo de la clase].class" /> -->
+				<include name="**/administracion2/siga/registro/service/*.class" />
+				<include name="**/administracion2/siga/rqnp/service/*.class" />
+			</fileset>
+			<!-- indique la version del jar, y las clases con sus versiones que van dentro del jar -->
+			<manifest>
+				<attribute name="Built-By" value="${user.name}" />
+				<section name="common">
+					<attribute name="Specification-Title" value="[indicar el contenido]" />
+					<attribute name="Specification-Version" value="1.0 ${TODAY}" />
+					<attribute name="Specification-Vendor" value="SUNAT - INSI" />
+					<attribute name="Implementation-Title" value="[indicar el paquete principal o paquetes contenidos]" />
+					<attribute name="Implementation-Version" value="build[1]" />
+					<attribute name="Implementation-Vendor" value="SUNAT - INSI" />
+				</section>
+			</manifest>
+		</jar>
+	</target>
+	<target name="${MODEL}-gen">
+		<tstamp>
+			<format property="TODAY" pattern="dd-MM-yyyy" />
+		</tstamp>
+		<jar jarfile="${project.lib}/${MODEL}-${impl.version}.jar">
+			<fileset dir="${classes.dir}">
+				<!-- indique las clases que necesita para generar el jar -->
+				<!-- <include name="[Nombre completo de la clase].class" /> -->
+				<include name="pe/gob/sunat/administracion2/siga/registro/model/domain/*.class" />
+				<include name="pe/gob/sunat/administracion2/siga/rqnp/model/domain/*.class" />
+
+				<include name="pe/gob/sunat/administracion2/siga/registro/model/dao/*.class" />
+				<include name="pe/gob/sunat/administracion2/siga/rqnp/model/dao/*.class" />
+
+				<include name="pe/gob/sunat/administracion2/siga/registro/model/dao/ibatis/*.class" />
+				<include name="pe/gob/sunat/administracion2/siga/rqnp/model/dao/ibatis/*.class" />
+
+				<include name="pe/gob/sunat/administracion2/siga/registro/model/dao/ibatis/maps/*.xml" />
+				<include name="pe/gob/sunat/administracion2/siga/rqnp/model/dao/ibatis/maps/*.xml" />
+			</fileset>
+			<!-- indique la version del jar, y las clases con sus versiones que van dentro del jar -->
+			<manifest>
+				<attribute name="Built-By" value="${user.name}" />
+				<section name="common">
+					<attribute name="Specification-Title" value="[indicar el contenido]" />
+					<attribute name="Specification-Version" value="1.0 ${TODAY}" />
+					<attribute name="Specification-Vendor" value="SUNAT - INSI" />
+					<attribute name="Implementation-Title" value="[indicar el paquete principal o paquetes contenidos]" />
+					<attribute name="Implementation-Version" value="build[1]" />
+					<attribute name="Implementation-Vendor" value="SUNAT - INSI" />
+				</section>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="${CLASSES}-gen">
+		<tstamp>
+			<format property="TODAY" pattern="dd-MM-yyyy" />
+		</tstamp>
+		<jar jarfile="${project.lib}/${CLASSES}-${impl.version}.jar">
+			<!-- indique los archivos de propiedades que necesita su aplicacion -->
+
+			<fileset dir="${build.dir}">
+				<!-- <include name="[nombre del archivo].properties" /> -->
+				<!-- de caracter obligatorio -->
+				<include name="*.properties" />
+				<include name="*.htm" />
+				<include name="/data/*.txt" />
+			</fileset>
+			<!-- indique la version del jar, y las clases con sus versiones que van dentro del jar -->
+			<manifest>
+				<attribute name="Built-By" value="${user.name}" />
+				<section name="common">
+					<attribute name="Specification-Title" value="[indicar el contenido]" />
+					<attribute name="Specification-Version" value="1.0 ${TODAY}" />
+					<attribute name="Specification-Vendor" value="SUNAT - INSI" />
+					<attribute name="Implementation-Title" value="[indicar el paquete principal o paquetes contenidos]" />
+					<attribute name="Implementation-Version" value="build[1]" />
+					<attribute name="Implementation-Vendor" value="SUNAT - INSI" />
+				</section>
+			</manifest>
+		</jar>
+	</target>
+		
+		<target name="${UTIL}-gen">
+				<tstamp>
+					<format property="TODAY" pattern="dd-MM-yyyy" />
+				</tstamp>
+				<jar jarfile="${project.lib}/${UTIL}-${impl.version}.jar">
+					<fileset dir="${classes.dir}">
+						<!-- indique las clases que necesita para generar el jar -->
+						<!-- <include name="[Nombre completo de la clase].class" /> -->
+						<include name="**/administracion2/siga/rqnp/util/*.class" />
+					</fileset>
+					<!-- indique la version del jar, y las clases con sus versiones que van dentro del jar -->
+					<manifest>
+						<attribute name="Built-By" value="${user.name}" />
+						<section name="common">
+							<attribute name="Specification-Title" value="[indicar el contenido]" />
+							<attribute name="Specification-Version" value="1.0 ${TODAY}" />
+							<attribute name="Specification-Vendor" value="SUNAT - INSI" />
+							<attribute name="Implementation-Title" value="[indicar el paquete principal o paquetes contenidos]" />
+							<attribute name="Implementation-Version" value="build[1]" />
+							<attribute name="Implementation-Vendor" value="SUNAT - INSI" />
+						</section>
+					</manifest>
+				</jar>
+			</target>
+
+	<!-- generador del ear -->
+	<target name="ear-gen" depends="${CONTROLLER}-gen, ${CLASSES}-gen, ${MODEL}-gen, ${SERVICES}-gen, ${UTIL}-gen, ${WARNAME1}-gen">
+		<!-- indique las librerias que utiliza la aplicacion -->
+		<copy todir="${project.lib}">
+			
+			<fileset dir="${java.lib.dir}">
+				<!-- librerias obligatorias -->
+				<!--AGREGADOS -->
+				<include name="commons-email-1.0.jar" />
+			</fileset>
+			
+			<fileset dir="${java.lib.dir}/framework">
+				<!-- librerias obligatorias -->
+				<include name="framework-core-service-1.0.jar" />
+				
+				<!--AGREGADOS -->
+				<include name="framework-core-1.6.jar" />
+				<include name="framework-security-1.1.jar" />
+				<include name="framework-web-1.2.jar" />
+				<include name="framework-util-1.6.jar" />
+				
+			</fileset>
+
+			<fileset dir="${java.lib.dir}/menu">
+				<!-- librerias obligatorias -->
+				<include name="menu-test.jar" />
+				<include name="seguridad-intranet-1.0.jar" />
+				<include name="menu-sso-cliente-1.0.jar" />
+			</fileset>
+			
+		</copy>
+
+		<jar jarfile="${build.dir}/${slbear}-${impl.version}.ear" basedir="${build.dir}">
+			<include name="${WARNAME1}-${impl.version}.war" />
+			<include name="META-INF/*.xml" />
+
+			<!--JAR PROPIAS DEL MÓDULO-->
+			<include name="lib/${CONTROLLER}-${impl.version}.jar" />
+			<include name="lib/${SERVICES}-${impl.version}.jar" />
+			<include name="lib/${MODEL}-${impl.version}.jar" />
+			<include name="lib/${CLASSES}-${impl.version}.jar" />
+			<include name="lib/${UTIL}-${impl.version}.jar" />
+
+			<include name="lib/framework-core-service-1.0.jar" />
+			<include name="lib/menu-test.jar" />
+			<include name="lib/seguridad-intranet-1.0.jar" />
+			
+			<!--AGREGADOS -->
+			<include name="lib/commons-email-1.0.jar" />
+			<include name="lib/framework-core-1.6.jar" />
+			<include name="lib/framework-security-1.1.jar" />
+			<include name="lib/framework-web-1.2.jar" />
+			<include name="lib/framework-util-1.6.jar" />
+			<include name="lib/menu-sso-cliente-1.0.jar" />
+
+			<manifest>
+				<attribute name="Built-By" value="${user.name}" />
+				<section name="common">
+					<attribute name="Specification-Title" value="[indicar el contenido]" />
+					<attribute name="Specification-Version" value="1.0 ${TODAY}" />
+					<attribute name="Specification-Vendor" value="SUNAT - INSI" />
+					<attribute name="Implementation-Title" value="[indicar el contenido]" />
+					<attribute name="Implementation-Version" value="build[1]" />
+					<attribute name="Implementation-Vendor" value="SUNAT - INSI" />
+				</section>
+			</manifest>
+		</jar>
+
+		<!-- Elimina el EAR del autodeploy para volver a generarlo -->
+		<delete file="${wls103.deploy.dir}/${slbear}-${impl.version}.ear" />
+		<copy file="${build.dir}/${slbear}-${impl.version}.ear" todir="${wls103.deploy.dir}" />
+
+		<delete>
+			<fileset dir="${build.dir}" includes="*.war" />
+		</delete>
+
+		<delete>
+			<fileset dir="${project.lib}" includes="*.jar" />
+		</delete>
+		
+	</target>
+
+</project>

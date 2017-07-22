@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/aop
+	    http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	    http://www.springframework.org/schema/jee
+        http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
+        http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+        
+	<!-- ======================== Configuracion de los datasource =============== -->
+	<jee:jndi-lookup id="sigaDSConsulta" jndi-name="jdbc/dgsig" resource-ref="true" />
+	<jee:jndi-lookup id="sigaDSGrabacion" jndi-name="jdbc/dgsig" resource-ref="true" />
+	
+	<!-- ======================== SqlMap setup for iBATIS Database Layer =============== -->
+	<bean id="sigaregistro.sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean"
+		p:configLocation="/WEB-INF/sql-map-config-rqnp.xml"
+		p:dataSource-ref="sigaDSConsulta" />
+	
+	<bean id="sigarqnp.sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean"
+		p:configLocation="/WEB-INF/sql-map-config-rqnp.xml"
+		p:dataSource-ref="sigaDSGrabacion" />
+		
+	<!-- ======================== BASE ====================================================== -->
+	<bean id="rqnp.daoBase.siga" class="pe.gob.sunat.framework.spring.util.dao.SqlMapDAOBase"
+		p:sqlMapClient-ref="sigarqnp.sqlMapClient" />
+	
+	<bean id="registro.daoBase.siga" class="pe.gob.sunat.framework.spring.util.dao.SqlMapDAOBase"
+		p:sqlMapClient-ref="sigaregistro.sqlMapClient" />	
+			
+	<!-- ======================== RQNP ====================================================== -->
+	<bean id="rqnp.sysRegistroArchivosDao"
+		class="pe.gob.sunat.administracion2.siga.registro.model.dao.ibatis.SqlMapSysRegistroArchivosDaoImpl"
+		parent="rqnp.daoBase.siga" />
+	
+	<bean id="rqnp.sysRegistroArchivosFisicoDao"
+		class="pe.gob.sunat.administracion2.siga.registro.model.dao.ibatis.SqlMapSysRegistroArchivosFisicoDaoImpl"
+		parent="rqnp.daoBase.siga" />
+	
+	<bean id="requerimientoNoProgramadoDao"
+		class="pe.gob.sunat.administracion2.siga.rqnp.model.dao.ibatis.SqlMapRequerimientoNoProgramadoDaoImpl"
+		parent="rqnp.daoBase.siga" />
+	
+	<bean id="catalogoBienesDao"
+		class="pe.gob.sunat.administracion2.siga.rqnp.model.dao.ibatis.SqlMapCatalogoBienesDaoImpl"
+		parent="rqnp.daoBase.siga" />
+	
+	<bean id="requerimientoNoProgBienesDao"
+		class="pe.gob.sunat.administracion2.siga.rqnp.model.dao.ibatis.SqlMapRequerimientoNoProgBienesDaoImpl"
+		parent="rqnp.daoBase.siga" />
+	
+	<bean id="requerimientoNoProgMetasDao"
+		class="pe.gob.sunat.administracion2.siga.rqnp.model.dao.ibatis.SqlMapRequerimientoNoProgMetasDaoImpl"
+		parent="rqnp.daoBase.siga" />
+	
+	<bean id="solicitudBienDao"
+		class="pe.gob.sunat.administracion2.siga.rqnp.model.dao.ibatis.SqlMapSolicitudBienDaoImpl"
+		parent="rqnp.daoBase.siga" />
+	
+	<bean id="unidadMedidaDao"
+		class="pe.gob.sunat.administracion2.siga.rqnp.model.dao.ibatis.SqlMapUnidadMedidaDaoImpl"
+		parent="rqnp.daoBase.siga" />
+	
+	<bean id="rqnpBandejaDao"
+		class="pe.gob.sunat.administracion2.siga.rqnp.model.dao.ibatis.SqlMapRqnpBandejaDaoImpl"
+		parent="rqnp.daoBase.siga" />
+	
+	<bean id="aucBandejaDao"
+		class="pe.gob.sunat.administracion2.siga.rqnp.model.dao.ibatis.SqlMapAucBandejaDaoImpl"
+		parent="rqnp.daoBase.siga" />
+	
+	<bean id="metasProyectosDao"
+		class="pe.gob.sunat.administracion2.siga.rqnp.model.dao.ibatis.SqlMapMetasProyectosDaoImpl"
+		parent="rqnp.daoBase.siga" />
+	
+	<bean id="aucMetasDao"
+		class="pe.gob.sunat.administracion2.siga.rqnp.model.dao.ibatis.SqlMapAucMetasDaoImpl"
+		parent="rqnp.daoBase.siga" />
+	
+	<bean id="tdBeneficiariosDao"
+		class="pe.gob.sunat.administracion2.siga.registro.model.dao.ibatis.SqlMapTdBeneficiariosDaoImpl"
+		parent="rqnp.daoBase.siga" />
+</beans>

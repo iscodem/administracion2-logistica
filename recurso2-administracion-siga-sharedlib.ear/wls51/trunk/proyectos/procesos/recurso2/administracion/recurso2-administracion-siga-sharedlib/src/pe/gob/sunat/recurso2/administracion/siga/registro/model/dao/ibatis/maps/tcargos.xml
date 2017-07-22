@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="tcargos">
+
+<typeAlias alias="tcargosBean" type="pe.gob.sunat.recurso2.administracion.siga.registro.model.bean.TcargosBean" />
+		
+	<resultMap id="lstcargos" class="tcargosBean">
+		<result property="codigoCargo" 		column="CODI_CARG_TCA" />
+		<result property="cargo" 			column="DESC_CARG_TCA" />
+		<result property="codigoEmpleado" 	column="CODI_EMPL_PER" />
+		<result property="numeroRegistro" 	column="NUMERO_REGISTRO_ALTERNO" />
+		<result property="nombreCompleto" 	column="NOMB_CORT_PER" />
+		<result property="codigoNivel" 		column="CODI_NIVE_NVL" />
+		<result property="nivel" 			column="DESC_NIVE_NVL" />
+	</resultMap>
+
+	<select id="select_cargo" parameterClass="java.util.HashMap" resultMap="lstcargos" >
+		SELECT 
+			 '-' CODI_CARG_TCA,
+			'-' DESC_CARG_TCA,
+			MP.CODI_EMPL_PER,
+			MP.NUMERO_REGISTRO_ALTERNO,
+			MP.NOMB_CORT_PER,
+			N.CODI_NIVE_NVL,
+			N.DESC_NIVE_NVL
+		FROM 
+		
+			MAESTRO_PERSONAL MP,  
+			NIVELES N 
+		WHERE 
+			MP.ESTA_TRAB_PER = 1  
+			AND MP.CODI_NIVE_NVL = N.CODI_NIVE_NVL   
+			<isNotNull prepend="AND" property="codEmp"> MP.CODI_EMPL_PER  = #codEmp# </isNotNull>
+	</select>
+</sqlMap>

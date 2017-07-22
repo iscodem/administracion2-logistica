@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+	
+	<import resource="classpath*:administracion-siga-model-data.xml" />
+	<import resource="classpath*:administracion-siga-service.xml" /> 
+	
+	<bean id="requerimientoNoProgramadoService" 
+		class="pe.gob.sunat.administracion2.siga.rqnp.service.RequerimientoNoProgramadoServiceImpl">
+		<property name="requerimientoNoProgramadoDao" 	ref="requerimientoNoProgramadoDao"></property>
+		<property name="requerimientoNoProgBienesDao"	ref="requerimientoNoProgBienesDao"></property>
+		<property name="requerimientoNoProgMetasDao"	ref="requerimientoNoProgMetasDao"></property>
+		<property name="catalogoBienesDao"				ref="catalogoBienesDao"></property>
+		<property name="accesoDao"						ref="accesoDao"></property>
+		<property name="maestroPersonalDao" 			ref="maestroPersonalDao"></property>
+		<property name="dependenciaDao" 				ref="dependenciaDao"></property>
+		<property name="rqnpBandejaDao" 				ref="rqnpBandejaDao"></property>
+		<property name="sysEstadosDao" 					ref="sysEstadosDao"></property>
+		<property name="sysParametrosDao" 				ref="sysParametrosDao"></property>
+		<property name="expedienteInternoAccionDao" 	ref="expedienteInternoAccionDao"></property>
+		<property name="objetivosDao" 					ref="objetivosDao"></property>
+		<property name="maestroContratistasDao" 		ref="maestroContratistasDao"></property>
+		<!-- <property name="registroPersonalService" 		ref="registroPersonalService"></property> -->
+		<property name="registroPersonalService" 		ref="registro.registroPersonalService" />
+		<property name="metasProyectosDao" 				ref="metasProyectosDao"></property>
+		<property name="t01ParametroDao" 				ref="t01ParametroDao"></property>
+	</bean>
+	
+	<bean id="rqnp.registroArchivosService"
+		class="pe.gob.sunat.administracion2.siga.registro.service.RegistroArchivosServiceImpl">
+		<property name="sysRegistroArchivosDao" 		ref="rqnp.sysRegistroArchivosDao"></property>
+		<property name="sysRegistroArchivosFisicoDao" 	ref="rqnp.sysRegistroArchivosFisicoDao"></property>
+		<property name="t01ParametroDao" 				ref="t01ParametroDao"></property>
+		<property name="accesoDao" 						ref="accesoDao"></property>
+		<property name="tdBeneficiariosDao" 			ref="tdBeneficiariosDao"></property>
+	</bean>
+	
+	
+	<bean id="solicitudBienService"
+		class="pe.gob.sunat.administracion2.siga.rqnp.service.SolicitudBienServiceImpl">
+		<property name="solicitudBienDao" 			ref="solicitudBienDao"></property>
+		<property name="unidadMedidaDao" 			ref="unidadMedidaDao"></property>
+		<property name="t01ParametroDao" 			ref="t01ParametroDao"></property>
+		<property name="dependenciaDao" 			ref="dependenciaDao"></property>
+		<property name="maestroPersonalDao" 		ref="maestroPersonalDao"></property>
+		<property name="sysEstadosDao" 				ref="sysEstadosDao"></property>
+		<property name="accesoDao" 					ref="accesoDao"></property>
+		<property name="sysParametrosDao" 			ref="sysParametrosDao"></property>
+	</bean>
+	
+	<bean id="requerimientoAucService"
+		class="pe.gob.sunat.administracion2.siga.rqnp.service.RequerimientoAucServiceImpl">
+		<property name="aucBandejaDao" 					ref="aucBandejaDao"></property>
+		<!-- <property name="registroPersonalService" 		ref="registroPersonalService"></property> -->
+		<property name="registroPersonalService" 		ref="registro.registroPersonalService" />
+		<property name="requerimientoNoProgramadoDao" 	ref="requerimientoNoProgramadoDao"></property>
+		<property name="dependenciaDao" 				ref="dependenciaDao"></property>
+		<property name="accesoDao" 						ref="accesoDao"></property>
+		<property name="requerimientoNoProgBienesDao" 	ref="requerimientoNoProgBienesDao"></property>
+		<property name="requerimientoNoProgMetasDao" 	ref="requerimientoNoProgMetasDao"></property>
+		<property name="catalogoBienesDao" 				ref="catalogoBienesDao"></property>
+		<property name="maestroPersonalDao" 			ref="maestroPersonalDao"></property>
+		<property name="sysParametrosDao" 				ref="sysParametrosDao"></property>
+		<property name="segRolesUsuariosDao" 			ref="segRolesUsuariosDao" ></property>
+		<property name="rqnpBandejaDao" 				ref="rqnpBandejaDao"></property>
+		<property name="prgAnnoDao" 					ref="prgAnnoDao"></property>
+		<property name="t01ParametroDao" 				ref="t01ParametroDao"></property>
+		<property name="aucMetasDao" 					ref="aucMetasDao"></property>
+	</bean>
+	
+	<bean id="autenticaTestConfig" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location" value="classpath:autenticaTest.properties"></property>
+  	</bean>
+  	
+	<bean
+		class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="targetClass" value="org.springframework.util.Log4jConfigurer" />
+		<property name="targetMethod" value="initLogging" />
+		<property name="arguments">
+			<list>
+				<value>/logs/apps/config/administracion2-logistica.config</value>
+				<value>10000</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="msgView" class="org.springframework.web.servlet.ModelAndView">
+		<constructor-arg type="java.lang.String" value="PagM" />
+	</bean>
+	
+</beans>

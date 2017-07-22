@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<import resource="classpath*:administracion-siga-model-data.xml" />
+	
+	<!-- ======REGISTRO DE ARCHIVO ===================================================== -->
+	<bean id="registro.registroArchivosService"
+		class="pe.gob.sunat.recurso2.administracion.siga.archivo.service.RegistroArchivosServiceImpl">
+		<property name="sysRegistroArchivosDao" ref="sysRegistroArchivosDao"></property>
+		<property name="sysRegistroArchivosFisicoDao" ref="sysRegistroArchivosFisicoDao"></property>
+		<property name="t01ParametroDao" ref="t01ParametroDao"></property>
+		<property name="accesoDao" ref="accesoDao"></property>
+	</bean>
+	<!-- ======REGISTRO DE EXPEDIENTE ===================================================== -->
+	<bean id="registro.registroExpedienteService"
+		class="pe.gob.sunat.recurso2.administracion.siga.expediente.service.RegistroExpedienteServiceImpl">
+		<property name="expedienteInternoAccionDao" ref="expedienteInternoAccionDao"></property>
+		<property name="paExpedienteDAO" ref="paExpedienteDAO" />
+		
+	</bean>
+	
+	<!-- ======REGISTRO DE MENSAJERIA ===================================================== -->
+		
+	<bean id="registro.registroMensajeriaService"
+		class="pe.gob.sunat.recurso2.administracion.siga.mensajeria.service.RegistroMensajeriaServiceImpl">
+		<property name="sysMensajeriaDAO" ref="sysMensajeriaDAO"></property>
+		
+	</bean>
+
+	<!-- ======REGISTRO DE PARAMETRO ===================================================== -->
+	<bean id="registro.registroGeneralService"
+		class="pe.gob.sunat.recurso2.administracion.siga.registro.service.RegistroGeneralServiceImpl">
+		<property name="t01ParametroDao" ref="t01ParametroDao"></property>
+		<property name="sysEstadosDao" ref="sysEstadosDao"></property>
+		<property name="tDepartamentosDao" ref="tDepartamentosDao"></property>
+		<property name="tProvinciasDao" ref="tProvinciasDao"></property>
+		<property name="tDistritosDao" ref="tDistritosDao"></property>
+		<property name="sysParametrosDao" ref="sysParametrosDao"></property>
+		
+	</bean>
+	<!-- ======REGISTRO DE REGISTRO ===================================================== -->
+	<bean id="registro.registroDependenciasService"
+		class="pe.gob.sunat.recurso2.administracion.siga.registro.service.RegistroDependenciasServiceImpl">
+		<property name="dependenciaDao" ref="dependenciaDao"></property>
+		<property name="paFirmaElectronicaDAO" ref="paFirmaElectronicaDAO"></property>
+	</bean>
+	<bean id="registro.registroPersonalService"
+		class="pe.gob.sunat.recurso2.administracion.siga.registro.service.RegistroPersonalServiceImpl">
+		<property name="maestroPersonalDao" ref="maestroPersonalDao"></property>
+		<property name="encargosPersonaDao" ref="encargosPersonaDao"></property>
+		<property name="dependenciaDao" ref="dependenciaDao"></property>
+		<property name="accesoDao" ref="accesoDao"></property>
+		<property name="personaDao" ref="personaDao"></property>
+		<property name="maestroContratistasDao" ref="maestroContratistasDao"></property>
+		<property name="t01ParametroDao" ref="t01ParametroDao"></property>
+
+		<property name="ddpDao" ref="ddpDao"></property>
+		<property name="ddsDao" ref="ddsDao"></property>
+		<property name="t733pernatDao" ref="t733pernatDao"></property>
+	</bean>
+	
+	<bean id="registro.registroComisionadoService"
+		class="pe.gob.sunat.recurso2.administracion.siga.registro.service.RegistroComisionadoServiceImpl">
+		<property name="maestroPersonalDao" ref="maestroPersonalDao"></property>
+		<property name="t01ParametroDao" ref="t01ParametroDao"></property> 
+	</bean>	
+	
+	
+
+</beans>

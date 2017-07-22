@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="seg_roles_usuarios">
+
+<typeAlias alias="segRolesUsuariosBean"
+		type="pe.gob.sunat.recurso2.administracion.siga.registro.model.bean.SegRolesUsuariosBean" />
+
+	<resultMap id="resultado" class="segRolesUsuariosBean">
+		<result property="cod_rol" 		column="CODI_ROLE_ROL" />
+		<result property="cod_user" 	column="CODI_USUA_USU" />
+		<result property="nro_reg" 		column="COD_PERSONAL" />
+		<result property="fec_asig" 	column="FECH_ASIG_RUS" />
+		<result property="cod_estado" 	column="ESTA_ACTU_RUS" />
+		
+	</resultMap>
+	
+	<select id="selectRol" parameterClass="map" resultMap="resultado">
+		SELECT 	A.CODI_ROLE_ROL, 
+				A.CODI_USUA_USU, 
+				A.FECH_ASIG_RUS,  
+				A.ESTA_ACTU_RUS,
+				B.COD_PERSONAL
+		FROM SEG_ROLES_USUARIOS A, SEG_USUARIO B
+		WHERE A.CODI_USUA_USU=B.CODI_USUA_USU
+		<isNotNull prepend="AND" property="cod_rol"> CODI_ROLE_ROL = #cod_rol#</isNotNull>
+		<isNotNull prepend="AND" property="cod_user"> CODI_USUA_USU = #cod_user#</isNotNull>
+		<isNotNull prepend="AND" property="nro_reg"> B.COD_PERSONAL = #nro_reg#</isNotNull>
+	</select>
+
+	<!-- PAS201780000300007 -->
+	<select id="selectGrupoAUC" parameterClass="map" resultMap="resultado">
+		SELECT
+			SEG_ROLES_USUARIOS.CODI_ROLE_ROL, 
+			SEG_ROLES_USUARIOS.CODI_USUA_USU, 
+			SEG_ROLES_USUARIOS.FECH_ASIG_RUS,  
+			SEG_ROLES_USUARIOS.ESTA_ACTU_RUS,
+			SEG_USUARIO.COD_PERSONAL
+			FROM TDEPENDENCIAS, SEG_USUARIO, SEG_ROLES_USUARIOS
+			WHERE 
+			       TDEPENDENCIAS.CODI_EMPL_PER = SEG_USUARIO.CODI_EMPL_PER (+)
+			AND SEG_USUARIO.CODI_USUA_USU = SEG_ROLES_USUARIOS.CODI_USUA_USU (+)
+			AND TDEPENDENCIAS.ESTADO_ID='1'
+			AND TDEPENDENCIAS.CODI_DEPE_TDE IN (
+                                               SELECT DISTINCT COD_AUC_TECNICA
+	                                               FROM CATALOGO_BIEN_SERVICIO
+	                                               WHERE SITU_BSER_CAT = 'A'
+	                                               AND COD_AUC_TECNICA IS NOT NULL
+	                                               AND COD_AUC_TECNICA NOT IN ('0000')
+                                               UNION ALL
+	                                               SELECT DISTINCT codi_depe_tde FROM TDEPENDENCIAS 
+	                                               WHERE CODI_DEPE_TDE in (SELECT COD_OEC_DEFECTO 
+	                                               FROM TDEPENDENCIAS
+	                                               WHERE estado_id = '1')
+	                                               AND estado_id = '1'
+	                                               AND CODI_DEPE_TDE NOT IN( (SELECT TRIM(VALOR_CHAR_PAR) FROM SYS_PARAMETROS WHERE NOM_VAR_PAR = 'ind_oec_ina'))
+                                              )
+        	<isNotNull prepend="AND" property="cod_dep"> TDEPENDENCIAS.CODI_DEPE_TDE = #cod_dep#</isNotNull>
+	</select>
+</sqlMap>

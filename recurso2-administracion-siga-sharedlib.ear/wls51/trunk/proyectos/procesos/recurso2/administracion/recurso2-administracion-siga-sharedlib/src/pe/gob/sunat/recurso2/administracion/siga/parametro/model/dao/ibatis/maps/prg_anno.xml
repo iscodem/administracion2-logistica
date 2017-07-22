@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="prg_anno">
+
+	<typeAlias alias="prgAnnoBean"
+		type="pe.gob.sunat.recurso2.administracion.siga.parametro.model.bean.PrgAnnoBean" />
+	
+	<resultMap id="lstannos" class="prgAnnoBean">
+		<result property="anno" 		column="ANNO_PROG_PRG" />
+	</resultMap>
+
+	<select id="selectAll" parameterClass="java.util.HashMap" resultMap="lstannos">
+	  	SELECT PRG_ANNO.ANNO_PROG_PRG  
+    	FROM PRG_ANNO   
+    	<dynamic prepend="WHERE">
+				<isNotNull prepend="AND" property="anio_act"> ANNO_PROG_PRG >= #anio_act#</isNotNull>
+				
+		</dynamic>
+	
+	
+  </select>
+	
+</sqlMap>

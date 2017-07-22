@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE weblogic-web-app PUBLIC "-//BEA Systems, Inc.//DTD Web Application 8.1//EN" "http://www.bea.com/servers/wls810/dtd/weblogic810-web-jar.dtd">
+<weblogic-web-app>
+	<description><![CDATA[Requerimientos No Programados - Módulo Intranet]]></description>
+   	<weblogic-version></weblogic-version>
+   	
+  	<session-descriptor>
+  		<session-param>
+     		<param-name>ConsoleMainAttribute</param-name>
+     		<param-value>Requerimientos no Programdos - Módulo Intranet</param-value>
+  		</session-param>
+  		<session-param>
+     		<param-name>CookieName</param-name>
+     		<param-value>IARQNPSSESSION</param-value>
+  		</session-param>
+  		<session-param>
+     		<param-name>PersistentStoreType</param-name>
+     		<param-value>replicated_if_clustered</param-value>
+		</session-param>
+  		<session-param>
+   			<param-name>TrackingEnabled</param-name>
+	  		<param-value>true</param-value>
+  		</session-param>
+  		<session-param>
+   			<param-name>IDLength</param-name>
+	  		<param-value>256</param-value>
+  		</session-param>
+  		<session-param>
+  			<param-name>InvalidationIntervalSecs</param-name>
+	  		<param-value>20</param-value>
+  		</session-param>
+	</session-descriptor>
+
+	<jsp-descriptor>
+		<jsp-param>
+			<param-name>compileFlags</param-name> 
+			<param-value>-deprecation -g -verbose</param-value>
+		</jsp-param>
+		<jsp-param>
+			<param-name>debug</param-name> 
+			<param-value>true</param-value>
+		</jsp-param>
+		<jsp-param>
+			<param-name>keepgenerated</param-name> 
+			<param-value>true</param-value>
+		</jsp-param>
+		<jsp-param>
+			<param-name>verbose</param-name> 
+			<param-value>true</param-value>
+		</jsp-param>
+		<jsp-param>
+			<param-name>noTryBlocks</param-name> 
+			<param-value>true</param-value>
+		</jsp-param>
+		<jsp-param>
+			<param-name>printNulls</param-name> 
+			<param-value>false</param-value>
+		</jsp-param>
+	</jsp-descriptor>
+
+	<container-descriptor>
+		<session-monitoring-enabled>true</session-monitoring-enabled>
+	</container-descriptor>
+</weblogic-web-app>

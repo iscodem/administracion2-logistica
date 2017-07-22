@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="encargospersona">
+	<typeAlias alias="encargospersona"
+		type="pe.gob.sunat.recurso2.administracion.siga.registro.model.bean.EncargosPersonaBean" />
+	
+	<resultMap id="resultado" class="encargospersona">
+		<result property="cod_per" 		column="CODI_EMPL_PER" />
+		<result property="cod_enc" 		column="CODI_ENCA_ENC" />
+		<result property="fec_ini" 		column="FECH_INIC_ENC" />
+		<result property="fec_fin" 		column="FECH_FINA_ENC" />
+		<result property="motivo" 		column="MOTIVO" />
+		<result property="estado" 		column="FLAG_ENCA_ENC" />
+		<result property="cod_dep" 		column="COD_DEPENDENCIA" />
+		
+	</resultMap>
+	
+	
+	<select id="selectAll" parameterClass="map" resultMap="resultado">
+		SELECT CODI_EMPL_PER, 
+		CODI_ENCA_ENC,
+		FECH_INIC_ENC,
+		FECH_FINA_ENC, 
+		MOTIVO, 
+		FLAG_ENCA_ENC,
+		COD_DEPENDENCIA
+		FROM ENCARGOS_PERSONA
+		WHERE CODI_ENCA_ENC =#cod_per# AND
+		FLAG_ENCA_ENC = 'S' AND  
+		TO_CHAR(SYSDATE,'YYYYMMDD')  BETWEEN TO_CHAR(FECH_INIC_ENC,'YYYYMMDD') AND TO_CHAR(FECH_FINA_ENC,'YYYYMMDD')
+	
+  </select>
+  
+ 
+  
+
+  
+  
+</sqlMap>
