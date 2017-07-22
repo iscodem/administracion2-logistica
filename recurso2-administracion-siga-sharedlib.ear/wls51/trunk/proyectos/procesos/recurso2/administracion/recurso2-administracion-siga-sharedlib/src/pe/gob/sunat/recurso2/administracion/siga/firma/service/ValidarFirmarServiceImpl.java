@@ -39,6 +39,7 @@ import pe.gob.sunat.recurso2.administracion.siga.firma.model.dao.T7075TerminoCon
 import pe.gob.sunat.recurso2.administracion.siga.firma.model.dao.T7076DelegacFirmaDAO;
 import pe.gob.sunat.recurso2.administracion.siga.firma.util.FirmaConstantes;
 import pe.gob.sunat.recurso2.administracion.siga.ldap.service.ValidadorLdapService;
+import pe.gob.sunat.recurso2.administracion.siga.util.FormatoUtil;
 
 /**
  * @author jcortezro
@@ -187,15 +188,19 @@ public class ValidarFirmarServiceImpl implements ValidarFirmarService {
 		log.info("Inicio de generarPDF - SIGA");
     	Long numPDF = 0l;
     	Map<String,Object> resultado = new HashMap<String, Object>();
-    	
+    
 		byte[] byData=null;
 		try {
 	    	
+			String idJasper = FormatoUtil.validaCompletaIdJasper(iddoc);
 			ReporteJasperBean params = new ReporteJasperBean();
 			params.setParametros(cabecera);
 			params.setListaDetalle(detalles);
 			params.setFileName("nombreArchivo");
-			params.setJasperName("PLANTILLA"+iddoc+".jasper");
+			params.setJasperName("PLANTILLA"+idJasper+".jasper");
+			log.debug("cabecera: "+cabecera.toString());
+			log.debug("detalles: "+detalles.toString());
+			log.debug("id Jasper SIGA: "+idJasper);
 			params.setIdJasper(Integer.toString(iddoc));
 			ReporteArchivoBean reporte = ReporteJasperUtil.GenerarArchivoPDF(params);
 			

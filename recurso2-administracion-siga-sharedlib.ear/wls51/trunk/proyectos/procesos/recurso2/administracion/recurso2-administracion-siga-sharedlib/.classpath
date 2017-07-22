@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry including="main/resources/|pe/gob/sunat/recurso2/administracion/siga/archivo/|pe/gob/sunat/recurso2/administracion/siga/expediente/|pe/gob/sunat/recurso2/administracion/siga/firma/|pe/gob/sunat/recurso2/administracion/siga/ldap/|pe/gob/sunat/recurso2/administracion/siga/mensajeria/|pe/gob/sunat/recurso2/administracion/siga/parametro/|pe/gob/sunat/recurso2/administracion/siga/registro/|pe/gob/sunat/recurso2/administracion/siga/ubigeo/|pe/gob/sunat/recurso2/administracion/siga/util/|pe/gob/sunat/recurso2/administracion/siga/web/" kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.6.0_26"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.6.0_45"/>
 	<classpathentry kind="var" path="LIBS/activation.jar"/>
 	<classpathentry kind="var" path="LIBS/aopalliance-1.0.jar"/>
 	<classpathentry kind="var" path="LIBS/aspectjrt.jar"/>

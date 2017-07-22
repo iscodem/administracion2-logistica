@@ -41,6 +41,7 @@ public class ReporteJasperUtil {
 			log.debug("name JAsper: " + reporte.getName());
 			 
 	        JRDataSource dsLista = new JRBeanCollectionDataSource(params.getListaDetalle());
+	        log.debug("Detalles de reporte dsLista: " + dsLista.toString());
 	        
 	        JasperPrint jasperPrint=new JasperPrint() ;
 	        jasperPrint = JasperFillManager.fillReport( reporte,params.getParametros(), dsLista );

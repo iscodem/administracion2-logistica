@@ -2,13 +2,9 @@ package pe.gob.sunat.recurso2.administracion.siga.firma.service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import pe.gob.sunat.recurso2.administracion.siga.firma.model.bean.Dependencia;
 import pe.gob.sunat.recurso2.administracion.siga.firma.model.bean.MaestroPersonal;
 import pe.gob.sunat.recurso2.administracion.siga.firma.model.bean.T01Parametro;
@@ -26,6 +22,7 @@ import pe.gob.sunat.recurso2.administracion.siga.firma.model.dao.T7074DocumentoF
 import pe.gob.sunat.recurso2.administracion.siga.firma.model.dao.T7075TerminoCondDAO;
 import pe.gob.sunat.recurso2.administracion.siga.firma.model.dao.T7076DelegacFirmaDAO;
 import pe.gob.sunat.recurso2.administracion.siga.firma.util.FirmaConstantes;
+import pe.gob.sunat.recurso2.administracion.siga.util.FormatoUtil;
 
 public class ConsultaFirmaServiceImpl implements ConsultaFirmaService {
 
@@ -341,13 +338,15 @@ public class ConsultaFirmaServiceImpl implements ConsultaFirmaService {
 			String numDocumento) throws Exception {
 		
 		T7074DocumentoFirm documento = recuperarDatosDocumentoFirmadoVigente(codTipdoc, numDocumento);
+		
+		T5282Archbin record = FormatoUtil.convertirObjetoInformixToSiga(documento);
+		/* 
+		log.info("recuperando archivo: " + iddoc);
 		Long iddoc = documento.getCodIdarchivo().longValue();
 		String nombreArchivo = documento.getNomArchivo();
-		
-		log.info("recuperando archivo: " + iddoc);
 		T5282Archbin record = recuperarDocumentoPdfFirmado(iddoc);
 		record.setDesNombreAlternativo(nombreArchivo);
-		
+		*/
 		log.info("resultado: " + record);
 		return record;
 	}
@@ -357,13 +356,15 @@ public class ConsultaFirmaServiceImpl implements ConsultaFirmaService {
 		throws Exception {
 		
 		T7074DocumentoFirm documento = recuperarDatosDocumentoFirmado(codDocaut);
+		
+		T5282Archbin record = FormatoUtil.convertirObjetoInformixToSiga(documento);
+		/*
+		log.info("recuperando archivo: " + iddoc);
 		Long iddoc = documento.getCodIdarchivo().longValue();
 		String nombreArchivo = documento.getNomArchivo();
-		
-		log.info("recuperando archivo: " + iddoc);
 		T5282Archbin record = recuperarDocumentoPdfFirmado(iddoc);
 		record.setDesNombreAlternativo(nombreArchivo);
-		
+		*/
 		log.info("resultado: " + record);
 		return record;
 	}

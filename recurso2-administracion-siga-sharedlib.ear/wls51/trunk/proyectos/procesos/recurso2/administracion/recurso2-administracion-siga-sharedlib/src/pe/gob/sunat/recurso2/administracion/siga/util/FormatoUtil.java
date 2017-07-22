@@ -3,6 +3,9 @@ package pe.gob.sunat.recurso2.administracion.siga.util;
 import java.util.HashMap;
 import java.util.Map;
 
+import pe.gob.sunat.recurso2.administracion.siga.firma.model.bean.T5282Archbin;
+import pe.gob.sunat.recurso2.administracion.siga.firma.model.bean.T7074DocumentoFirm;
+
 public class FormatoUtil {
 	public static String validarEmptyToNull(String parameterRequest) {
 		String finalParameterRequest = parameterRequest;
@@ -51,4 +54,33 @@ public class FormatoUtil {
 		}
 		return upperCaseText;
 	}
+	
+	/**
+	 * Se obtiene un Objeto tipo Informix
+	 * @param t7074DocumentoFirm
+	 * @return
+	 */
+	public static T5282Archbin convertirObjetoInformixToSiga(T7074DocumentoFirm documento){
+		T5282Archbin record = new T5282Archbin();
+		record.setNumId(documento.getCodIdarchivo().longValue());
+		record.setDesNombreAlternativo(documento.getNomArchivo());
+		record.setArcDatos(documento.getArcFirmado());
+		return record;
+	}
+	
+	/**
+	 * Verifica que el id del Jasper tenga el formato correcto
+	 * @param iddoc
+	 * @return
+	 */
+	public static String validaCompletaIdJasper(int iddoc){
+		int longitudIdDoc = String.valueOf(iddoc).length();
+		StringBuffer sb = new StringBuffer(6);
+		for ( int i=0;i < (6 - longitudIdDoc);i++) {
+		  sb.append( "0");
+		}
+		String codigo = sb.toString();
+		return (codigo+iddoc);
+	}
+
 }
